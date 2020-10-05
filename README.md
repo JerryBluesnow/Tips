@@ -1,2 +1,2 @@
-# JavaTips
-all things collected during java learning
+# Tips
+all things collected during learning
