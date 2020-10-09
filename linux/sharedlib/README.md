@@ -368,11 +368,12 @@
 
     gcc编译链接动态库时，很有可能编译通过，但是执行时，找不到动态链接库，那是因为-L选项指定的路径只在编译时有效，编译出来的可执行文件不知道-L选项后面的值，当然找不到。可以用ldd <your_execute>看看是不有 ‘not found’在你链接的库后面，解决方法是通过-Wl,rpath=<your_lib_dir>，使得execute记住链接库的位置
 
-[gcc.gnu.org](http://gcc.gnu.org/ml/gcc-help/2005-12/msg00017.html)
-[Linux动态库(.so)搜索路径](http://www.cnitblog.com/windone0109/archive/2008/04/23/42653.aspx)
-[Linux操作系统的头文件和库文件搜索路径](https://my.oschina.net/u/1540325/blog/612615)
-[Linux升级OpenSSL版本](https://www.cnblogs.com/findumars/p/6278906.html)
-[Linux下OpenSSL的安装全过程(CentOS6.3 x86 + Openssl 1.1.0e)](https://blog.csdn.net/lu_yonggang/article/details/62041422)
-[shell程序中 2> /dev/null 代表什么意思?](https://www.zhihu.com/question/53295083)
-[Linux Shell 1>/dev/null 2>&1 含义](https://blog.csdn.net/ithomer/article/details/9288353)
-[彻底理解链接器：三，库与可执行文件](https://segmentfault.com/a/1190000016433897)   -- 动态、静态库理解非常好的一篇文章
+# reference
+- [gcc.gnu.org](http://gcc.gnu.org/ml/gcc-help/2005-12/msg00017.html)
+- [Linux动态库(.so)搜索路径](http://www.cnitblog.com/windone0109/archive/2008/04/23/42653.aspx)
+- [Linux操作系统的头文件和库文件搜索路径](https://my.oschina.net/u/1540325/blog/612615)
+- [Linux升级OpenSSL版本](https://www.cnblogs.com/findumars/p/6278906.html)
+- [Linux下OpenSSL的安装全过程(CentOS6.3 x86 + Openssl 1.1.0e)](https://blog.csdn.net/lu_yonggang/article/details/62041422)
+- [shell程序中 2> /dev/null 代表什么意思?](https://www.zhihu.com/question/53295083)
+- [Linux Shell 1>/dev/null 2>&1 含义](https://blog.csdn.net/ithomer/article/details/9288353)
+- [彻底理解链接器：三，库与可执行文件](https://segmentfault.com/a/1190000016433897)   -- 动态、静态库理解非常好的一篇文章
