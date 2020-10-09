@@ -317,24 +317,7 @@
 
 [pkg-config的一些用法](https://blog.csdn.net/luotuo44/article/details/24836901)
 
-    /home_nbu/jzhan107/projects/09/obj/linux_x86
-    vi ./sde/opt/LU3P/lib/pkgconfig
-    " ============================================================================
-    " Netrw Directory Listing                                        (netrw v132)
-    "   /home_nbu/jzhan107/projects/09/obj/linux_x86/sde/opt/LU3P/lib/pkgconfig
-    "   Sorted by      name
-    "   Sort sequence: [\/]$,\.h$,\.c$,\.cpp$,*,\.o$,\.obj$,\.info$,\.swp$,\.bak$,\~$
-    "   Quick Help: <F1>:help  -:go up dir  D:delete  R:rename  s:sort-by  x:exec
-    " ============================================================================
-    ../
-    libcrypto.pc@
-    libcurl.pc@
-    libssl.pc@
-    openssl.pc@
-    xmlsec1-openssl.pc@
-    xmlsec1.pc@
-
-    jzhan107@lsslogin1:/home_nbu/jzhan107/projects/08test/obj/linux_x86/sde/tpp/openssl/linux_x86/openssl-1.1.1>
+    jerry@workingpc:/home/jerry
     $ pkg-config --cflags --libs openssl
     sh: gnome-config: not found
     Package openssl was not found in the pkg-config search path.
@@ -342,9 +325,10 @@
     to the PKG_CONFIG_PATH environment variable
     No package 'openssl' found
 
-    jzhan107@lsslogin1:/home_nbu/jzhan107/projects/08test/obj/linux_x86/sde/tpp/openssl/linux_x86/openssl-1.1.1>
-    $ export PKG_CONFIG_PATH=/home_nbu/jzhan107/projects/08test/obj/linux_x86/sde/tpp/openssl/linux_x86/openssl-1.1.1;pkg-config --cflags --libs openssl
-    -I/opt/LU3P/include  -L/opt/LU3P/lib -lssl -lcrypto
+    jerry@workingpc:/home/jerry
+    $ export PKG_CONFIG_PATH=/home/jerry/prj/
+    openssl-1.1.1;pkg-config --cflags --libs openssl
+    -I/opt/llpp/include  -L/opt/llpp/lib -lssl -lcrypto
 
 
 # Comiler Order
@@ -356,13 +340,12 @@
 
 1. in our system build directory, we can not run ldd 
     
-    jzhan107@lsslogin1:/fs_nbu/umtsbld/R3708.00/obj/linux_x86-64/ssp>
-    $ ldd ./linux_x86-64/opt/lucent/apps/bin/ngss
-    ldd: ./linux_x86-64/opt/lucent/apps/bin/ngss: ELF machine type: EM_AMD64: is incompatible with system
+    $ ldd app
+    ldd: app: ELF machine type: EM_AMD64: is incompatible with system
 
 2. try readelf -d 
     
-   ![readelf -d ngss](./images/readelf_ngss.png)
+   readelf -d app
 
 3. Linux系统下连接器ld链接顺序的总结
 
