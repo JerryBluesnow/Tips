@@ -368,6 +368,9 @@
 
     gcc编译链接动态库时，很有可能编译通过，但是执行时，找不到动态链接库，那是因为-L选项指定的路径只在编译时有效，编译出来的可执行文件不知道-L选项后面的值，当然找不到。可以用ldd <your_execute>看看是不有 ‘not found’在你链接的库后面，解决方法是通过-Wl,rpath=<your_lib_dir>，使得execute记住链接库的位置
 
+## linux systemctl 指令 —— 阮一峰
+ [linux systemctl 指令 —— 阮一峰](https://www.cnblogs.com/zwcry/p/9602756.html)
+
 # reference
 - [gcc.gnu.org](http://gcc.gnu.org/ml/gcc-help/2005-12/msg00017.html)
 - [Linux动态库(.so)搜索路径](http://www.cnitblog.com/windone0109/archive/2008/04/23/42653.aspx)

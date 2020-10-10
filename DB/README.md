@@ -588,3 +588,143 @@
     WHERE Country = ‘UK’AND  
     Customers.CustomerID= Orders.CustomerID) 
 </details>
+
+
+## install mysql
+    https://www.cnblogs.com/fanshudada/p/9781794.html
+    https://dev.mysql.com/downloads/mysql/
+    https://itsfoss.com/install-mysql-ubuntu/
+    sudo apt install mysql-server -y
+    wget https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.30-linux-glibc2.12-x86_64.tar.gz --no-check-certificate
+    [配置请参考](https://www.jianshu.com/p/276d59cbc529)
+
+## install libaio.so.1
+    apt-get install libaio-dev
+
+# install libnuma.so.1
+    apt-get install libnuma-dev
+
+# 2020-09-10T01:16:58.429180Z 0 [ERROR] Fatal error: Can't change to run as user 'mysql' ;  Please check that the user exists!
+    bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql
+
+## add user group
+    groupadd mysql
+    useradd -g mysql mysql 
+
+## install chkconfig tool
+    1. sudo apt install sysv-rc-conf
+
+    当我安装sysv-rc-conf时，报了如下的错：
+    E: Unable to locate package sysv-rc-conf（无法定位sysv-rc-conf包）
+
+    在软件源列表sources.list（该文本的位置在/etc/apt/sources.list）文件中的末尾添加如下内容：
+    deb http://archive.ubuntu.com/ubuntu/ trusty main universe restricted multiverse
+    2、sudo apt-get update
+    3、apt-get install sysv-rc-conf
+    4. sysv-rc-conf --list 
+    5. cp /usr/sbin/sysv-rc-conf /usr/sbin/chkconfig
+
+## install mariadb
+    + download from : https://mariadb.org/download/#entry-header
+    +  wget https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-10.5.5/bintar-linux-x86_64/mariadb-10.5.5-linux-x86_64.tar.gz --no-check-certificate
+    + apt-get install mariadb-server
+    + [MariaDB三种方法安装及多实例实现](https://blog.51cto.com/13695854/2127892)
+    + [MariaDB安装及基本配置（CentOS6.9）](https://www.cnblogs.com/52py/p/8074541.html)
+    + [安装MariaDB和简单配置](https://www.cnblogs.com/wu-chao/p/9138665.html)
+    + NOTES: you must remove all your mysql/mariadb from your system, or althrogh it seems the installation well
+     but some actions during installation may fail without reporting any error to you.
+    + after clean all mysql, you could run command to install
+    + + apt-get install mariadb-servr
+    + + after installation, run "whereis mysql" and "whereis mysqld", you could see the right output
+    + + run command: mysql_secure_installation
+    + + run command: mysql_install_db
+    + + run command: service mysql start    (some procedure may advise you to run: service mysqld start, but in my system, mysqld service could not be found)
+    + + show variables like "%character%";show variables like "%collation%";
+
+## java.sql.SQLException: Access denied for user 'root'@'localhost'
+    最终通过一下方式解决的， 依然很奇怪
+    + + 首先实验 mysql -uroot -p命令是否需要正确的密码，只有需要输入正确的密码，才能继续进行； 然后，
+    + + 修改数据库密码 update user set password=password("123456") where user="root";
+    + + 刷新数据库flush privileges;
+
+## [Linux MySQL 常见无法启动或启动异常的解决方案](https://www.cnblogs.com/youjianjiangnan/p/10259151.html)
+
+## remove mysql
+    apt-get autoremove mysql* --purge
+    删除mysql完整步骤：
+
+    1、 sudo apt-get remove mysql-server.
+    2、sudo apt-get autoremove mysql-server
+    3、sudo apt-get remove mysql-common
+    4、
+    sudo rm /var/lib/mysql/ -R
+    sudo rm /etc/mysql/ -R
+    sudo apt-get autoremove mysql* --purge
+    sudo apt-get remove apparmor
+
+    再次安装mysql命令：sudo apt-get install mysql-server mysql-common
+
+    To start mysqld at boot time you have to copy
+    support-files/mysql.server to the right place for your system
+
+    PLEASE REMEMBER TO SET A PASSWORD FOR THE MariaDB root USER !
+    To do so, start the server, then issue the following commands:
+
+    '/usr/bin/mysqladmin' -u root password 'new-password'
+    '/usr/bin/mysqladmin' -u root -h default password 'new-password'
+
+    Alternatively you can run:
+    '/usr/bin/mysql_secure_installation'
+
+    which will also give you the option of removing the test
+    databases and anonymous user created by default.  This is
+    strongly recommended for production servers.
+
+    See the MariaDB Knowledgebase at http://mariadb.com/kb or the
+    MySQL manual for more instructions.
+
+    You can start the MariaDB daemon with:
+    cd '/usr' ; /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
+
+    You can test the MariaDB daemon with mysql-test-run.pl
+    cd '/usr/mysql-test' ; perl mysql-test-run.pl
+
+    Please report any problems at http://mariadb.org/jira
+
+    The latest information about MariaDB is available at http://mariadb.org/.
+    You can find additional information about the MySQL part at:
+    http://dev.mysql.com
+    Consider joining MariaDB's strong and vibrant community:
+    https://mariadb.org/get-involved/
+
+## install ncat
+    apt-get install netcat
+
+    nc -vz -w 5 127.0.0.1 777 &> /dev/null && echo "online" || echo "offline"
+    nohup nc -l -p 777 &
+    nohup nc -lk -s 127.0.0.1 -p 777 &  
+    使用案例如下：
+
+    1、测试TCP端口
+
+    nc -vz ip tcp-port
+
+    2、测试UDP
+
+    nc -uvz ip udp-port
+
+    3、临时监听TCP端口
+
+    nc -l port
+
+    4、永久监听TCP端口
+
+    nc -lk port
+
+    5、临时监听UDP
+
+    nc -lu port
+
+    6、永久监听UDP
+
+    nc -luk port

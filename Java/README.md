@@ -23,3 +23,29 @@
 ### SpringApplication.run
 - [SpringApplication.run执行流程详解](http://c.biancheng.net/view/4632.html)
 - [springboot启动类--SpringApplication.run()详解](hhttps://blog.csdn.net/weixin_41884010/article/details/88844946)
+
+## 安装java jdk
+[refer](https://www.cnblogs.com/carryLess/p/7508378.html)
+网站查询
+https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jdk-8u261-linux-x64.tar.gz?xd_co_f=27b6b93d465637b95d61599612466900
+
+wget https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jdk-8u261-linux-x64.tar.gz?AuthParam=1599643461_25207893d4c504094edb8a58b6341fe0 --no-check-certificate
+
+root@default:~# pwd
+
+export http_proxy=http://192.168.99.99:8080
+export https_proxy=https://192.168.99.99:8080
+export JAVA_HOME=/jerry/work/jdk1.8.0_261
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+
+## download maven
+
+    http://maven.apache.org/download.cgi
+    https://www.linuxidc.com/Linux/2013-05/84489.htm
+    apache-maven-3.6.3-bin.tar.gz
+    wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz --no-check-certificate
+
+    export MAVEN_HOME=/jerry/work/apache-maven-3.6.3
+    export PATH=${MAVEN_HOME}/bin:${PATH}
