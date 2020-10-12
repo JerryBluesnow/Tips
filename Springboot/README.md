@@ -75,3 +75,15 @@ FNHGC-2GFPD-XK3D4-YV97J-F3KTY
 - [Netty入门教程2——动手搭建HttpServer](https://www.jianshu.com/p/ed0177a9b2e3)
 - [Netty入门教程3——Decoder和Encoder](https://www.jianshu.com/p/fd815bd437cd)
 - [Netty笔记4-如何实现长连接](https://www.jianshu.com/p/9d89b2299ce4)
+
+## CommandLineRunner
+- [Spring Boot 启动加载数据 CommandLineRunner](https://blog.csdn.net/catoop/article/details/50501710)
+
+- [CommandLineRunner或者ApplicationRunner接口](https://www.jianshu.com/p/5d4ffe267596) - 更详细
+
+## SpringApplication.run
+- [SpringApplication.run执行流程详解](http://c.biancheng.net/view/4632.html)
+- [springboot启动类--SpringApplication.run()详解](hhttps://blog.csdn.net/weixin_41884010/article/details/88844946)
+
+## @Data注解 与 lombok
+- [@Data注解 与 lombok](https://www.jianshu.com/p/c1ee7e4247bf)
