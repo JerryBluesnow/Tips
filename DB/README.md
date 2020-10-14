@@ -644,7 +644,7 @@
 ## java.sql.SQLException: Access denied for user 'root'@'localhost'
     最终通过一下方式解决的， 依然很奇怪
     + + 首先实验 mysql -uroot -p命令是否需要正确的密码，只有需要输入正确的密码，才能继续进行； 然后，
-    + + 修改数据库密码 update user set password=password("123456") where user="root";
+    + + 修改数据库密码 update user set password=password("keeninfo123") where user="root";
     + + 刷新数据库flush privileges;
 
 ## [Linux MySQL 常见无法启动或启动异常的解决方案](https://www.cnblogs.com/youjianjiangnan/p/10259151.html)
@@ -728,3 +728,6 @@
     6、永久监听UDP
 
     nc -luk port
+
+
+## alter user 'root'@'localhost' identified by '123456';

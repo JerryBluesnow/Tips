@@ -350,3 +350,6 @@
   docker run -v /usr/local/bin:/target jpetazzo/nsenter
   PID=$(docker inspect --format {{.State.Pid}} <container_name_or_ID>)
   nsenter --target $PID --mount --uts --ipc --net --pid
+
+  ## Docker容器跨主机通信之：直接路由方式
+  - [Docker容器跨主机通信之：直接路由方式](https://www.cnblogs.com/xiao987334176/p/10049844.html)

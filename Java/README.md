@@ -51,3 +51,5 @@
     export MAVEN_HOME=/jerry/work/apache-maven-3.6.3
     export PATH=${MAVEN_HOME}/bin:${PATH}
 
+## Visual搭建Java开发环境
+- [Visual Studio Code 搭建 Java 开发环境](https://blog.csdn.net/hezh1994/article/details/79895480)
