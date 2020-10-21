@@ -6,7 +6,6 @@
 - [内网环境下修改Docker Toolbox的访问地址并暴露端口](https://blog.csdn.net/weixin_38187317/article/details/102918056)
 - [Win10 Ping通Docker Toolbox容器](https://zhuanlan.zhihu.com/p/95290602)
 - [理解 Docker 网络(一) -- Docker 对宿主机网络环境的影响](https://zhuanlan.zhihu.com/p/59538531)
-- []()
 
 # Docker setup tips
 
@@ -378,3 +377,5 @@
 ```
 ## 环境变量
 - [解决docker容器不能自动加载环境变量问题](https://www.jianshu.com/p/3b50f23b6f38)
+ 
+## [docker文件迁移到其他磁盘解决c盘空间不足的问题](https://blog.csdn.net/iteye_10432/article/details/103288296)
