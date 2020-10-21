@@ -1,14 +1,6 @@
 # Docker Tips
 
-## 宿主机访问Docker container网络
-- [windows10配置Docker容器独立IP地址互相通信](https://www.cnblogs.com/fusheng11711/archive/2004/01/13/11003124.html)
-- [WIN10系统和Docker内部容器IP互通](https://blog.csdn.net/u014104286/article/details/82961203)
-- [内网环境下修改Docker Toolbox的访问地址并暴露端口](https://blog.csdn.net/weixin_38187317/article/details/102918056)
-- [Win10 Ping通Docker Toolbox容器](https://zhuanlan.zhihu.com/p/95290602)
-- [理解 Docker 网络(一) -- Docker 对宿主机网络环境的影响](https://zhuanlan.zhihu.com/p/59538531)
-
-# Docker setup tips
-
+## Docker setup tips
 [Docker Forum](https://forums.docker.com/)
 
 [Install Docker ToolBox on Windows](https://docs.docker.com/toolbox/toolbox_install_windows/)
@@ -231,22 +223,22 @@
                 |
                 +---apt-get install python-dev
 
-
-
 # [docker中，如何将镜像保存为tar文件或者将镜像保存为文件，将tar文件导入到docker中](https://www.cnblogs.com/chuanzhang053/p/10084156.html)
 
 ## docker images 存在哪里
-[refer link](https://codeday.me/bug/20180702/187031.html)
+- [docker images 存在哪里](https://codeday.me/bug/20180702/187031.html)
+- [docker在本地如何管理image?](https://segmentfault.com/a/1190000009730986)
+- [Docker 基础 : 镜像](https://www.cnblogs.com/sparkdev/p/8901728.html)
+- [docker 在本地如何管理 image（镜像）?](https://www.yangcs.net/posts/how-manage-image/)
+```
     docker-machine ssh default
     sudo -i
-    [docker在本地如何管理image?](https://segmentfault.com/a/1190000009730986)
-    [Docker 基础 : 镜像](https://www.cnblogs.com/sparkdev/p/8901728.html)
-    [docker 在本地如何管理 image（镜像）?](https://www.yangcs.net/posts/how-manage-image/)
     root@default:/mnt/sda1/var/lib/docker/aufs/diff# du -sh * |sort -u
     root@default:/mnt/sda1/var/lib/docker/aufs/diff#
+```
 
 ## prepare in jerryubuntu
-
+```
     docker search boonyadocker/tomcat-allow-remote  
     docker pull boonyadocker/tomcat-allow-remote 
     
@@ -266,24 +258,10 @@
     cd /jerry/work/.ssh
 
     copy pub key to gerrit
+```
 
-## [docker安装Ubuntu以及ssh连接](https://www.cnblogs.com/mengw/p/11413461.html)
- refer to [docker安装Ubuntu以及ssh连接](https://www.cnblogs.com/mengw/p/11413461.html)
-
-## configure cscope 
-   
-   [reference link](http://blog.chinaunix.net/uid-12461657-id-3050878.html)
-    find ./ -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files
-    cscope -Rbq
-
-    s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
-    g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
-    d: 查找本函数调用的函数
-    c: 查找调用本函数的函数
-    t: 查找指定的字符串
-    e: 查找egrep模式，相当于egrep功能，但查找速度快多了
-    f: 查找并打开文件，类似vim的find功能
-    i: 查找包含本文件的文
+## docker安装Ubuntu以及ssh连接
+- [docker安装Ubuntu以及ssh连接](https://www.cnblogs.com/mengw/p/11413461.html)
 
 ## commit and push docker images
     
@@ -309,12 +287,12 @@
    [reference link](https://www.cnblogs.com/hgwang/p/10279023.html)
 
 ## Docker configure ssh login
+- [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
+- [Linux主机如何用ssh去登录docker容器的步骤](https://blog.csdn.net/ypbsyy/article/details/80529101)
+- [docker新建ubuntu容器，设置ssh与物理机登陆](https://www.cnblogs.com/winchua/p/4942837.html)
+- [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
 
-    https://www.jb51.net/article/164010.htm
-    https://blog.csdn.net/ypbsyy/article/details/80529101
-   [docker新建ubuntu容器，设置ssh与物理机登陆](https://www.cnblogs.com/winchua/p/4942837.html)
-   [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
-
+```
     安装容器的openssh-server，输入 apt-get install openssh-server -y
 
     成功安装后，vim /etc/ssh/sshd_config，修改下面两个配置
@@ -331,16 +309,12 @@
     启动这个镜像的容器，并映射本地的一个闲置的端口（例如10000）到容器的22端口，并启动容器的sshd docker run -d -p 10000:22 ubuntu-ssh /usr/sbin/sshd -D
 
     现在打开新的终端，输入ssh root@127.0.0.1 -p 10000，如果能链接成功，会要求输入密码的，输入刚才的123456就可以进入容器的终端了
+```
 
 ## rename a container
-  
+```  
     docker rename bbb76c123a97 ubuntu-v3
-
-## windows下ssh server搭建方法
-  [reference](https://blog.csdn.net/luhuaxing/article/details/104074680)
-  https://www.cnblogs.com/feipeng8848/p/8568018.html
-  https://jingyan.baidu.com/article/a3aad71a64fb38f1fa009671.html
-
+```
 
 ## Docker容器进入的4种方式
   [Docker容器进入的4种方式](https://www.cnblogs.com/xhyan/p/6593075.html)
@@ -350,12 +324,19 @@
   PID=$(docker inspect --format {{.State.Pid}} <container_name_or_ID>)
   nsenter --target $PID --mount --uts --ipc --net --pid
 
-  ## Docker容器跨主机通信之：直接路由方式
-  - [Docker容器跨主机通信之：直接路由方式](https://www.cnblogs.com/xiao987334176/p/10049844.html)
+## 环境变量
+- [解决docker容器不能自动加载环境变量问题](https://www.jianshu.com/p/3b50f23b6f38)
 
-  ## Dokcer网络
-  - [docker安装使用全教程包含独立ip](https://blog.csdn.net/mergerly/article/details/54926127) -- 很好
-  - [Linux之Docker容器中的网络](https://blog.csdn.net/qq_43830639/article/details/98481670?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend~default-1-98481670.nonecase&utm_term=安装docker后没有eth1&spm=1000.2123.3001.4430)
+## Docker 网络
+### 宿主机访问Docker container网络
+- [windows10配置Docker容器独立IP地址互相通信](https://www.cnblogs.com/fusheng11711/archive/2004/01/13/11003124.html)
+- [WIN10系统和Docker内部容器IP互通](https://blog.csdn.net/u014104286/article/details/82961203)
+- [内网环境下修改Docker Toolbox的访问地址并暴露端口](https://blog.csdn.net/weixin_38187317/article/details/102918056)
+- [Win10 Ping通Docker Toolbox容器](https://zhuanlan.zhihu.com/p/95290602)
+- [理解 Docker 网络(一) -- Docker 对宿主机网络环境的影响](https://zhuanlan.zhihu.com/p/59538531)
+- [Docker容器跨主机通信之：直接路由方式](https://www.cnblogs.com/xiao987334176/p/10049844.html)
+- [docker安装使用全教程包含独立ip](https://blog.csdn.net/mergerly/article/details/54926127) -- 很好
+- [Linux之Docker容器中的网络](https://blog.csdn.net/qq_43830639/article/details/98481670?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend~default-1-98481670.nonecase&utm_term=安装docker后没有eth1&spm=1000.2123.3001.4430) -很好
 ```
     docker-machine ssh default
     sudo -i
