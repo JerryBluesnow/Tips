@@ -353,3 +353,28 @@
 
   ## Docker容器跨主机通信之：直接路由方式
   - [Docker容器跨主机通信之：直接路由方式](https://www.cnblogs.com/xiao987334176/p/10049844.html)
+
+  ## Dokcer网络
+  - [docker安装使用全教程包含独立ip](https://blog.csdn.net/mergerly/article/details/54926127) -- 很好
+  - [Linux之Docker容器中的网络](https://blog.csdn.net/qq_43830639/article/details/98481670?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend~default-1-98481670.nonecase&utm_term=安装docker后没有eth1&spm=1000.2123.3001.4430)
+```
+    docker-machine ssh default
+    sudo -i
+    #增加新IP，eth1为192.168.99.101的网卡
+    ifconfig eth1:0 192.168.99.101 netmask 255.255.255.0 up
+    echo "ifconfig eth1:0 192.168.99.101 netmask 255.255.255.0 up" >> /opt/bootlocal.sh
+    #查看容器IP
+    docker inspect -f '{{.NetworkSettings.IPAddress}}' centoslatest
+    #增加转发，192.168.99.101为新增地址，172.17.0.2为容器IP
+    iptables -t nat -A PREROUTING -d 192.168.99.101 -j DNAT --to-destination 172.17.0.2
+    iptables -t nat -A POSTROUTING -d 172.17.0.2 -j SNAT --to 172.17.0.1
+    #开启IP转发
+    echo 1 > /proc/sys/net/ipv4/ip_forward  
+    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+    sysctl -p
+    #防火墙开启转发
+    iptables -F
+    至此访问192.168.99.101即访问容器
+```
+## 环境变量
+- [解决docker容器不能自动加载环境变量问题](https://www.jianshu.com/p/3b50f23b6f38)
