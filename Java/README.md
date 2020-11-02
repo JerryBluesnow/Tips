@@ -51,10 +51,7 @@
     export MAVEN_HOME=/jerry/work/apache-maven-3.6.3
     export PATH=${MAVEN_HOME}/bin:${PATH}
 
-<<<<<<< HEAD
 ## Visual搭建Java开发环境
 - [Visual Studio Code 搭建 Java 开发环境](https://blog.csdn.net/hezh1994/article/details/79895480)
-=======
 ## Ubuntu 16.04安装Java 8
  - [Ubuntu 16.04安装Java 8](https://www.cnblogs.com/-qing-/p/10894868.html)
->>>>>>> update from home

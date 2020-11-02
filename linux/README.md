@@ -210,3 +210,16 @@ The following actions will resolve these dependencies:
     2. sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
     3. source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
 ```
+
+##　解决linux下vim乱码的情况：(修改vimrc的内容）
+
+全局的情况下：即所有用户都能用这个配置
+
+文件地址：/etc/vimrc
+
+在文件中添加：
+
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set hls
