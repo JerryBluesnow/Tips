@@ -15,6 +15,40 @@
   git config --list
 ```
 
+## Git 修改远端仓库地址
+```
+  方法有三种：
+  1.修改命令
+  git remote set-url origin [url]
+
+  例如：git remote set-url origin gitlab@gitlab.chumob.com:php/hasoffer.git
+
+  2.先删后加
+
+  git remote rm origin
+  git remote add origin [url]
+  3.直接修改config文件
+```
+
+## 配置
+### 显示所有的配置
+```
+git config --list
+```
+
+### 添加全局配置
+```
+ git config --global user.name yxibng
+ git config --global user.email yxibng@gmail.com
+```
+
+### 为本地的工程里面添加单独的配置,可以使用不同的用户名和密码
+
+```
+ git config --local user.name xxx
+ git config --local user.email xxx@xxx.com
+
+```
 ## 比较两次commit修改的文件列表
 ```
 git diff --name-only <commit-id-1> <commit-id-2>

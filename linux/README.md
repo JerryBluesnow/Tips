@@ -223,3 +223,32 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 set hls
+
+## 安装npm （这个命令最管用）
+curl -L https://npmjs.com/install.sh | sh
+
+### 其他安装命令，但是有问题，可以参考
+#### Ubuntu 16.04 TLS，执行以下命令：
+```
+sudo apt-get install nodejs
+sudo apt install nodejs-legacy
+sudo apt install npm
+```
+
+#### Ubuntu 18.04 TLS，执行以下命令：
+```
+sudo apt-get install nodejs
+sudo apt install libssl1.0-dev nodejs-dev node-gyp npm
+更新npm的包镜像源，方便快速下载
+sudo npm config set registry https://registry.npm.taobao.org
+sudo npm config list
+安装n管理器(用于管理nodejs版本)
+sudo npm install n -g
+```
+
+#### 安装最新的nodejs（stable版本）
+```
+sudo n stable
+sudo node -v
+sudo npm -v
+```
