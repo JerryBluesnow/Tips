@@ -30,13 +30,13 @@
     网站查询
     https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/    jdk-8u261-linux-x64.tar.gz?xd_co_f=27b6b93d465637b95d61599612466900
 
-    wget https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/   jdk-8u261-linux-x64.tar.gz?AuthParam=1599643461_25207893d4c504094edb8a58b6341fe0   --no-check-certificate
+    wget https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jdk-8u261-linux-x64.tar.gz?AuthParam=1599643461_25207893d4c504094edb8a58b6341fe0   --no-check-certificate
 
     root@default:~# pwd
 
     export http_proxy=http://192.168.99.99:8080
     export https_proxy=https://192.168.99.99:8080
-    export JAVA_HOME=/jerry/work/jdk1.8.0_261
+    export JAVA_HOME=/usr/local/java/jdk1.8.0_261
     export JRE_HOME=${JAVA_HOME}/jre
     export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
     export PATH=${JAVA_HOME}/bin:$PATH
@@ -79,14 +79,13 @@
 - jsp可以，不过你也可以用vue+html实现前后端分离.可以推荐element ui 给你,很方便，很简洁.
 ```
 
-晨曦遇晓
-等级 
-勋章Blank	
 全栈的路过，首先申明下你说的html转jsp这个问题 jsp其实就是后台的一个servlet文件而已 只不过在程序运行的过程中它会自动解析并渲染成html的文件，在接着说前后端的交互问题，一般都使用的是ajax，也有较少部分使用的是form表单，后台获取到了数据之后进行逻辑判断然后对数据库进行操作 如果现在和你聊mvc可能还太早了 简单点就是现在大部分都是一个人从表设计，创建，在到前端页面的创建，后台的逻辑以及对数据库的操作都是一个人来完成的 所以lz加油 你能行的 
-2018-03-23 16:25:47#5得分 0
 
-大昭逸
-等级 
-勋章Blank	
 说的都这么不好理解,其实纯后台的人拿到html页面第一件事就是转成JSP,交互有2种技术,同步和异步,同步就是http协议中的内容,异步是Ajax,Ajax属于前端技术,不过后端人都会学习. 当然懂点前端技术(html+CSS+JS+jquery)是好的,办事不求人,
 ```
+
+## [Thread.Sleep(0) vs Sleep(1) vs Yeild](https://www.cnblogs.com/stg609/p/3857242.html)
+ 
+## Arthas vs top/htop
+
++ [Arthas功能介绍](https://www.jianshu.com/p/cfe4c7aaed1e)

@@ -38,3 +38,21 @@ protobuf在google中是一个比较核心的基础库，承担着google海量服
 - [Thrift之visual studio c++实例](https://blog.csdn.net/byxdaz/article/details/74479671)
 
 - [Windows 10 Visual Studio 2017 安装配置 Apache Thrift （C++）](https://www.cnblogs.com/49er/p/7193829.html)
+
+- [Thrift初探：简单实现C#通讯服务程序](https://www.cnblogs.com/liping13599168/archive/2011/09/15/2176836.html)
+
+- [Apache Thrift](https://thrift.apache.org/)
+
+- [由浅入深了解Thrift（一）——Thrift介绍与用法](https://xiaoyaozi.blog.csdn.net/article/details/42778335)
+
+- [由浅入深了解Thrift（三）——Thrift server端的几种工作模式分析](https://blog.csdn.net/houjixin/article/details/42779915)
+
+- [Thrift初探：简单实现C#通讯服务程序](https://www.cnblogs.com/liping13599168/archive/2011/09/15/2176836.html)
+
+- [RPC学习--C#使用Thrift简介，C#客户端和Java服务端相互交互](https://www.cnblogs.com/amosli/p/3948342.html)
+
+- [C#实现Thrift服务端与客户端](https://blog.csdn.net/lwwl12/article/details/77116253)
+
+- [Thrift与其说他传输方式的比较](https://blog.csdn.net/yczz/article/details/52450398)
+
+- [Apache Thrift系列详解(三) - 序列化机制](https://zhuanlan.zhihu.com/p/45206710)

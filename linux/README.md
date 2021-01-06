@@ -211,7 +211,7 @@ The following actions will resolve these dependencies:
     3. source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
 ```
 
-##　解决linux下vim乱码的情况：(修改vimrc的内容）
+##　解决linux下vim中文乱码的情况：(修改vimrc的内容）
 
 全局的情况下：即所有用户都能用这个配置
 
@@ -252,3 +252,207 @@ sudo n stable
 sudo node -v
 sudo npm -v
 ```
+
+## vue环境配置
+最好用的就是方法1
+```
+方法1：
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+如果安装nodejs 9.x版本
+
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+sudo apt-get install -y nodejs
+方法2：
+下载nodejs压缩文件
+wget https://nodejs.org/dist/v8.1.0/node-v8.1.0-linux-x64.tar.xz
+解压
+tar -xvf node-v8.1.0-linux-x64.tar.xz
+切换并查看当前node所在路径
+cd node-v8.1.0-linux-x64/bin
+pwd
+查看node版本
+./node -v
+将node和npm设置为全局
+sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/node /usr/local/bin/node
+sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/npm /usr/local/bin/npm
+pwd
+
+方法三：
+也可以使用ubuntu自带apt-get安装,安装后使用node -v查看版本
+
+sudo apt-get install nodejs-legacy nodejs
+
+1，输入命令sudo npm config set registry https://registry.npm.taobao.org，把npm的包源设置为淘宝的镜像
+2，输入命令sudo npm install n -g，来安装n这个工具，n这个工具是用于更新node版本的工具
+3，输入命令sudo n stable，安装最新稳定版的nodejs
+4，重启终端，查看node.js和npm版本,node --version,npm  --version
+```
+
+## linux查看系统信息硬件配置
+### 系统
+　　# uname -a # 查看内核/操作系统/CPU信息
+　　# head -n 1 /etc/issue # 查看操作系统版本
+　　# cat /proc/cpuinfo # 查看CPU信息
+　　# hostname # 查看计算机名
+　　# lspci -tv # 列出所有PCI设备
+　　# lsusb -tv # 列出所有USB设备
+　　# lsmod # 列出加载的内核模块
+　　# env # 查看环境变量
+### 资源
+　　# free -m # 查看内存使用量和交换区使用量
+　　# df -h # 查看各分区使用情况
+　　# du -sh <目录名> # 查看指定目录的大小
+　　# grep MemTotal /proc/meminfo # 查看内存总量
+　　# grep MemFree /proc/meminfo # 查看空闲内存量
+　　# uptime # 查看系统运行时间、用户数、负载
+　　# cat /proc/loadavg # 查看系统负载
+### 磁盘和分区
+　　# mount | column -t # 查看挂接的分区状态
+　　# fdisk -l # 查看所有分区
+　　# swapon -s # 查看所有交换分区
+　　# hdparm -i /dev/hda # 查看磁盘参数(仅适用于IDE设备)
+　　# dmesg | grep IDE # 查看启动时IDE设备检测状况
+### 网络
+　　# ifconfig # 查看所有网络接口的属性
+　　# iptables -L # 查看防火墙设置
+　　# route -n # 查看路由表
+　　# netstat -lntp # 查看所有监听端口
+　　# netstat -antp # 查看所有已经建立的连接
+　　# netstat -s # 查看网络统计信息
+### 进程
+　　# ps -ef # 查看所有进程
+　　# top # 实时显示进程状态
+### 用户
+　　# w # 查看活动用户
+　　# id <用户名> # 查看指定用户信息
+　　# last # 查看用户登录日志
+　　# cut -d: -f1 /etc/passwd # 查看系统所有用户
+　　# cut -d: -f1 /etc/group # 查看系统所有组
+　　# crontab -l # 查看当前用户的计划任务
+### 服务
+　　# chkconfig --list # 列出所有系统服务
+　　# chkconfig --list | grep on # 列出所有启动的系统服务
+### 程序
+　　# rpm -qa # 查看所有安装的软件包
+### 其他常用命令整理如下：
+　　查看主板的序列号：dmidecode | grep -i 'serial number'
+　　用硬件检测程序kuduz探测新硬件：service kudzu start ( or restart)
+　　查看CPU信息：cat /proc/cpuinfo [dmesg | grep -i 'cpu'][dmidecode -t processor]
+　　查看内存信息：cat /proc/meminfo [free -m][vmstat]
+　　查看板卡信息：cat /proc/pci
+　　查看显卡/声卡信息：lspci |grep -i 'VGA'[dmesg | grep -i 'VGA']
+　　查看网卡信息：dmesg | grep -i 'eth'[cat /etc/sysconfig/hwconf | grep -i eth][lspci | grep -i 'eth']
+　　查看PCI信息：lspci (相比cat /proc/pci更直观)
+　　查看USB设备：cat /proc/bus/usb/devices
+　　查看键盘和鼠标：cat /proc/bus/input/devices
+　　查看系统硬盘信息和使用情况：fdisk & disk – l & df
+　　查看各设备的中断请求(IRQ)：cat /proc/interrupts
+　　查看系统体系结构：uname -a
+　　查看及启动系统的32位或64位内核模式：isalist –v [isainfo –v][isainfo –b]
+　　查看硬件信息，包括bios、cpu、内存等信息：dmidecode
+　　测定当前的显示器刷新频率：/usr/sbin/ffbconfig –rev ?
+　　查看系统配置：/usr/platform/sun4u/sbin/prtdiag –v
+　　查看当前系统中已经应用的补丁：showrev –p
+　　显示当前的运行级别：who –rH
+　　查看当前的bind版本信息：nslookup –class=chaos –q=txt version.bind
+　　查看硬件信息：dmesg | more
+　　显示外设信息， 如usb，网卡等信息：lspci
+　　查看已加载的驱动：
+　　lsnod
+　　lshw
+　　查看当前处理器的类型和速度(主频)：psrinfo -v
+　　打印当前的OBP版本号：prtconf -v
+　　查看硬盘物理信息(vendor， RPM， Capacity)：iostat –E
+　　查看磁盘的几何参数和分区信息：prtvtoc /dev/rdsk/c0t0d0s
+　　显示已经使用和未使用的i-node数目：
+　　df –F ufs –o i
+　　isalist –v
+　　对于“/proc”中文件可使用文件查看命令浏览其内容，文件中包含系统特定信息：
+　　主机CPU信息：Cpuinfo
+　　主机DMA通道信息：Dma
+　　文件系统信息：Filesystems
+　　主机中断信息：Interrupts
+　　主机I/O端口号信息：Ioprots
+　　主机内存信息：Meninfo
+　　Linux内存版本信息：Version
+### 备注： proc – process information pseudo-filesystem 进程信息伪装文件系统
+
+
+### centos install
+
+- [centos官网](https://www.centos.org/download/)
+- [centos清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/centos/8.3.2011/isos/x86_64/)
+- [centos中文网](https://www.centoschina.cn/downloads)
+
+## debian install
+
+- [制作debian U盘启动盘](https://blog.51cto.com/1827495/488844)
+- [使用Etcher来创建可启动盘（可引导的USB盘或SD卡）的方法](https://ywnz.com/linuxjc/3010.html)
+
+http://mirrors.163.com/debian-cd/10.7.0/amd64/iso-cd/
+
+http://www.92os.com/post/34
+
+https://cdimage.debian.org/debian-cd/10.7.0/amd64/iso-dvd/
+
+Debian 制作U盘启动安装盘
+1,工具：Universal-USB-Installer（据经验软碟通UltraISOl不是很100%成功）
+
+          官网下载地址： http://www.pendrivelinux.com/  我下载的是 Universal-USB-Installer-1.9.9.0版本
+
+2 .U盘一个(4G/8G)根据系统的大小决定
+
+3.下载Debian镜像文件，目前最新的是debian-10.3.0-i386-netinst .iso 及debian-10.3.0-i386-xfce-CD-1.iso 及debian-10.3.0-i386-DVD-1.iso的DVD均可，从这里选择下载https://www.debian.org/distrib/  只需下载 下载第1个镜像文件 debian-8.1.0-amd64-DVD-1 或 CD即可 。
+
+制作启动安装U盘
+    
+    在另一台电脑上制作U盘安装盘
+
+        1）将U盘插入电脑，注意提前备份该U盘上的数据，制作安装盘的过程将格式化U盘
+
+        2）直接启动下载的 Universal-USB-Installer-1.9.6.1软件 （可执行文件，无需安装）              
+
+        直接I Agree       
+
+        此处在提供的Debain选项中，只有Live 和Netinst两个选项，并非想安装的amd64。往下拉滚动条，直接拉到最后，选择Try Unlisted Linux ISO
+
+        然后选择下载的ISO镜像文件，选择U盘，点击Create按钮。         
+
+        接下来将解压ISO文件，制作安装U盘，此过程时间较长，大约15分钟左右。
+
+        出现以下提示，表示安装启动盘已经成功制作完成
+
+## debian镜像制作
+
+-[这是为中国定制的Debian镜像](https://github.com/docker4cn/debian)
+
+```
+docker pull docker4cn/debian:buster-aliyun
+
+```
+
+- [如何制作debian(mips64el) docker镜像并上传到docker官方仓库](https://www.it610.com/article/1278555881058877440.htm)
+
+
+docker pull docker4cn/debian:buster-aliyun
+/etc/apt/sources.list
+
+https://mirror.tuna.tsinghua.edu.cn/help/debian/
+
+apt-get update
+apt-get install vim -y
+
+vi /etc/apt/sources.list
+
+apt-get update
+
+apt-get install certbot -y
+
+certbot certonly --standalone -d sam-tech.com
+
+- [Certbot-免费的HTTPS证书](https://zhuanlan.zhihu.com/p/80909555)
+
+
+- [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)

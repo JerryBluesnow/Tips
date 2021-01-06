@@ -650,6 +650,9 @@
     + 如果不行采用执行下面的command：
     UPDATE mysql.user SET authentication_string = PASSWORD('keeninfo123'), plugin = 'mysql_native_password' WHERE User = 'root' AND Host = 'localhost';
 
+    systemctl restart mariadb
+    然后就可以了
+
 ## [Linux MySQL 常见无法启动或启动异常的解决方案](https://www.cnblogs.com/youjianjiangnan/p/10259151.html)
 
 ## remove mysql
