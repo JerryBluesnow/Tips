@@ -352,6 +352,7 @@ sudo apt-get install nodejs-legacy nodejs
 ### 程序
 　　# rpm -qa # 查看所有安装的软件包
 ### 其他常用命令整理如下：
+```
 　　查看主板的序列号：dmidecode | grep -i 'serial number'
 　　用硬件检测程序kuduz探测新硬件：service kudzu start ( or restart)
 　　查看CPU信息：cat /proc/cpuinfo [dmesg | grep -i 'cpu'][dmidecode -t processor]
@@ -392,10 +393,12 @@ sudo apt-get install nodejs-legacy nodejs
 　　主机I/O端口号信息：Ioprots
 　　主机内存信息：Meninfo
 　　Linux内存版本信息：Version
+```
+
 ### 备注： proc – process information pseudo-filesystem 进程信息伪装文件系统
 
 
-### centos install
+## centos install
 
 - [centos官网](https://www.centos.org/download/)
 - [centos清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/centos/8.3.2011/isos/x86_64/)
@@ -412,14 +415,14 @@ http://www.92os.com/post/34
 
 https://cdimage.debian.org/debian-cd/10.7.0/amd64/iso-dvd/
 
-Debian 制作U盘启动安装盘
-1,工具：Universal-USB-Installer（据经验软碟通UltraISOl不是很100%成功）
+### Debian 制作U盘启动安装盘
++ 1,工具：Universal-USB-Installer（据经验软碟通UltraISOl不是很100%成功）
 
-          官网下载地址： http://www.pendrivelinux.com/  我下载的是 Universal-USB-Installer-1.9.9.0版本
+    官网下载地址： http://www.pendrivelinux.com/  我下载的是 Universal-USB-Installer-1.9.9.0版本
 
-2 .U盘一个(4G/8G)根据系统的大小决定
++ 2 .U盘一个(4G/8G)根据系统的大小决定
 
-3.下载Debian镜像文件，目前最新的是debian-10.3.0-i386-netinst .iso 及debian-10.3.0-i386-xfce-CD-1.iso 及debian-10.3.0-i386-DVD-1.iso的DVD均可，从这里选择下载https://www.debian.org/distrib/  只需下载 下载第1个镜像文件 debian-8.1.0-amd64-DVD-1 或 CD即可 。
++ 3.下载Debian镜像文件，目前最新的是debian-10.3.0-i386-netinst .iso 及debian-10.3.0-i386-xfce-CD-1.iso 及debian-10.3.0-i386-DVD-1.iso的DVD均可，从这里选择下载https://www.debian.org/distrib/  只需下载 下载第1个镜像文件 debian-8.1.0-amd64-DVD-1 或 CD即可 。
 
 制作启动安装U盘
     
@@ -439,7 +442,7 @@ Debian 制作U盘启动安装盘
 
         出现以下提示，表示安装启动盘已经成功制作完成
 
-## debian镜像制作
+### debian镜像制作
 
 -[这是为中国定制的Debian镜像](https://github.com/docker4cn/debian)
 
