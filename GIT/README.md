@@ -134,3 +134,5 @@ git config --global http.lowSpeedTime 999999
 git clone --depth=1 http://xxx.git
 git fetch --unshallow
 ```
+## 
+- [获取JavaScript异步函数的返回值](https://www.cnblogs.com/zmc/p/6916164.html)
