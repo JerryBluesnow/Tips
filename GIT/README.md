@@ -108,3 +108,29 @@ bc5e932862f25688c09f0c90df74d505efb5bcc3 init the bter demo
 https://zhuanlan.zhihu.com/p/87053283
 
 https://segmentfault.com/a/1190000003076028
+
+## 使用Git pull文件时，出现"error: RPC failed; curl 18 transfer closed with outstanding read data remaining"
+```
+error: RPC failed; curl 18 transfer closed with outstanding read data remaining
+fatal: The remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+出现以上错误有以下原因
+
+1.缓存区溢出curl的postBuffer的默认值太小，需要增加缓存
+使用git命令增大缓存（单位是b，524288000B也就500M左右）
+
+git config --global http.postBuffer 524288000
+使用git config --list查看是否生效
+
+此时重新克隆即可
+
+2.网络下载速度缓慢
+修改下载速度
+
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+3.以上两种方式依旧无法clone下，尝试以浅层clone，然后更新远程库到本地
+git clone --depth=1 http://xxx.git
+git fetch --unshallow
+```
