@@ -397,3 +397,16 @@ docker info|grep Mirrors -A 1
 Registry Mirrors:
  https://y0qd3iq.mirror.aliyuncs.com/
 就表示镜像配置成功，然后再执行docker pull操作，就会很快了。
+
+
+## docker如何将运行中的容器保存为docker镜像?
+答: 使用docker commit和docker save保存镜像
+
+$ sudo docker commit <当前运行的container id> <仓库名称>:<tag>
+$ sudo docker save -o <仓库名称>-<tag>.img <仓库名称>:<tag>
+示例如下:
+$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+111111111111        222222222222        "/bin/bash"   5 minutes ago       Up 5 minutes                                       jello
+$ sudo docker commit 111111111111 bash:1.0
+$ sudo docker save -o bash-1.0.img bash:1.0

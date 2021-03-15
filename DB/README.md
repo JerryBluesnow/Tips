@@ -625,7 +625,7 @@
     5. cp /usr/sbin/sysv-rc-conf /usr/sbin/chkconfig
 
 ## install mariadb
-    + download from : https://mariadb.org/download/#entry-header
+    + download from : https://.org/download/#entry-header
     +  wget https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-10.5.5/bintar-linux-x86_64/mariadb-10.5.5-linux-x86_64.tar.gz --no-check-certificate
     + apt-get install mariadb-server
     + [MariaDB三种方法安装及多实例实现](https://blog.51cto.com/13695854/2127892)
@@ -737,3 +737,42 @@
 
 
 ## alter user 'root'@'localhost' identified by '123456';
+
+
+## command
+
+### 查找指定库中所有表名
++ select table_name from information_schema.tables where table_schema='fusion';
+
++ select radio_id from fusion.usr_authority where usr_au=5 AND usr_id=9
+
++ select * from fusion.radio_info where radio_id in (select radio_id from fusion.usr_authority where usr_au=5 AND usr_id=1);
+
++ select * from fusion.radio_info where radio_type = #{typeCode} AND where radio_id in (select radio_id from fusion.usr_authority where usr_au=5 AND usr_id=1) order by radio_id ASC 
+
++ select * from fusion.radio_info where radio_id in (select radio_id from fusion.usr_authority where usr_au=5 AND usr_id=#{usrId}) AND radio_type = #{typeCode} order by radio_id ASC
+
+selectByTypeWithUsrAuthority
+
+select * from usr_info;
++----+----------+----------+-----------------+---------------------+
+| id | username | password | description     | created_date        |
++----+----------+----------+-----------------+---------------------+
+|  1 | admin    | admin    | 系统管理员      | 2020-07-28 22:50:18 |
+| 13 | admin1   | 12345    | p：12345        | 2021-03-03 11:05:42 |
+| 15 | admin2   | 12345    | P:12345         | 2021-03-06 18:40:39 |
+|  9 | guest    | 123456   | guest           | 2020-08-27 23:11:52 |
+| 17 | liyan    | liyan    | ceshi           | 2021-03-09 15:51:23 |
+| 16 | test     | test     | test            | 2021-03-09 14:40:28 |
++----+----------+----------+-----------------+---------------------+
+6 rows in set (0.000 sec)
+
+
+select table_name from information_schema.tables where table_schema='fusion';
+
+select * from radio_info;
+
+select * from usr_authority where usr_id=13;
+
+| usr_id | radio_id | radio_type | usr_au |
+

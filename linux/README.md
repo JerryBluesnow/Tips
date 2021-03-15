@@ -224,6 +224,21 @@ set termencoding=utf-8
 set encoding=utf-8
 set hls
 
+## git log显示中文
+
+后查询相关资料，现将解决办法总结如下：
+
+1、运行Git Bash窗口，在该窗口导航条（即最上面）右键，选择Options−>Text，找到下面两处
+　　Locale:选择 zh_CN 
+　　Charector set:选择 UTF-8 
+2、到Git Bash命令窗口输入如下设置命令语句
+
+git config --global i18n.commitencoding utf-8  --注释：该命令表示提交命令的时候使用utf-8编码集提交
+
+git config --global i18n.logoutputencoding utf-8 --注释：该命令表示日志输出时使用utf-8编码集显示
+
+export LESSCHARSET=utf-8  --注释：设置LESS字符集为utf-8
+
 ## 安装npm （这个命令最管用）
 curl -L https://npmjs.com/install.sh | sh
 
@@ -459,6 +474,3 @@ certbot certonly --standalone -d sam-tech.com
 
 
 链接: https://pan.baidu.com/s/1yNdDQ3WgpdxFwRpUQSka_g 提取码: r9sj 复制这段内容后打开百度网盘手机App，操作更方便哦
-
-
-c21hcnQtbGljZW5zZaztAAVzcgAqb3JnLnNtYXJ0Ym9vdC5saWNlbnNlLmNsaWVudC5MaWNlbnNlRW50aXR5aZMraDxQLCsCAAVKAAlhcHBseVRpbWVKAApleHBpcmVUaW1lTAADbWQ1dAASTGphdmEvbGFuZy9TdHJpbmc7WwAKcHVibGljS2V5c3QAAltCWwAJc3BsaXRGbGFncQB+AAJ4cAAAAXbVMRSlAAABdyJwdPJ0ACBjYjZjNjgxZmQyYTNkOTI0MWIwMWYyZTEwNjU3Y2VkNnVyAAJbQqzzF/gGCFTgAgAAeHAAAACiMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNsls9vZcMAF+qPXvGTw6d77QKpIsg1eBf0Mbtfavspzruua2Tm9/rNrozadNHygYEnBf+GGAB4CkDGwBTabjjtGjE5AlnqNWpAJxeTtZGAfcBxzvwFfkKGqAbbx3vFJACPhAby5+qo02mimmRPL7zDN2B71NwxBjvgBTHAhMfCwIDAQABdXEAfgAFAAAAAkNAegAAAURDQAAAAXbVMRSlAAABdyJwdPJDQKIwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAI2yWz29lwwAX6o9e8ZPDp3vtAqkiyDV4F/Qxu19q+ynOu65rZOb3+s2ujNp00fKBgScF/4YYAHgKQMbAFNpuOO0aMTkCWeo1akAnF5O1kYB9wHHO/AV+QoaoBtvHe8UkAI+EBvLn6qjTaaKaZE8vvMM3YHvU3DEGO+AFMcCEx8LAgMBAAFDQIB54cQNhuaRQq9/MQ8smQKfKq1qJ4dXZ2WuGcZuZLDsXptx8QkqOKu0hcwe6B882ZrJD19tLUPPh/Lw67xLG0ES5sRutWWu84Md9iQNaIe/IgQsuRoWBlN7cbvszsoUYyBARPzYEPe7O854lRZcTeEC+ar8y15PFHvN/H1FtWpshkNAAAAAAAAAAAB3AQA=
