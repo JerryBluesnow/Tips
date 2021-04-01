@@ -136,3 +136,16 @@ git fetch --unshallow
 ```
 ## 
 - [获取JavaScript异步函数的返回值](https://www.cnblogs.com/zmc/p/6916164.html)
+## git查看当前commit修改的文件列表
+```
+git diff --name-only HEAD~ HEAD
+
+git diff --name-only <commit compare1> <compare2>
+
+gdiff 63e3b647d55fcc643e793e650c893be8601719b1 548cdaf01dbc2f08d1ca0b697a24afe512b75a2f --stat
+
+git log 查看commit的历史
+git show <commit-hash-id>查看某次commit的修改内容
+git log -p <filename>查看某个文件的修改历史
+git log -p -2查看最近2次的更新内容
+```

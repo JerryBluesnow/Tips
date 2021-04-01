@@ -188,3 +188,8 @@ keytool -list -v -keystore fusionsrv.keystore -storepass baonserv
 
 # webpack-dev-server版本需要把ssl/server.pem转成cer，安装到信任机构
 openssl x509 -inform pem -in server.pem -outform der -out server.cer
+- [解读 vue-cli 脚手架（一）：npm run dev的背后](https://blog.csdn.net/six_six_six_666/article/details/82633731)
+
+- [vue-cli webpack项目npm run dev启动过程](https://www.cnblogs.com/zeroes/p/vue-run-dev.html)
+
+- [pcm-player](https://github.com/pkjy/pcm-player)

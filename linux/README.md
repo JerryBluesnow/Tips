@@ -472,8 +472,35 @@ certbot certonly --standalone -d sam-tech.com
 
 - [Certbot-免费的HTTPS证书](https://zhuanlan.zhihu.com/p/80909555)
 
-
 - [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
 
 
 链接: https://pan.baidu.com/s/1yNdDQ3WgpdxFwRpUQSka_g 提取码: r9sj 复制这段内容后打开百度网盘手机App，操作更方便哦
+## 安装多个版本gcc
+- [reference link](https://blog.csdn.net/qq_23084801/article/details/80726643)
+
+- 查看系统gcc和g++是什么版本 
+    - gcc -v
+    - ls /usr/bin/gcc*
+- 安装gcc 4.9
+    - sudo apt-get install gcc-4.9 gcc-4.9-multilib g++-4.9 g++-4.9-multilib
+
+- 修改优先级
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 40 
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 50 
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 40
+
+- 查看优先级 
+    - sudo update-alternatives --config gcc
+    - 会看到如下的选项，有 3 个候选项可用于替换 gcc (提供 /usr/bin/gcc)。 
+    ------------------------------------------------------------
+        选择      路径            优先级           状态
+      * 0       /usr/bin/gcc-5      50          自动模式
+        1       /usr/bin/gcc-5      50          手动模式
+        2       /usr/bin/gcc-4.9    40          手动模式
+        
+        要维持当前值[*]请按回车键，或者键入选择的编号： 
+
+- 删除可选项
+    - sudo update-alternatives --remove gcc /usr/bin/gcc-4.9
