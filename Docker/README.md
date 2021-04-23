@@ -257,6 +257,14 @@
     docker run -d -p 10000:22 -it jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -d -p 23:22 -itd jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -it debian /bin/bash --registry-mirror=https://docker.mirrors.ustc.edu.cn
+
+
+    - [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
+    docker run -d -p 9982:22 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v6
+    ssh连接容器
+    通过主机端口映射连接：ssh -p 9022 root@主机ip
+    直接连接容器（需要网络通）：ssh -p 22 root@容器ip
+
     docker-machine ssh default
 
     apt-get install libncurses5-dev

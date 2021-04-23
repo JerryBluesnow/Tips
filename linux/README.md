@@ -504,3 +504,70 @@ certbot certonly --standalone -d sam-tech.com
 
 - 删除可选项
     - sudo update-alternatives --remove gcc /usr/bin/gcc-4.9
+
+
+## 使用Visual Studio 2017开发Linux程序
+- - [使用Visual Studio 2017开发Linux程序](https://www.cnblogs.com/dongc/p/6599461.html)
+- ssh servers使用docker搭建
+```
+gdb调试报错warning: Error disabling address space randomization: Operation not permitted
+ Canceled
+#I1KPAQ
+Bug
+独奏曲
+Opened this issue  
+2020-06-15 19:47
+这是一个bug还是新特性?:
+
+bug
+发生结果:
+
+Starting program: /root/rpmbuild/BUILD/libmediaart-1.9.4/tests/.libs/lt-mediaarttest -k --tap
+warning: Error disabling address space randomization: Operation not permitted
+warning: Could not trace the inferior process.
+Error: 
+warning: ptrace: Operation not permitted
+During startup program exited with code 127.
+[图片上传中…(image-qhzUMEQsDjXOs8QpqEif)]
+
+期望结果:
+
+gdb正常调试
+
+如何重现（尽量详细）:
+
+gdb --args .libs/lt-mediaarttest -k --tap
+
+补充说明?:
+
+环境情况:
+
+版本:
+操作系统版本 (e.g. from /etc/os-release):openEuler 20.03 (LTS)
+内核版本 (e.g. uname -a):Linux openEuler 4.19.36-vhulk1907.1.0.h619.eulerosv2r8.aarch64 #1 SMP Mon Jul 22 00:00:00 UTC 2019 aarch64 aarch64 aarch64 GNU/Linux
+其它:
+Attachments
+lt-mediaarttest
+(93.66 KB)
+Download
+独奏曲
+10 months ago
+独奏曲-speacher
+独奏曲 created缺陷 10 months ago
+独奏曲-speacher
+独奏曲 set related repository to openEuler/community 10 months ago
+展开全部操作日志 
+5329419 openeuler ci bot 1578984659
+openeuler-ci-bot
+member
+10 months ago
+Hey @独奏曲 , Welcome to openEuler Community.
+All of the projects in openEuler Community are maintained by @openeuler-ci-bot .
+That means the developers can comment below every pull request or issue to trigger Bot Commands.
+Please follow instructions at https://gitee.com/openeuler/community/blob/master/en/sig-infrastructure/command.md to find the details.
+
+独奏曲-speacher
+独奏曲
+10 months ago
+启动容器时加上--cap-add=SYS_PTRACE --security-opt seccomp=unconfined选项可以解决该问题
+```
