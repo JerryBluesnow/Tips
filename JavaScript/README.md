@@ -1,5 +1,3 @@
-
-
 ## webaudioapi
 
 - [webaudioapi.com](https://webaudioapi.com/book/Web_Audio_API_Boris_Smus_html/toc.html)
@@ -139,62 +137,30 @@ https://github.com/pkjy/pcm-player
 # 使用JDK自带工具keytool生成ssl证书
 - [使用JDK自带工具keytool生成ssl证书](https://blog.csdn.net/dwyane__wade/article/details/80350548)
 
-keytool -genkey -validity 36000 -alias www.rushs.com -keyalg RSA -keystore https.keystore
+## 一、使用keytool命令生成证书
+keytool -genkey -alias fusionsrv -keypass baonserv -keyalg RSA -keysize 1024 -validity 36500 -keystore fusionsrv.keystore -storepass baonserv
 
-password:
-	baonserv
+keytool -importkeystore -srckeystore fusionsrv.keystore -destkeystore fusionsrv.keystore -deststoretype pkcs12
 
-Enter keystore password: baonserv
-Re-enter new password: baonserv
-What is your first and last name?
-  [rushs]:
-What is the name of your organizational unit?
-  [samx]:
-What is the name of your organization?
-  [samx]:
-What is the name of your City or Locality?
-  [QD]:
-What is the name of your State or Province?
-  [CN]:  ShangDong
-What is the two-letter country code for this unit?
-  [CN]:
-Is CN=rushs, OU=samx, O=samx, L=QD, ST=ShangDong, C=CN correct?
-  [no]:  yes
+## 二、为客户端生成证书
 
-Enter key password for <www.rushs.com>
-        (RETURN if same as keystore password):
+keytool -genkey -alias client -keypass baonserv -keyalg RSA -storetype PKCS12 -keypass baonserv -storepass baonserv -keystore client.p12
 
-
-# 一、使用keytool命令生成证书
-keytool -genkey -alias fusionsrv -keypass baonserv -keyalg RSA -keysize 1024 -validity 36500 -keystore W:/https.keystore -storepass baonserv
-
-# 二、为客户端生成证书
-
-keytool -genkey -alias client -keypass baonserv -keyalg RSA -storetype PKCS12 -keypass 123456 -storepass baonserv -keystore W:/client.p12
-
-# 三、让服务器信任客户端证书
+## 三、让服务器信任客户端证书
 必须先把客户端证书导出为一个单独的CER文件，使用如下命令：
 
-keytool -export -alias client -keystore W:/client.p12 -storetype PKCS12 -keypass 123456 -file W:/client.cer
+keytool -export -alias client -keystore client.p12 -storetype PKCS12 -keypass baonserv -file client.cer
 
-keytool -import -v -file W:/client.cer -keystore W:/tomcat.keystor
+keytool -import -v -file client.cer -keystore fusionsrv.keystore
 
-keytool -list -v -keystore W:/tomcat.keystore
+keytool -list -v -keystore fusionsrv.keystore
 
-# 四、让客户端信任服务器证书
+## 四、让客户端信任服务器证书
 由于是双向SSL认证，客户端也要验证服务器证书，因此，必须把服务器证书添加到浏览器的“受信任的根证书颁发机构”。
 
 由于不能直接将keystore格式的证书库导入，必须先把服务器证书导出为一个单独的CER文件，使用如下命令：
 
-keytool -keystore W:/tomcat.keystore -export -alias tomcat -file W:/server.cer
-
-
-返回：
-
-W:\sys_toos\jdk8\jdk1.8.0_73\bin>keytool -keystore W:/tomcat.keystore -export -alias tomcat -file W:/server.cer
-输入密钥库口令:
-存储在文件 <W:/server.cer> 中的证书
-
+keytool -keystore fusionsrv.keystore -export -alias fusionsrv -file server.cer
 
 双击server.cer文件，按照提示安装证书
 
@@ -204,25 +170,21 @@ W:\sys_toos\jdk8\jdk1.8.0_73\bin>keytool -keystore W:/tomcat.keystore -export -a
 
 - 打开谷歌浏览器 --> 设置--> 高级 --> 管理证书 --> 受信任的根证书颁发机构 --> 导入SEEKER.cer
 
-
 其他浏览器将证书填入到“受信任的根证书颁发机构”：
 
 - 打开浏览器   - 工具  -  internet选项-内容- 证书-把中级证书颁发机构里的www.seeker.com(该名称即时你前面生成证书时填写的名字与姓氏)证书导出来-再把导出来的证书导入  受信任的根颁发机构  就OK了。
 
+# https://blog.csdn.net/u013412772/article/details/103726154
+# https://my.oschina.net/u/4365165/blog/4047638
+keytool -genkey -alias fusion -keypass baonserv -keyalg RSA -keysize 1024 -validity 365 -keystore fusionsrv.keystore -storepass baonserv -dname "CN=localhost,OU=shixun,O=shixun,L=beijing,ST=beijing,c=cn"
 
+keytool -genkey -alias client -keypass baonserv -keyalg RSA -keysize 1024 -validity 365 -storetype PKCS12 -keystore client.p12 -storepass baonserv -dname "CN=client,OU=shixun,O=shixun,L=beijing,ST=beijing,c=cn"
 
-keytool -genkey -alias tomcat -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore W:/tomcat.keystore -storepass 123456
+keytool -export -alias client -keystore client.p12 -storetype PKCS12 -keypass baonserv -file client.cer -storepass baonserv
 
+keytool -import -v -file client.cer -keystore fusionsrv.keystore -storepass baonserv
 
+keytool -list -v -keystore fusionsrv.keystore -storepass baonserv
 
-生成的证书 使用的 1024 位 RSA 密钥 被视为存在安全风险。此密钥大小将在未来的更新中被禁用。
-JKS 密钥库使用专用格式。建议使用 "keytool -importkeystore -srckeystore tomcat.keystore -destkeystore tomcat.keystore -deststoretype pkcs12" 迁移到行业标准格式 PKCS12。
-
-
-keytool -genkey -alias client -keypass 123456 -keyalg RSA -storetype PKCS12 -keypass 123456 -storepass 123456 -keystore client.p12
-
-keytool -export -alias client -keystore client.p12 -storetype PKCS12 -keypass 123456 -file client.cer
-
-keytool -import -v -file client.cer -keystore tomcat.keystor
-
-keytool -keystore tomcat.keystore -export -alias tomcat -file server.cer
+# webpack-dev-server版本需要把ssl/server.pem转成cer，安装到信任机构
+openssl x509 -inform pem -in server.pem -outform der -out server.cer

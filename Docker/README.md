@@ -1,21 +1,26 @@
 # Docker Tips
 
 ## Docker setup tips
-[Docker Forum](https://forums.docker.com/)
 
-[Install Docker ToolBox on Windows](https://docs.docker.com/toolbox/toolbox_install_windows/)
-[Get Docker Toolbox for Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
+- [Docker 教程](https://www.runoob.com/docker/docker-tutorial.html)
 
-[jerry.hub.docker.com](https://hub.docker.com/r/jerry4docker/ubuntu/)
+- [Docker Forum](https://forums.docker.com/)
 
-[完整记录在 windows7 下使用 docker 的过程](https://www.jianshu.com/p/d809971b1fc1)
+- [Install Docker ToolBox on Windows](https://docs.docker.com/toolbox/toolbox_install_windows/)
 
-[docker~在centos容器中安装新程序](https://www.cnblogs.com/lori/p/6703174.html)
+- [Get Docker Toolbox for Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
 
-[docker toolbox relase](https://github.com/docker/toolbox/releases)
+- [jerry.hub.docker.com](https://hub.docker.com/r/jerry4docker/ubuntu/)
+
+- [完整记录在 windows7 下使用 docker 的过程](https://www.jianshu.com/p/d809971b1fc1)
+
+- [docker~在centos容器中安装新程序](https://www.cnblogs.com/lori/p/6703174.html)
+
+- [docker toolbox relase](https://github.com/docker/toolbox/releases)
+
 ## 如何修改Windows上Docker的镜像源
 
-[如何修改Windows上Docker的镜像源](https://blog.csdn.net/wangdandong/article/details/68958210)
+- [如何修改Windows上Docker的镜像源](https://blog.csdn.net/wangdandong/article/details/68958210)
 
     docker-machine create --engine-registry-mirror=https://xxxxxxxx.mirror.aliyuncs.com -d virtualbox default
 
@@ -34,14 +39,18 @@
     export "NO_PROXY=192.168.99.100"
 
 ## Win7 修改为阿里云镜像加速
-### 1. 在阿里云查看给个人分配的镜像源地址: [俊杰的阿里云](https://cr.console.aliyun.com/cn-hangzhou/mirrors)
+### 1. 在阿里云查看给个人分配的镜像源地址: 
+- [俊杰的阿里云](https://cr.console.aliyun.com/cn-hangzhou/mirrors)
+
 ### 2. docker-machine ssh default
+```
     sudo mkdir -p /etc/docker
     sudo tee /etc/docker/daemon.json <<-'EOF'
     {
       "registry-mirrors": ["https://r19oqqqv.mirror.aliyuncs.com"]
     }
     EOF 
+```
 
 ## Docker: How to enable/disable HTTP Proxy in Toolbox
 
@@ -259,6 +268,8 @@
     cd /jerry/work/.ssh
 
     copy pub key to gerrit
+
+    winpty docker run --name devhub -it jerry4docker/jerry4docker:v4 /bin/bash
 ```
 
 ## docker安装Ubuntu以及ssh连接
@@ -282,6 +293,8 @@
     jerry4docker/jerryubuntu   first               94fd38a8c1ee        11 months ago            752MB
 
    [Reference push docker images](https://blog.csdn.net/boonya/article/details/74906927)
+
+    docker push jerry4docker/jerry4docker:v7
 
 ## configuration of vscode of gtags
     
@@ -360,17 +373,15 @@
 ## 环境变量
 - [解决docker容器不能自动加载环境变量问题](https://www.jianshu.com/p/3b50f23b6f38)
  
-## [docker文件迁移到其他磁盘解决c盘空间不足的问题](https://blog.csdn.net/iteye_10432/article/details/103288296)
+## docker文件迁移到其他磁盘解决c盘空间不足的问题
+
+- [docker文件迁移到其他磁盘解决c盘空间不足的问题](https://blog.csdn.net/iteye_10432/article/details/103288296)
 
 
-## ubuntu安装https://www.runoob.com/docker/ubuntu-docker-install.html
+## Ubuntu Linux下修改docker镜像源
 
-
-Ubuntu Linux下修改docker镜像源
-
-冯立彬 2019-06-15 15:51:29  13285  收藏 6
-分类专栏： Docker 文章标签： ubuntu linux docker镜像 GFW
-版权
+- [Ubuntu Linux下修改docker镜像源](https://www.runoob.com/docker/ubuntu-docker-install.html)
+```
 在国内访问国外的Docker镜像源通常都是非常慢的，特别是最近GFW升级后，就变得更加慢了，因为要使用Docker中的镜像，这个时候最好就是将镜像指向国内的资源。
 
 国内亲测可用的几个镜像源：
@@ -397,9 +408,10 @@ docker info|grep Mirrors -A 1
 Registry Mirrors:
  https://y0qd3iq.mirror.aliyuncs.com/
 就表示镜像配置成功，然后再执行docker pull操作，就会很快了。
-
+```
 
 ## docker如何将运行中的容器保存为docker镜像?
+```
 答: 使用docker commit和docker save保存镜像
 
 $ sudo docker commit <当前运行的container id> <仓库名称>:<tag>
@@ -410,3 +422,4 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 111111111111        222222222222        "/bin/bash"   5 minutes ago       Up 5 minutes                                       jello
 $ sudo docker commit 111111111111 bash:1.0
 $ sudo docker save -o bash-1.0.img bash:1.0
+```

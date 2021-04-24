@@ -57,3 +57,4 @@
     建议楼主打好扎实的基础知识，走稳了再跑。
     话可能有些不好听，请见谅
 
+- [利用vs2019编译器远程调试linux程序（走心版）](https://blog.csdn.net/foxriver_gjg1989/article/details/102854440)

@@ -776,3 +776,18 @@ select * from usr_authority where usr_id=13;
 
 | usr_id | radio_id | radio_type | usr_au |
 
+countClusterVHFRadio
+
+selectCluterRadios
+
+select COUNT(*) from radio_info,usr_info where radio_type=5 and username=7;
+
+
+objeEditForm: {
+                radioType: '',
+                radioId: '',
+                radioChannel: 0,
+                radioName: '',
+                radioCity: '',
+                radioDesc: ''
+            },
