@@ -1,6 +1,7 @@
 # Docker Tips
 
 ## Docker setup tips
+<<<<<<< HEAD
 
 - [Docker 教程](https://www.runoob.com/docker/docker-tutorial.html)
 
@@ -12,6 +13,16 @@
 
 - [jerry.hub.docker.com](https://hub.docker.com/r/jerry4docker/ubuntu/)
 
+=======
+- [Docker Forum](https://forums.docker.com/)
+
+- [Install Docker ToolBox on Windows](https://docs.docker.com/toolbox/toolbox_install_windows/)
+
+- [Get Docker Toolbox for Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
+
+- [jerry.hub.docker.com](https://hub.docker.com/r/jerry4docker/ubuntu/)
+
+>>>>>>> 4af60de (push from work pc)
 - [完整记录在 windows7 下使用 docker 的过程](https://www.jianshu.com/p/d809971b1fc1)
 
 - [docker~在centos容器中安装新程序](https://www.cnblogs.com/lori/p/6703174.html)
@@ -84,7 +95,7 @@
     docker-machine create -d virtualbox --engine-env HTTP_PROXY=http://xxx.xxx.xxx.xxx:8000 --engine-env HTTPS_PROXY=http://xxx.xxx.xxx.xxx:8000 --engine-env NO_PROXY=192.168.99.100 default
 
 ## sharefolder
-[配置共享文件夹](https://blog.csdn.net/weixin_33714884/article/details/86345700)
+- [配置共享文件夹](https://blog.csdn.net/weixin_33714884/article/details/86345700)
 
 ## Error response from daemon: error parsing HTTP 404 response body
 ![Error response from daemon: error parsing HTTP 404 response body](pic/pic_1.png)
@@ -92,9 +103,9 @@
 ## Cannot perform an interactive login from a non TTY device
 ![Cannot perform an interactive login from a non TTY device](pic/pic_1.png)
 
-[Docker Hub 仓库使用，及搭建 Docker Registry](https://segmentfault.com/a/1190000012662268)
+- [Docker Hub 仓库使用，及搭建 Docker Registry](https://segmentfault.com/a/1190000012662268)
 
-[docker 学习笔记21：docker连接网络的设置](https://www.cnblogs.com/51kata/p/5268951.html)
+- [docker 学习笔记21：docker连接网络的设置](https://www.cnblogs.com/51kata/p/5268951.html)
     可以修改 /etc/default/docker 配置文件
 
     If you need Docker to use an HTTP proxy, it can also be specified here.
@@ -212,7 +223,7 @@
     Linux的经典文本编辑器vi的使用,	基本的文件内容查看命令
 
 ### win下Docker默认存储位置修改
-[win下Docker默认存储位置修改](https://chybeta.github.io/2017/02/14/win%E4%B8%8BDocker%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/)
+- [win下Docker默认存储位置修改](https://chybeta.github.io/2017/02/14/win%E4%B8%8BDocker%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/)
 
  docker commit -m="new Linux system with gcc g++ ping openssl make vim installed" 49efe8bedaf4 jerry4docker/jerryubuntu:first
 
@@ -300,13 +311,13 @@
     jerry4docker/jerryubuntu   latest              788c7e711aa3        About a minute ago       3.14GB
     jerry4docker/jerryubuntu   first               94fd38a8c1ee        11 months ago            752MB
 
-   [Reference push docker images](https://blog.csdn.net/boonya/article/details/74906927)
+- [Reference push docker images](https://blog.csdn.net/boonya/article/details/74906927)
 
     docker push jerry4docker/jerry4docker:v7
 
 ## configuration of vscode of gtags
     
-   [reference link](https://www.cnblogs.com/hgwang/p/10279023.html)
+- [reference link](https://www.cnblogs.com/hgwang/p/10279023.html)
 
 ## Docker configure ssh login
 - [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
@@ -339,8 +350,8 @@
 ```
 
 ## Docker容器进入的4种方式
-  [Docker容器进入的4种方式](https://www.cnblogs.com/xhyan/p/6593075.html)
-  [为什么不需要在 Docker 容器中运行 sshd](https://www.oschina.net/translate/why-you-dont-need-to-run-sshd-in-docker?cmp)
+- [Docker容器进入的4种方式](https://www.cnblogs.com/xhyan/p/6593075.html)
+- [为什么不需要在 Docker 容器中运行 sshd](https://www.oschina.net/translate/why-you-dont-need-to-run-sshd-in-docker?cmp)
 
   docker run -v /usr/local/bin:/target jpetazzo/nsenter
   PID=$(docker inspect --format {{.State.Pid}} <container_name_or_ID>)
@@ -430,4 +441,13 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 111111111111        222222222222        "/bin/bash"   5 minutes ago       Up 5 minutes                                       jello
 $ sudo docker commit 111111111111 bash:1.0
 $ sudo docker save -o bash-1.0.img bash:1.0
+
+## Windows下VirtualBox与Docker冲突
+```
+1、使用 VirtualBox：
+bcdedit /set hypervisorlaunchtype off
+
+2、使用 Docker：
+
+bcdedit /set hypervisorlaunchtype auto
 ```
