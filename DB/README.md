@@ -791,3 +791,8 @@ objeEditForm: {
                 radioCity: '',
                 radioDesc: ''
             },
+
+
+# alter table cere_buyer_bank change bank_card bank_card varchar(50) character set utf8;
+
+show create table cere_buyer_bank;

@@ -571,3 +571,8 @@ Please follow instructions at https://gitee.com/openeuler/community/blob/master/
 10 months ago
 启动容器时加上--cap-add=SYS_PTRACE --security-opt seccomp=unconfined选项可以解决该问题
 ```
+
+## 后台运行
+```
+nohup npm run dev >/dev/null 2>&1
+```

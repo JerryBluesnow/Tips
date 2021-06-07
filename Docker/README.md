@@ -272,6 +272,10 @@
 
     - [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
     docker run -d -p 9982:22 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v6
+    docker run -d -p 9982:22 -p 9528:9528 -p 9529:9529 -p 9530:9530 -p 9531:9531 -p 9906:3306 -p 9004:9004 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
+    docker run -d -p 3306:3306 --name=mysql --privileged --cap-add=SYS_PTRACE -e MYSQL_ROOT_PASSWORD=admin --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
+
+    /var/run/mysqld/mysqld.sock
     ssh连接容器
     通过主机端口映射连接：ssh -p 9022 root@主机ip
     直接连接容器（需要网络通）：ssh -p 22 root@容器ip
@@ -441,7 +445,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 111111111111        222222222222        "/bin/bash"   5 minutes ago       Up 5 minutes                                       jello
 $ sudo docker commit 111111111111 bash:1.0
 $ sudo docker save -o bash-1.0.img bash:1.0
-
+```
 ## Windows下VirtualBox与Docker冲突
 ```
 1、使用 VirtualBox：
@@ -451,3 +455,205 @@ bcdedit /set hypervisorlaunchtype off
 
 bcdedit /set hypervisorlaunchtype auto
 ```
+
+
+
+## 
+1.修改数据库字符集
+ALTER DATABASE database_name CHARACTER SET utf8
+1
+这一行SQL语句可以修改对应的数据库的默认字符集，这之后的表均会采用这一字符集，不过我们还需要修改现有的表。
+当然，也可以在创建表的时候就指定默认字符集：
+
+CREATE DATABASE database_name DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+1
+2.修改表的字符集
+ALTER TABLE table_name CONVERT TO CHARACTER SET utf8
+1
+这一行语句会修改一个表以及其中所有字段的字符集，如果不想修改现有的字段，只想修改表的默认字符集，可以使用下面这一行语句：
+
+AlTER TABLE table_name DEFAULT CHARACTER SET utf8
+————————————————
+版权声明：本文为CSDN博主「gooding300」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/gooding300/article/details/88607534
+
+
+## 排障集锦：九九八十一难之第十八难！-----System has not been booted with systemd as init system (PID 1). Can‘t operat
+
+不吃小白菜 2020-09-21 23:04:53  9516  收藏 4
+分类专栏： 排障集锦 文章标签： docker shell linux bash
+版权
+报错现象如下
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+1
+2
+解决方案一
+检查启动命令 加参数 -itd --privileged 如果dockerfile中CMD中没有执行 要在后面命令加/usr/sbin/init
+
+dockerun --privileged -itd --name systemctl3 -v /sys/fs/cgroup:/sys/fs/cgroup:ro systemctl:test
+
+解决方案二
+重启一个docker在后台运行 执行上面的命令
+dockerun --privileged -itd --name systemctl3 -v /sys/fs/cgroup:/sys/fs/cgroup:ro systemctl:test
+
+原因详解
+–privateged 使container内的root拥有真正的root权限，不进行降权处理。否则，容器内的用户只是外部的一个普通用户，普通用户还想访问内核？让systemctl管理系统？ 而且默认情况下，在第一步执行的是 /bin/bash 所以我们使用了 /usr/sbin/init覆盖/bin/bash
+
+同时 只能使用 docker exec -it systemctl5 /bin/bash 因为 exec 可以让我们执行被覆盖掉的默认命令 /bin/bash 同时 -it 也是必须的。
+————————————————
+版权声明：本文为CSDN博主「不吃小白菜」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_47219935/article/details/108720455
+
+
+
+## 使用Docker搭建MySQL服务
+一、安装docker#
+windows 和 mac 版可以直接到官网下载 docker desktop
+
+linux 的安装方法可以参考 https://www.cnblogs.com/myzony/p/9071210.html
+
+可以在shell中输入以下命令检查是否成功安装： sudo docker version
+
+二、建立镜像#
+拉取官方镜像（我们这里选择5.7，如果不写后面的版本号则会自动拉取最新版）
+
+docker pull mysql:5.7   # 拉取 mysql 5.7
+docker pull mysql       # 拉取最新版mysql镜像
+MySQL文档地址
+
+检查是否拉取成功
+
+$ sudo docker images
+一般来说数据库容器不需要建立目录映射
+
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:latest
+
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d centos/mysql-57-centos7:latest
+
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mariadb:latest
+
+docker run -p 3306:3306 --name mysql  -v /d/WorkSpace/mysql/my.cnf:/etc/mysql/my.cnf -e MYSQL_ROOT_PASSWORD=admin -d mysql:latest
+–name：容器名，此处命名为mysql
+-e：配置信息，此处配置mysql的root用户的登陆密码
+-p：端口映射，此处映射 主机3306端口 到 容器的3306端口
+-d：后台运行容器，保证在退出终端后容器继续运行
+如果要建立目录映射
+
+duso docker run -p 3306:3306 --name mysql \
+-v /usr/local/docker/mysql/conf:/etc/mysql \
+-v /usr/local/docker/mysql/logs:/var/log/mysql \
+-v /usr/local/docker/mysql/data:/var/lib/mysql \
+-e MYSQL_ROOT_PASSWORD=123456 \
+-d mysql:5.7
+-v：主机和容器的目录映射关系，":"前为主机目录，之后为容器目录
+检查容器是否正确运行
+
+docker container ls
+可以看到容器ID，容器的源镜像，启动命令，创建时间，状态，端口映射信息，容器名字
+三、连接mysql#
+进入docker本地连接mysql客户端
+
+sudo docker exec -it mysql bash
+mysql -uroot -p123456
+使用远程连接软件时要注意一个问题
+
+我们在创建容器的时候已经将容器的3306端口和主机的3306端口映射到一起，所以我们应该访问：
+
+host: 127.0.0.1
+port: 3306
+user: root
+password: 123456
+如果你的容器运行正常，但是无法访问到MySQL，一般有以下几个可能的原因：
+
+防火墙阻拦
+
+### 开放端口：
+$ systemctl status firewalld
+$ firewall-cmd  --zone=public --add-port=3306/tcp -permanent
+$ firewall-cmd  --reload
+### 关闭防火墙：
+$ sudo systemctl stop firewalld
+需要进入docker本地客户端设置远程访问账号
+
+$ sudo docker exec -it mysql bash
+$ mysql -uroot -p123456
+mysql> grant all privileges on *.* to root@'%' identified by "password";
+原理：
+
+### mysql使用mysql数据库中的user表来管理权限，修改user表就可以修改权限（只有root账号可以修改）
+
+mysql> use mysql;
+Database changed
+
+mysql> select host,user,password from user;
++--------------+------+-------------------------------------------+
+| host                    | user      | password                                                                 |
++--------------+------+-------------------------------------------+
+| localhost              | root     | *A731AEBFB621E354CD41BAF207D884A609E81F5E      |
+| 192.168.1.1            | root     | *A731AEBFB621E354CD41BAF207D884A609E81F5E      |
++--------------+------+-------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> grant all privileges  on *.* to root@'%' identified by "password";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select host,user,password from user;
++--------------+------+-------------------------------------------+
+| host                    | user      | password                                                                 |
++--------------+------+-------------------------------------------+
+| localhost              | root      | *A731AEBFB621E354CD41BAF207D884A609E81F5E     |
+| 192.168.1.1            | root      | *A731AEBFB621E354CD41BAF207D884A609E81F5E     |
+| %                       | root      | *A731AEBFB621E354CD41BAF207D884A609E81F5E     |
++--------------+------+-------------------------------------------+
+3 rows in set (0.00 sec)
+参考连接：#https://blog.csdn.net/jor_ivy/article/details/81323199
+
+https://www.52pojie.cn/thread-727433-1-1.html
+
+作者：sablier
+出处：https://www.cnblogs.com/sablier/p/11605606.html
+
+版权：本作品采用「署名-非商业性使用-相同方式共享 4.0 国际」许可协议进行许可
+```
+show variables like '%char%';
+D://WorkSpace//ido-shop//cereshop//doc//1.4//cereshop.sql
+
+[mysqld]
+# 注意你的安装位置
+datadir=C:/soft/a/MySQL/MariaDB 10.5/data
+port=3306
+innodb_buffer_pool_size=2035M
+character-set-client-handshake = false  
+
+character_set_server = utf8mb4  
+character_set_filesystem = binary  
+character_set_client = utf8mb4  
+collation_server = utf8mb4_unicode_ci  
+init_connect='SET NAMES utf8mb4'  
+[client]
+port=3306
+# 注意位置
+plugin-dir=C:/soft/a/MySQL/MariaDB 10.5/lib/plugin
+
+default-character-set=utf8mb4  
+
+  
+[mysqldump]  
+character_set_client=utf8mb  
+  
+[mysql]  
+default-character-set=utf8mb4  
+```
+
+# minio
+[Minio](https://www.jianshu.com/p/52dbc679094a)
+
+docker run -it -p 9000:9000 --name minio \
+-d --restart=always \
+-e "MINIO_ACCESS_KEY=AU1KIRAXJNT5Z7ZWA2CY3ZTD" \
+-e "MINIO_SECRET_KEY=glhL2C8am6GACEJJ9hhYikWA1NywYESqu9vNgXEiFoU2nTJn" \
+minio/minio server /data
