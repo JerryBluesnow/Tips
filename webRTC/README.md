@@ -56,7 +56,7 @@ webrtc2sip是一个功能很完善的网关，既实现了信令层，也实现�
 
 
 ## rtpengine build
-
+- [ubuntu 安装 rtpengine](t.zoukankan.com/flash55-p-10224521.html)
 - 1. git clone https://github.com/sipwise/rtpengine.git rtpengine
 - 2. 
 ```

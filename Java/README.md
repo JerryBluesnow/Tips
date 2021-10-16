@@ -28,15 +28,14 @@
 - [refer](https://www.cnblogs.com/carryLess/p/7508378.html)
    
     网站查询
-    https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/    jdk-8u261-linux-x64.tar.gz?xd_co_f=27b6b93d465637b95d61599612466900
+    https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jdk-8u261-linux-x64.tar.gz?xd_co_f=27b6b93d465637b95d61599612466900
 
     wget https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jdk-8u261-linux-x64.tar.gz?AuthParam=1599643461_25207893d4c504094edb8a58b6341fe0   --no-check-certificate
 
     root@default:~# pwd
-
     export http_proxy=http://192.168.99.99:8080
     export https_proxy=https://192.168.99.99:8080
-    export JAVA_HOME=/usr/local/java/jdk1.8.0_261
+    export JAVA_HOME=/bin/java/jdk1.8.0_291
     export JRE_HOME=${JAVA_HOME}/jre
     export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
     export PATH=${JAVA_HOME}/bin:$PATH

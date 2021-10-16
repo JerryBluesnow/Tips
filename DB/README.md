@@ -626,11 +626,12 @@
 
 ## install mariadb
     + download from : https://.org/download/#entry-header
-    +  wget https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-10.5.5/bintar-linux-x86_64/mariadb-10.5.5-linux-x86_64.tar.gz --no-check-certificate
+    + wget https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-10.5.5/bintar-linux-x86_64/mariadb-10.5.5-linux-x86_64.tar.gz --no-check-certificate
     + apt-get install mariadb-server
     + [MariaDB三种方法安装及多实例实现](https://blog.51cto.com/13695854/2127892)
     + [MariaDB安装及基本配置（CentOS6.9）](https://www.cnblogs.com/52py/p/8074541.html)
     + [安装MariaDB和简单配置](https://www.cnblogs.com/wu-chao/p/9138665.html)
+    + [Mysql创建新用户方法](https://blog.csdn.net/leili0806/article/details/8573636)
     + NOTES: you must remove all your mysql/mariadb from your system, or althrogh it seems the installation well
      but some actions during installation may fail without reporting any error to you.
     + after clean all mysql, you could run command to install
@@ -652,6 +653,20 @@
 
     systemctl restart mariadb
     然后就可以了
+
+## 解决mariadb设置初始密码不生效方法【Mariardb】
+
+默认是无密码的，换用了更安全的认证，但是很多链接需要密码，所以，，，需要设置密码
+操作如下：
+```
+root@ubuntu:mysql
+mariadb>use mysql;
+mariadb>update user set password=PASSWORD("admin") where User='root';
+mariadb>update user set plugin="mysql_native_password";
+mariadb>flush privileges;
+mariadb>exit;
+```
+https://mariadb.com/kb/en/set-password/
 
 ## [Linux MySQL 常见无法启动或启动异常的解决方案](https://www.cnblogs.com/youjianjiangnan/p/10259151.html)
 
@@ -792,7 +807,156 @@ objeEditForm: {
                 radioDesc: ''
             },
 
+insert into communicating_info values(”,’glchengang’,’深圳一中’,’-10-10′); 
+
+insert into radio_info values(101, '深圳101'， 'Radio', 'QD', 3, 1, 1, 1, '2020-08-27 23:11:52');
+
+
+| radio_info | CREATE TABLE `radio_info` (
+  `radio_id` int(16) NOT NULL DEFAULT 0,
+  `radio_name` varchar(50) NOT NULL DEFAULT '',
+  `radio_des` varchar(50) NOT NULL DEFAULT '',
+  `radio_city` varchar(50) NOT NULL DEFAULT '',
+  `radio_type` tinyint(2) NOT NULL,
+  `radio_stat` int(12) NOT NULL DEFAULT 0,
+  `radio_cnl` int(2) NOT NULL DEFAULT 0,
+  `device_id` int(16) DEFAULT 0,
+  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`radio_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 |
+
 
 # alter table cere_buyer_bank change bank_card bank_card varchar(50) character set utf8;
 
 show create table cere_buyer_bank;
+
+# 解决mariadb无法访问的问题
+```
+root in idomall in mysql on  master [+]
+⚡️ mysql -upackmall -ppackmall -h 127.0.0.1
+ERROR 1045 (28000): Access denied for user 'packmall'@'192.168.80.1' (using password: YES)
+
+root in idomall in mysql on  master [+]
+⚡️
+
+root in idomall in mysql on  master [+]
+⚡️ ls
+conf  docker-compose.yaml  initdb
+
+root in idomall in mysql on  master [+]
+⚡️ docker-compose down
+Stopping mariadb-c ... done
+Removing mariadb-c ... done
+Removing network mysql_default
+
+root in idomall in mysql on  master [+] took 3s
+⚡️ docker-compose up -d
+Creating network "mysql_default" with the default driver
+Creating mariadb-c ... done
+
+root in idomall in mysql on  master [+]
+⚡️ mysql -upackmall -ppackmall -h 127.0.0.1
+ERROR 1045 (28000): Access denied for user 'packmall'@'172.26.0.1' (using password: YES)
+
+root in idomall in mysql on  master [+]
+⚡️ mysql -upackmall -ppackmall -h 127.0.0.1
+ERROR 1045 (28000): Access denied for user 'packmall'@'172.26.0.1' (using password: YES)
+
+root in idomall in mysql on  master [+]
+⚡️ ls
+conf  docker-compose.yaml  initdb
+
+
+
+grant all privileges on *.* to 'root'@'%' identified by 'password';
+update `mysql`.`user` set `Grant_priv` = 'Y' where `user` = 'root';
+delete from user where user='root' and host='localhost';
+flush privileges;
+
+update mysql.user set Grant_priv='Y' where User='root' and Host='%';
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+grant all privileges on awesome.* to 'root'@'192.168.*.*' identified by 'passwd';
+FLUSH PRIVILEGES;
+```
+
+```
+docker run --name mysql --restart=always -d -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql --entrypoint "/usr/bin/mysqld_safe" mysql_image
+```
+
+# mysql连接docker报错_本地宿主机通过mysql命令连接mysql Docker容器中的服务器报错 ERROR 2002 (HY000)...
+```
+1、具体所错与下所示：[user@cluster2 ~]$ mysql -uroot -p
+
+Enter password:
+
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+
+2、根据报错提示，是本地mysql连接服务器时，没有找到/var/lib/mysql/mysql.sock文件。那么从这入手，我们看到mysql容器中的服务器启动后的mysql.sock文件在哪。
+
+我们进入mysql容器中看看：sudo docker exec -it mysql /bin/bash
+
+查看mysql配置文件my.cnfroot@9e313681fc3e:/# cat /etc/mysql/my.cnf
+
+我们看到下面的一些配置：[mysqld]
+
+pid-file = /var/run/mysqld/mysqld.pid
+
+socket = /var/run/mysqld/mysqld.sock
+
+datadir = /var/lib/mysql
+
+secure-file-priv= NULL
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+
+symbolic-links=0
+
+这里可以看到mysqld.sock的目录是在/var/run/mysqld目录下，但是这个目录，我们并没有挂载主机目录，下面我们重新运行mysql容器，挂载相应的容器，如下所示：sudo docker run --name=mysql -it -p 3306:3306 -v /opt/data/mysql/mysqld:/var/run/mysqld -v /opt/data/mysql/db:/var/lib/mysql -v /opt/data/mysql/conf:/etc/mysql/conf.d -v /opt/data/mysql/files:/var/lib/mysql-files -e MYSQL_ROOT_PASSWORD=123456 --privileged=true -d mysql
+
+使用以上命令运行mysql容器，这里使用/opt/data/mysql中的相关目录挂载到mysql容器中，启动容器之后你会发现mysql服务器无法正常启动，报错如下：2018-12-29T06:25:09.480604Z 0 [ERROR] [MY-010273] [Server] Could not create unix socket lock file /var/run/mysqld/mysqld.sock.lock.
+
+2018-12-29T06:25:09.480619Z 0 [ERROR] [MY-010268] [Server] Unable to setup unix socket lock file.
+
+2018-12-29T06:25:09.480625Z 0 [ERROR] [MY-010119] [Server] Aborting
+
+2018-12-29T06:25:11.289786Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.13) MySQL Community Server - GPL.
+
+[user@cluster2 mysql]$ sudo docker logs mysql
+
+2018-12-29T06:25:09.095301Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
+
+2018-12-29T06:25:09.095434Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.13) starting as process 1
+
+2018-12-29T06:25:09.478963Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+
+2018-12-29T06:25:09.480604Z 0 [ERROR] [MY-010273] [Server] Could not create unix socket lock file /var/run/mysqld/mysqld.sock.lock.
+
+2018-12-29T06:25:09.480619Z 0 [ERROR] [MY-010268] [Server] Unable to setup unix socket lock file.
+
+2018-12-29T06:25:09.480625Z 0 [ERROR] [MY-010119] [Server] Aborting
+
+2018-12-29T06:25:11.289786Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.13) MySQL Community Server - GPL.
+
+说是无法创建：Could not create unix socket lock file /var/run/mysqld/mysqld.sock.lock。这说明本地的/opt/data/mysql/mysqld目录，mysql容器中无权限防问。
+
+注意：这里的/opt/data/mysql目录下的所示目录都是mysql容器启动时自动创建的，这里只有db目录的用户和组是：polkitd input，其它的就是root root，因此，我们要将其它几个目录的用户和组都改成polkitd input。命令如下：cd /opt/data
+
+sudo chown -R polkitd:input mysql
+
+这样，删除mysql docker 容器。重新创建：sudo docker rm mysqlsudo docker run --name=mysql -it -p 3306:3306 -v /opt/data/mysql/mysqld:/var/run/mysqld -v /opt/data/mysql/db:/var/lib/mysql -v /opt/data/mysql/conf:/etc/mysql/conf.d -v /opt/data/mysql/files:/var/lib/mysql-files -e MYSQL_ROOT_PASSWORD=123456 --privileged=true -d mysql
+
+这样容器中的mysql就能正常运行了。
+
+3、本地主机连接容器的mysql时，需要查到 /var/lib/mysql/mysql.sock。我们启动mysql容器后，在/opt/data/mysql/mysqld目录下有一个mysqld.sock。我们要把这个文件链接到本地主机的var/lib/myql目录中。sudo ln -s /opt/data/mysql/mysqld/mysqld.sock /var/lib/mysql/
+
+这样在运行mysql -uroot -p输入密码就能正常连接，docker容器中的mysql服务了。
+
+4、本地主机只需要安装mysql-community-client包就可以了。具体参考百度。
+————————————————
+版权声明：本文为CSDN博主「张梅雪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_31630721/article/details/114902635
+```

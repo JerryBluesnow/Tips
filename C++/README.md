@@ -67,3 +67,13 @@
 ## C++ 20
 
 - [C++20新特性个人总结](https://blog.csdn.net/qq811299838/article/details/105153096/)
+
+## [代码自动生成-宏带来的奇技淫巧](http://www.cppblog.com/kevinlynx/archive/2008/03/19/44828.html)
+
+- [C++博客](http://www.cppblog.com/)
+
+- [使用GTEST编写C++测试用例进阶教程（GTEST advanced中文译文）](https://www.jianshu.com/p/215edbfc2e0a)
+
+- [Advanced googletest Topics](google.github.io/googletest/advanced.html)
+
+- [有哪些值得推荐的c/c++开源框架与库]h(ttps://zhuanlan.zhihu.com/p/71707672)
