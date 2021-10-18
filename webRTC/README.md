@@ -56,7 +56,7 @@ webrtc2sip是一个功能很完善的网关，既实现了信令层，也实现�
 
 
 ## rtpengine build
-- [ubuntu 安装 rtpengine](t.zoukankan.com/flash55-p-10224521.html)
+
 - 1. git clone https://github.com/sipwise/rtpengine.git rtpengine
 - 2. 
 ```
@@ -90,8 +90,7 @@ apt-get install libwebsockets-dev -y
 
 ## kamailio build
 
-- 1. git clonehttps://github.com/kamailio/kamailio.git kamailio
-- 2. 
+- 1. git clone https://github.com/kamailio/kamailio.git kamailio
 
 The main index for documentation is available at:
 
@@ -115,3 +114,7 @@ rpm: https://www.kamailio.org/wiki/packages/rpms
 
 ## mix audio
 - [MultiStreamsMixer](https://www.webrtc-experiment.com/MultiStreamsMixer/)
+
+- [Certbot-免费的HTTPS证书](https://zhuanlan.zhihu.com/p/80909555)
+
+- [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)

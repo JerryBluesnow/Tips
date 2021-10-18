@@ -68,7 +68,7 @@
 
 - [C++20新特性个人总结](https://blog.csdn.net/qq811299838/article/details/105153096/)
 
-## [代码自动生成-宏带来的奇技淫巧](http://www.cppblog.com/kevinlynx/archive/2008/03/19/44828.html)
+- [代码自动生成-宏带来的奇技淫巧](http://www.cppblog.com/kevinlynx/archive/2008/03/19/44828.html)
 
 - [C++博客](http://www.cppblog.com/)
 
@@ -77,3 +77,52 @@
 - [Advanced googletest Topics](google.github.io/googletest/advanced.html)
 
 - [有哪些值得推荐的c/c++开源框架与库]h(ttps://zhuanlan.zhihu.com/p/71707672)
+
+- [利用vs2019编译器远程调试linux程序（走心版）](https://blog.csdn.net/foxriver_gjg1989/article/details/102854440)
+
+## C++ 11
+
+- [C++11 FAQ中文版](https://wizardforcel.gitbooks.io/cpp-11-faq/content/part1.html)
+- [cpp11 github](https://github.com/DragonFive/cpp11)
+- [搞懂C++11中的匿名函数](https://mp.weixin.qq.com/s/w_G8qy4UMucUqZ9Is22yqw)
+
+## 内存
+
+- [C++堆，栈，RAII](https://zhuanlan.zhihu.com/p/354611651)
+
+- [C++ 类在内存中的存储方式(一)](https://zhuanlan.zhihu.com/p/103384358)
+
+- [C++成员函数在内存中的存储方式](https://www.cnblogs.com/rednodel/p/9300729.html)
+
+- [C++类的实例化对象的大小之sizeof()](https://blog.csdn.net/houqd2012/article/details/40264943)
+
+## 代碼分析工具
+
+- [RunSnakeRun](https://segmentfault.com/a/1190000000356018)
+  
+  RunSnakeRun有一个内存调试模式（需要 Meliae ）。遗憾的是我还没有试过。但是如果你想看到内存的使用情况，它看起来确实很有用。就像[这样](http://www.vrplumber.com/programming/runsnakerun/meliae-sample.png）。
+
+```
+KCachegrind
+你可以用apt-get install kcachegrind 来安装或者从源码安装。
+
+鲜为人知的秘密：有windows版本的KCachegrind二进制包。 只需要安装windows版本的KDE，然后在选项“开发者工具”选中它，很可能要取消选择其他项）。
+
+我真的很喜欢这工具！它可以向你展示调用树的图表，可排序的调用表，调用/被调用的地图，源代码，而且你还能选择过滤掉所有的东西。而且它是语言无关的 – 如果你有C/C++背景的话，你很可能听说过这个工具。
+
+我喜欢这个工具的程度超过RunSnakeRun，因为它比后者功能要强大的多：
+
+在调用数的图表上，你可以排序，改变布局/用很多方法来渲染或者导出成点图/png，RunSnakeRun甚至不能显示调用树的图表
+你可以看见源码
+你可以得到被调用地图
+更容易安装（不需要依赖wxPython）
+在大项目里面哪些需要关注并不是那么显而易见，或者有很多的相关函数时，KCachegrind比RunSnakeRun更值得一用。
+可生成KCachegrind 分析文件的工具
+我想这是唯一的缺点，你需要用这种特殊的格式导出。但是它也有很好的支持：
+
+pyprof2calltree
+django扩展的 runprofileserver
+装饰器
+kcachegrind 转换器
+repoze.profile – 只需要设置cachegrind_filename
+```
