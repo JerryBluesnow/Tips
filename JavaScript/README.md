@@ -128,39 +128,47 @@ function encodePCM() {
 
 https://github.com/pkjy/pcm-player
 
-# PCM音量控制
+## PCM音量控制
 - [PCM音量控制](https://blog.jianchihu.net/pcm-volume-control.html)
 
-# 音视频博主
+## 音视频博主
 - [音视频](https://blog.jianchihu.net/category/avtechnology)
 
-# 使用JDK自带工具keytool生成ssl证书
+## 使用JDK自带工具keytool生成ssl证书
 - [使用JDK自带工具keytool生成ssl证书](https://blog.csdn.net/dwyane__wade/article/details/80350548)
 
-## 一、使用keytool命令生成证书
+### 一、使用keytool命令生成证书
+```shell
 keytool -genkey -alias fusionsrv -keypass baonserv -keyalg RSA -keysize 1024 -validity 36500 -keystore fusionsrv.keystore -storepass baonserv
 
 keytool -importkeystore -srckeystore fusionsrv.keystore -destkeystore fusionsrv.keystore -deststoretype pkcs12
+```
 
-## 二、为客户端生成证书
+### 二、为客户端生成证书
 
+```shell
 keytool -genkey -alias client -keypass baonserv -keyalg RSA -storetype PKCS12 -keypass baonserv -storepass baonserv -keystore client.p12
+```
 
-## 三、让服务器信任客户端证书
+### 三、让服务器信任客户端证书
 必须先把客户端证书导出为一个单独的CER文件，使用如下命令：
 
+```shell
 keytool -export -alias client -keystore client.p12 -storetype PKCS12 -keypass baonserv -file client.cer
 
 keytool -import -v -file client.cer -keystore fusionsrv.keystore
 
 keytool -list -v -keystore fusionsrv.keystore
+```
 
-## 四、让客户端信任服务器证书
+### 四、让客户端信任服务器证书
 由于是双向SSL认证，客户端也要验证服务器证书，因此，必须把服务器证书添加到浏览器的“受信任的根证书颁发机构”。
 
 由于不能直接将keystore格式的证书库导入，必须先把服务器证书导出为一个单独的CER文件，使用如下命令：
 
+```shell
 keytool -keystore fusionsrv.keystore -export -alias fusionsrv -file server.cer
+```
 
 双击server.cer文件，按照提示安装证书
 
@@ -174,8 +182,13 @@ keytool -keystore fusionsrv.keystore -export -alias fusionsrv -file server.cer
 
 - 打开浏览器   - 工具  -  internet选项-内容- 证书-把中级证书颁发机构里的www.seeker.com(该名称即时你前面生成证书时填写的名字与姓氏)证书导出来-再把导出来的证书导入  受信任的根颁发机构  就OK了。
 
-# https://blog.csdn.net/u013412772/article/details/103726154
-# https://my.oschina.net/u/4365165/blog/4047638
+### 五、reference
+
+[keytool如何生成自签名证书？](https://blog.csdn.net/u013412772/article/details/103726154)
+
+[[keytool工具生成自签名证书并且通过浏览器导入证书](https://my.oschina.net/u/4365165/blog/4047638)](https://my.os)china.net/u/4365165/blog/4047638
+
+```shell
 keytool -genkey -alias fusion -keypass baonserv -keyalg RSA -keysize 1024 -validity 365 -keystore fusionsrv.keystore -storepass baonserv -dname "CN=localhost,OU=shixun,O=shixun,L=beijing,ST=beijing,c=cn"
 
 keytool -genkey -alias client -keypass baonserv -keyalg RSA -keysize 1024 -validity 365 -storetype PKCS12 -keystore client.p12 -storepass baonserv -dname "CN=client,OU=shixun,O=shixun,L=beijing,ST=beijing,c=cn"
@@ -185,11 +198,17 @@ keytool -export -alias client -keystore client.p12 -storetype PKCS12 -keypass ba
 keytool -import -v -file client.cer -keystore fusionsrv.keystore -storepass baonserv
 
 keytool -list -v -keystore fusionsrv.keystore -storepass baonserv
+```
 
-# webpack-dev-server版本需要把ssl/server.pem转成cer，安装到信任机构
+## webpack-dev-server版本需要把ssl/server.pem转成cer，安装到信任机构
+```shell
 openssl x509 -inform pem -in server.pem -outform der -out server.cer
+```
+
 - [解读 vue-cli 脚手架（一）：npm run dev的背后](https://blog.csdn.net/six_six_six_666/article/details/82633731)
 
 - [vue-cli webpack项目npm run dev启动过程](https://www.cnblogs.com/zeroes/p/vue-run-dev.html)
 
 - [pcm-player](https://github.com/pkjy/pcm-player)
+
+- [获取JavaScript异步函数的返回值](https://www.cnblogs.com/zmc/p/6916164.html)

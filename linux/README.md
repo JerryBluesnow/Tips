@@ -165,7 +165,7 @@ The following actions will resolve these dependencies:
 
 ```
 
-##### 每个版本的软件源都不同 - ubuntu16.04更新软件源
+每个版本的软件源都不同 - ubuntu16.04更新软件源
 
 - [ubuntu16.04更新软件源](https://blog.csdn.net/lxlong89940101/article/details/89488461)
 
@@ -201,7 +201,7 @@ The following actions will resolve these dependencies:
  sudo ./bin/mysql -u root
 ```
 
-## source filename 与 sh filename 及./filename执行脚本的区别#
+## source filename 与 sh filename 及./filename执行脚本的区别
 - 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。./filename是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。
 - sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
 - source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
@@ -239,15 +239,16 @@ export LESSCHARSET=utf-8  --注释：设置LESS字符集为utf-8
 ## 安装npm （这个命令最管用）
 curl -L https://npmjs.com/install.sh | sh
 
-### 其他安装命令，但是有问题，可以参考
-#### Ubuntu 16.04 TLS，执行以下命令：
+Ubuntu 16.04 TLS，执行以下命令：
+
 ```
 sudo apt-get install nodejs
 sudo apt install nodejs-legacy
 sudo apt install npm
 ```
 
-#### Ubuntu 18.04 TLS，执行以下命令：
+Ubuntu 18.04 TLS，执行以下命令：
+
 ```
 sudo apt-get install nodejs
 sudo apt install libssl1.0-dev nodejs-dev node-gyp npm
@@ -258,7 +259,7 @@ sudo npm config list
 sudo npm install n -g
 ```
 
-#### 安装最新的nodejs（stable版本）
+## 安装最新的nodejs（stable版本）
 ```
 sudo n stable
 sudo node -v
@@ -450,9 +451,8 @@ rpm -qa # 查看所有安装的软件包
 　　主机I/O端口号信息：Ioprots
 　　主机内存信息：Meninfo
 　　Linux内存版本信息：Version
+　　proc – process information pseudo-filesystem 进程信息伪装文件系统
 ```
-
-### 备注： proc – process information pseudo-filesystem 进程信息伪装文件系统
 
 
 ## centos install
@@ -533,21 +533,20 @@ certbot certonly --standalone -d sam-tech.com
 
 - 查看优先级 
     - sudo update-alternatives --config gcc
-    - 会看到如下的选项，有 3 个候选项可用于替换 gcc (提供 /usr/bin/gcc)。 
-    ------------------------------------------------------------
-        选择      路径            优先级           状态
-      * 0       /usr/bin/gcc-5      50          自动模式
-        1       /usr/bin/gcc-5      50          手动模式
-        2       /usr/bin/gcc-4.9    40          手动模式
-        
-        要维持当前值[*]请按回车键，或者键入选择的编号： 
+    - 会看到如下的选项，有 3 个候选项可用于替换 gcc (提供 /usr/bin/gcc)。(要维持当前值[*]请按回车键，或者键入选择的编号)
+
+    | 选择 | 路径             | 优先级 | 状态     |
+    | ---- | ---------------- | ------ | -------- |
+    | 0    | /usr/bin/gcc-5   | 50     | 自动模式 |
+    | 1    | /usr/bin/gcc-5   | 50     | 手动模式 |
+    | 2    | /usr/bin/gcc-4.9 | 50     | 手动模式 |
 
 - 删除可选项
     - sudo update-alternatives --remove gcc /usr/bin/gcc-4.9
 
 
 ## 使用Visual Studio 2017开发Linux程序
-- - [使用Visual Studio 2017开发Linux程序](https://www.cnblogs.com/dongc/p/6599461.html)
+- [使用Visual Studio 2017开发Linux程序](https://www.cnblogs.com/dongc/p/6599461.html)
 - ssh servers使用docker搭建
 ```
 gdb调试报错warning: Error disabling address space randomization: Operation not permitted
@@ -611,3 +610,257 @@ Please follow instructions at https://gitee.com/openeuler/community/blob/master/
 10 months ago
 启动容器时加上--cap-add=SYS_PTRACE --security-opt seccomp=unconfined选项可以解决该问题
 ```
+
+## performance 
+
+[gperftools](https://github.com/gperftools)/**[gperftools](https://github.com/gperftools/gperftools)**
+
+[善用工具-程序性能分析Gperftools初探(libwind+pprof+Kcachegrind)](https://blog.csdn.net/aganlengzi/article/details/62893533?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_aggregation-15-62893533.pc_agg_rank_aggregation&utm_term=kcachegrind+分析&spm=1000.2123.3001.4430)
+
+```
+
+```
+
+## 函數邏輯關係圖
+
+在对源代码走读的过程中，我们可以借助一些工具来帮助理解源代码的结构和函数调用关系，比如生成函数调用关系图。
+
+cflow工具通过分析一组C源文件，绘制出程序的逻辑流程图和交叉引用列表，在此分析结果的基础上，通过其他工具生成可视化的图像文件，帮助我们理解源代码。
+
+cflow安装
+
+```text
+wget https://ftp.gnu.org/gnu/cflow/cflow-latest.tar.gz
+tar -zxvf cflow-latest.tar.gz
+cd cflow-1.6
+./configure
+make
+make install
+```
+
+tree2dotx脚本地址，shell脚本，拷贝到本地文件直接使用
+
+```text
+https://github.com/tinyclub/linux-0.11-lab/blob/master/tools/tree2dotx
+```
+
+graphviz安装
+
+```text
+yum install graphviz
+```
+
+进入tree2dotx脚本所在目录，按照下面的步骤操作：
+
+```text
+cflow -T -m main /root/freeswitch-1.8.7/src/switch.c > fs.txt
+cat fs.txt | ./tree2dotx > fs.dot
+dot -Tbmp fs.dot -o fs.bmp
+```
+
+for ALG/IMS
+
+```
+cd ssp/ds/ims/util  # I suppose ALG code is under this path
+
+cflow -T -m main IMSpolicy_qos_state.cpp > IMSpolicy_qos_state.txt
+cat IMSpolicy_qos_state.txt | ./tree2dotx > IMSpolicy_qos_state.dot
+dot -Tjpg IMSpolicy_qos_state.dot -o IMSpolicy_qos_state.jpg
+```
+
+```
+多個文件：
+cflow -m= *.c > 2.txt
+cat 2.txt | tree2dotx > 2.dot
+dot -Tjpg 2.dot -o 2.jpg
+```
+
+```
+cflow --help
+我们可以得到如下提示
+Usage: cflow [OPTION...] [FILE]...
+generate a program flowgraph
+
+ General options:
+  -d, --depth=NUMBER         Set the depth at which the flowgraph is cut off
+  -f, --format=NAME          Use given output format NAME. Valid names are
+                             `gnu' (default) and `posix'
+  -i, --include=CLASSES      Include specified classes of symbols (see below).
+                             Prepend CLASSES with ^ or - to exclude them from
+                             the output
+  -o, --output=FILE          Set output file name (default -, meaning stdout)
+  -r, --reverse              * Print reverse call tree
+  -x, --xref                 Produce cross-reference listing only
+
+ Symbols classes for --include argument
+
+    _                        symbols whose names begin with an underscore
+    s                        static symbols
+    t                        typedefs (for cross-references only)
+    x                        all data symbols, both external and static
+
+ Parser control:
+
+  -a, --ansi                 * Accept only sources in ANSI C
+  -D, --define=NAME[=DEFN]   Predefine NAME as a macro
+  -I, --include-dir=DIR      Add the directory DIR to the list of directories
+                             to be searched for header files.
+  -m, --main=NAME            Assume main function to be called NAME
+  -p, --pushdown=NUMBER      Set initial token stack size to NUMBER
+      --preprocess[=COMMAND], --cpp[=COMMAND]
+                             * Run the specified preprocessor command
+  -s, --symbol=SYMBOL:[=]TYPE   Register SYMBOL with given TYPE, or define an
+                             alias (if := is used). Valid types are: keyword
+                             (or kw), modifier, qualifier, identifier, type,
+                             wrapper. Any unambiguous abbreviation of the above
+                             is also accepted
+  -S, --use-indentation      * Rely on indentation
+  -U, --undefine=NAME        Cancel any previous definition of NAME
+
+ Output control:
+
+  -b, --brief                * Brief output
+      --emacs                * Additionally format output for use with GNU
+                             Emacs
+  -l, --print-level          * Print nesting level along with the call tree
+      --level-indent=ELEMENT Control graph appearance
+  -n, --number               * Print line numbers
+      --omit-arguments       * Do not print argument lists in function
+                             declarations
+      --omit-symbol-names    * Do not print symbol names in declaration strings
+                            
+  -T, --tree                 * Draw ASCII art tree
+
+ Informational options:
+
+      --debug[=NUMBER]       Set debugging level
+
+  -v, --verbose              * Verbose error diagnostics
+
+  -?, --help                 give this help list
+      --usage                give a short usage message
+  -V, --version              print program version
+
+Mandatory or optional arguments to long options are also mandatory or optional
+for any corresponding short options.
+
+* The effect of each option marked with an asterisk is reversed if the option's
+  long name is prefixed with `no-'. For example, --no-cpp cancels --cpp.
+
+Report bugs to <bug-cflow@gnu.org>.
+
+列出cflow的所有选项，包括简要的说明。所有的长选项和短选项都被列出了，所以你可以将这个表作为快速参考。
+大部分的选项都有一个相反意义的负选项对应，负选项的命名是对相应的长选项加前缀no-.这个特性用于取消在配置文件中定义的选项。
+-a (--ansi)
+假设输入文件使用ANSI C编写。目前这意味着不能解析K&R声明的函数。这在某些情况下可以加快处理进度。
+-b (--brief)
+简要输出
+--cpp[=command]
+运行指定的预处理命令
+-D name[=defn] (--define=name[=defn])
+预定义名字作为宏。
+-d number (--depth=number)
+设置流图中嵌套的最大层数。
+--debug[=number]
+设置调试级别。默认值是1，如果你开发或调试cflow时使用这个选项。
+--emacs
+让访问文件时告诉Emacs使用cflow模式输出。
+-f name (--format=name)
+使用给定的输出格式名。合法的名字是gnu和posix。
+-? (--help)
+帮助，对每个选项作简要的说明。
+-I dir (--include-dir=dir)
+增加搜索头文件时，所需要的头文件所在目录。
+-i spec (--include=spec)
+控制包含符号的数量。spec是一个字符串，指定了哪一类符号应该包含在输出里。合法字符如下：
+- ^ 输出中排除后接字符
++ 输出中包含后接字符（缺省）
+_ 以下划线开头的符号
+s 静态符号
+t 类型定义（只在交叉引用时使用）
+x 所有的数据符号，包括外部符号和静态符号
+-l
+--level-indent=string 指定每个级别缩进时使用的字符串
+-m name (--main=name) 设定最开始调用的函数名。
+-n (--number) 打印行号
+-o file (--output=file) 指定输出文件，默认是’-’,即标准输出
+--ommit-arguments 不打印函数声明中的参数列表
+--omit-symbol-names 不打印所指定的符号名字，在posix模式下可用。
+-r (--reverse) 打印逆向调用图
+-x (--xref) 只生成交叉引用列表
+-p number (--pushdown=number) 初始化令牌栈的大小。默认值64.令牌栈会自动增长，所以这个选项很少使用。
+--preprocess[=command] 使用预处理
+-s sym:class
+--symbol=sym:class
+--symbol=newsym:=oldsym
+第一种形式，在语法类class中注册符号sym。合法的额类名是‘keyword’ (or ‘kw’), ‘modifier’, ‘qualifier’, ‘identifier’, ‘type’, ‘wrapper’。任何明确的缩写都是可接受的。
+第二种形式(使用’:=’分割)，定义newsym作为oldsym的别名。
+-S (--use-indentation) 使用文件缩进作为提示。目前这个意思是右大括号 (‘}’) 在第零列强制cflow结束当前的函数定义。使用这个选项解析可能会对某些远产生误解。
+-U name (--undefine=name) 取消之前所做的name的定义
+-l (--print-level) 打印嵌套层数。层数在输出行的最后打印(如果使用了--number 或 --format=posix，层数会使用大括号括起来)。
+-T (--tree) 使用ASCII码打印，调用树。
+--usage 提供简短的使用信息。
+-v (--verbose) 详细的打印出所有的错误信息。cflow中的错误信息与c编译器的错误信息是不一样的，所以这个选项默认是关闭的。
+-V (--version) 打印程序的版本信息
+```
+
+下载jpg文件，打开查看
+
+![img](https://pic1.zhimg.com/50/v2-f2d26c2f3193a26f6108c9e644b73fdd_720w.jpg?source=1940ef5c)
+
+工具挺有趣的，但是对于freeswitch这种调用比较复杂的流程，图片看起来也比较复杂，和我使用工具的本意有差距，希望对大家有所帮助。
+
+## Debian设置开机启动命令行模式，关闭图形界面
+```
+debian10开机默认命令行需要如下，
+
+grub修改，grub修改有两种办法和centos7比较类似，
+
+a)修改/etc/default/grub 然后update-grub2
+
+或者直接修改/boot/grub/grub.cfg(修改之前建议先备份）
+
+一般建议修改/etc/default/grub（第一行是让用户登录时命令行login，第二行时grub选择系统界面为命令行）
+
+
+
+GRUB_CMDLINE_LINUX_DEFAULT="quiet text"
+
+GRUB_TERMINAL=console
+
+b)改完以后执行update-grub2 这个时候去/boot/grub/grub.cfg检查是否cmd line增加了text，等开机了也检查下/proc/cmdline
+
+c)然后设置多用户的配置
+
+sudo systemctl set-default multi-user.target
+
+如果要切回图形界面，
+
+sudo systemctl set-default graphical.target
+```
+
+## Debian 配置静态IP
+
+```
+vi /etc/network/interfaces
+```
+
+```
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+auto eth0 #开启自动连接网络
+iface lo inet loopback
+allow-hotplug eth0
+iface eth0 inet static
+address 192.168.1.104 # IP
+netmask 255.255.255.0 # 子网掩码
+gateway 192.168.1.1 # 网关
+```
+
+```
+service networking restart
+```
+

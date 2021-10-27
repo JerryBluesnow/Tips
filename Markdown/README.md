@@ -28,25 +28,25 @@
 1.  Parish
 
 ****************************************
-# 引用  
+## 引用
 > This is Quote  
 > This is Quote
 
 ****************************************
-# 插入链接  
+## 插入链接  
 [Baidu](http://www.baidu.com)
- 
 
-# 插入图片  
+
+## 插入图片  
 ![Mou icon](http://download.easyicon.net/ico/1098685/128/)
 
 ****************************************
-# Markdown 的粗体和斜体也非常简单，用两个 * 包含一段文本就是粗体的语法，用一个 * 包含一段文本就是斜体的语法。  
+## Markdown 的粗体和斜体也非常简单，用两个 * 包含一段文本就是粗体的语法，用一个 * 包含一段文本就是斜体的语法。  
 **Here We are**  
 *Here we are*  
 
 ****************************************
-# 表格  
+## 表格  
 | Tables        | Are           | Cool  |  
 | ------------- |:-------------:| -----:|  
 | col 3 is      | right-aligned | $1600 |  
@@ -69,11 +69,10 @@ Markdown表格和公式 | Markdown的**扩展语法**，表格、公式
 # 公式 
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
 通过使用MathJax，我们可以让Markdown解析LaTeX数学表达式，通常情况下，我们需要引入MathJax插件才可能工作。  
-如果使用陈列公式，结果为：  
-一个简单的数学公式，求圆的面积。  
-$$  
-	S=\pi r^2  
-$$  
+如果使用陈列公式，结果为：  一个简单的数学公式，求圆的面积。  
+$$
+S=\pi r^2
+$$
 
 # code
 
@@ -88,14 +87,14 @@ $$
     #include <iostream.h>  
     using namespace std;  
     int main()  
----------------------------------------  
+---------------------------------------
 
-# markdown 资料推荐
+## markdown 资料推荐
 [认识与入门 Markdown](https://sspai.com/post/25137)  
 [Markdown 语法说明](http://www.appinn.com/markdown/)  
 [CSDN Markdown简明教程3-表格和公式](http://blog.csdn.net/whqet/article/details/44277965)  
 
-# 字体、字号、颜色
+## 字体、字号、颜色
 
 <font face="黑体">我是黑体字</font>
 
@@ -112,3 +111,4 @@ $$
 </font>
 
 ## [配置颜色](http://blog.csdn.net/testcs_dn/article/details/45719357/)
+

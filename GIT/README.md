@@ -98,16 +98,21 @@ mengalong@along-mac:~/code/git/bter/bter$ git log --pretty=oneline utils.py
 bc5e932862f25688c09f0c90df74d505efb5bcc3 init the bter demo
 ```
 
-## git remote set-url origin git@github.com:User/UserRepo.git
+## 更换远端repo
 
+`git remote set-url origin git@github.com:User/UserRepo.git`
 
+## submodule 
 
-## git submodule init
-## git submodule update
+```
+git submodule init
 
-https://zhuanlan.zhihu.com/p/87053283
+git submodule update
+```
 
-https://segmentfault.com/a/1190000003076028
+[Git中submodule的使用](https://zhuanlan.zhihu.com/p/87053283)
+
+[使用Git Submodule管理子模块](https://segmentfault.com/a/1190000003076028)
 
 ## 使用Git pull文件时，出现"error: RPC failed; curl 18 transfer closed with outstanding read data remaining"
 ```
@@ -134,8 +139,6 @@ git config --global http.lowSpeedTime 999999
 git clone --depth=1 http://xxx.git
 git fetch --unshallow
 ```
-## 
-- [获取JavaScript异步函数的返回值](https://www.cnblogs.com/zmc/p/6916164.html)
 ## git查看当前commit修改的文件列表
 ```
 git diff --name-only HEAD~ HEAD

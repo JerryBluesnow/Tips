@@ -17,6 +17,7 @@
 
 - [一个http请求所历经的九九八十一难](https://www.cnblogs.com/traditional/p/13184481.html)
 
-- [架构进化论]h(ttps://www.cnblogs.com/binyue/p/12069641.html)
+- [架构进化论](https://www.cnblogs.com/binyue/p/12069641.html)
 
 - [Spring Cloud Alibaba](https://github.com/alibaba/spring-cloud-alibaba/blob/master/README-zh.md)
+

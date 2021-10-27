@@ -126,3 +126,8 @@ django扩展的 runprofileserver
 kcachegrind 转换器
 repoze.profile – 只需要设置cachegrind_filename
 ```
+
+## 你见过哪些令你瞠目结舌的C/C++代码技巧？
+
+- [The International Obfuscated C Code Contest](www.ioccc.org)
+- [你见过哪些令你瞠目结舌的C/C++代码技巧？](https://www.zhihu.com/question/37692782/answer/74409370)

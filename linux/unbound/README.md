@@ -10,7 +10,7 @@
     https://linux.cn/article-5926-1.html
     https://linux265.com/course/3763.html
 
-# Unbound服务的安装与运行管理 
+## Unbound服务的安装与运行管理
 
 一、[Unbound服务的安装与运行管理](https://www.cnblogs.com/rusking/p/7591938.html)
 - 1．获取Unbound软件包
@@ -47,7 +47,7 @@
     ss -tunap | grep unbound
 
 - 5. 使用Unbound软件部署DNS服务器时,相关的配置文件及目录。
-    位置及名称
+      位置及名称
 
     作用
 
@@ -237,33 +237,33 @@
 测试2：
 
     > set type=mx //验证MX记录的解析结果
-
+    
     > dyzx.edu
-
+    
     Server: 192.168.8.1
-
+    
     Address: 192.168.8.1#53
-
+    
     dyzx.edu mail exchanger = 5 mail.dyzx.edu.
-
+    
     > www.baidu.com //验证转发功能的解析结果
-
+    
     Server: 192.168.8.1
-
+    
     Address: 192.168.8.1#53
-
+    
     Non-authoritative answer:
-
+    
     www.baidu.com canonical name = www.a.shifen.com.
-
+    
     Name: www.a.shifen.com
-
+    
     Address: 58.217.200.112
-
+    
     Name: www.a.shifen.com
-
+    
     Address: 58.217.200.113
-
+    
     > exit //退出nslookup命令,结束测试
 
 - - 三、纯缓存DNS服务器的配置

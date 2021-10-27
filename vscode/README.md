@@ -5,3 +5,4 @@
 - [VS Code与CMake真乃天作之合](https://zhuanlan.zhihu.com/p/52874931)
 
 - [download vscode-server](https://az764295.vo.msecnd.net/stable/c3f126316369cd610563c75b1b1725e0679adfb3/vscode-server-linux-x64.tar.gz)
+
