@@ -67,7 +67,9 @@ Markdown基础 | Markdown的**基本语法**，格式化文本、代码、列表
 Markdown表格和公式 | Markdown的**扩展语法**，表格、公式
 
 # 公式 
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+```javascript
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+```
 通过使用MathJax，我们可以让Markdown解析LaTeX数学表达式，通常情况下，我们需要引入MathJax插件才可能工作。  
 如果使用陈列公式，结果为：  一个简单的数学公式，求圆的面积。  
 $$
@@ -76,17 +78,13 @@ $$
 
 # code
 
-`#include <iosteam.h>`  
-`using namespace std;`  
-
-`int main()`  
-`{`  
-    `return 0;`  
-`}`  
-
-    #include <iostream.h>  
-    using namespace std;  
-    int main()  
+```c++
+#include <iostream.h>  
+using namespace std;  
+int main()  {
+    return 0;
+}
+```
 ---------------------------------------
 
 ## markdown 资料推荐

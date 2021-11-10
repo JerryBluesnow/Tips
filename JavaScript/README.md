@@ -11,7 +11,7 @@
 - [BiquadFilterNode - 表示一个简单的低阶滤波器](https://www.mifengjc.com/api/BiquadFilterNode.html)
 
 - [js实现pcm数据编码](https://github.com/2fps/demo/blob/master/view/2019/04/js实现pcm数据编码/index.html)
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
