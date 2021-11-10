@@ -78,14 +78,6 @@
 
 - [有哪些值得推荐的c/c++开源框架与库]h(ttps://zhuanlan.zhihu.com/p/71707672)
 
-- [利用vs2019编译器远程调试linux程序（走心版）](https://blog.csdn.net/foxriver_gjg1989/article/details/102854440)
-
-## C++ 11
-
-- [C++11 FAQ中文版](https://wizardforcel.gitbooks.io/cpp-11-faq/content/part1.html)
-- [cpp11 github](https://github.com/DragonFive/cpp11)
-- [搞懂C++11中的匿名函数](https://mp.weixin.qq.com/s/w_G8qy4UMucUqZ9Is22yqw)
-
 ## 内存
 
 - [C++堆，栈，RAII](https://zhuanlan.zhihu.com/p/354611651)
