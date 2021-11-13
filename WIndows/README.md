@@ -237,3 +237,26 @@ https://blog.csdn.net/weixin_35589827/article/details/112487233
 # WIN10 Hyper-V 新建虚拟机 步骤以及一些有坑的地方说明
 
 https://blog.csdn.net/zfr_xuexiao66/article/details/80525970
+
+## windows预览体验计划 0x0错误解决方法
+都是网上整合的方法，能用就行 作者：小黑-xiaohei https://www.bilibili.com/read/cv11947720 出处：bilibili
+下载一个注册表文件 直接安装
+
+https://xiaoheiswz001.lanzoui.com/ievBmquyflg
+
+
+然后打开windows预览计划，如果闪退
+
+windows+R 输入regedit定位到
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsSelfHost
+
+1.选中Account项，然后在右侧安全窗格中删除除“默认”外的所有键值
+
+2.删除红框中的子项
+
+
+现在再打开预览计划应该就正常了 https://www.bilibili.com/read/cv11947720 出处：bilibili
+
+## 磁盘清理
+- [Dism++，也许是最强的实用工具](https://www.chuyu.me/zh-Hans/index.html)

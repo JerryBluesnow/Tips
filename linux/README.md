@@ -165,7 +165,7 @@ The following actions will resolve these dependencies:
 
 ```
 
-每个版本的软件源都不同 - ubuntu16.04更新软件源
+## 每个版本的软件源都不同 - ubuntu16.04更新软件源
 
 - [ubuntu16.04更新软件源](https://blog.csdn.net/lxlong89940101/article/details/89488461)
 
@@ -987,6 +987,13 @@ ps -ef|grep kamailio|grep -v grep|cut -c 9-15|xargs kill -9
 ## centos 7.6 安装kamailio n5记录
 
 ```
+git remote set-url origin git@git.samxtec.com:bbluesnow/kamaililo.git
+
+git remote set-url origin git@gitee.com:rnxt/vonrptt.git
+
+https://gitee.com/rnxt/vonrptt
+```
+```
 yum list java
 
 yum install -y java-1.8.0-openjdk-devel.x86_64
@@ -1328,10 +1335,15 @@ runcmd:
 This removes all existing cloud users and allows only root user and sets a password
 ```
 ### 3. Install following packages
++ ubuntu/Debian
 ```
 $ apt update && apt upgrade -y && apt install -y mysql-server tcpdump screen ntp ntpdate git-core dkms gcc flex bison libmysqlclient-dev make \
 libssl-dev libcurl4-openssl-dev libxml2-dev libpcre3-dev bash-completion g++ autoconf rtpproxy libmnl-dev libsctp-dev ipsec-tools libradcli-dev \
 libradcli4
+```
++ CentOS
+```
+
 ```
 ### 4. Clone Kamailio repository and checkout 5.3 version of repository
 ```
@@ -1440,7 +1452,50 @@ The kamdbctl will add two users in MySQL user tables:
 - kamailio   - (with default password 'kamailiorw') - user which has full access rights to 'kamailio' database
 - kamailioro - (with default password 'kamailioro') - user which has read-only access rights to 'kamailio' database
 ```
-### 9. Edit /etc/default/rtpproxy file as follows:
+### 9. 安装rtp proxy
+1. 安装依赖包:
+
+   ```
+   yum groupinstall "Development Tools"
+   yum install glibc-static libstdc++-static
+   ```
+
+   gcc编译器大于4.9，如gcc5.4版本的安装： 升级gcc, gcc-v可以查看当前版本
+
+   + [Centos7升级gcc版本方法之一使用scl软件集](https://blog.csdn.net/helpmsg/article/details/105876127)
+   + [CentOS 7下升级gcc版本](https://blog.csdn.net/ncdx111/article/details/106047228)
+
+   ```
+   yum install centos-release-scl scl-utils-build
+   yum list all --enablerepo='centos-sclo-rh' | grep devtoolset-.*
+   可以根据grep出来的结果选择安装最高版本，其中下面命令中devtoolset-4 代表版本gcc 4.x
+   yum install centos-release-scl -y
+   yum install devtoolset-4-toolchain -y
+   scl enable devtoolset-4 bash
+   ```
+
+2. 安装rtpproxy app:
+
+- 可以参照这个连接进行安装详细访问[Install RTPProxy from source on Ubuntu 20.04/18.04/16.04](https://computingforgeeks.com/how-to-install-rtpproxy-from-source-on-ubuntu-linux/)
+
+```
+git clone -b master https://github.com/sippy/rtpproxy.git
+
+cd rtpproxy
+
+git -c rtpproxy submodule update --init --recursive
+
+./configure
+
+make 
+
+make install
+
+启动rtpproxy:
+
+rtpproxy -l 182.XX.10.17 -s udp:127.0.0.1 7078 -F 
+```
+Edit /etc/default/rtpproxy file as follows:
 ```
 # Defaults for rtpproxy
 
@@ -1451,7 +1506,7 @@ The kamdbctl will add two users in MySQL user tables:
 CONTROL_SOCK=udp:127.0.0.1:7722
 
 # Additional options that are passed to the daemon.
-EXTRA_OPTS="-l 172.24.15.30 -d DBUG:LOG_LOCAL0"
+EXTRA_OPTS="-l 192.168.1.125 -d DBUG:LOG_LOCAL0"
 ```
 here, <font color="Hotpink">-l <PUBLIC_IP></font>
 
@@ -1476,9 +1531,9 @@ auto_aliases=no
 (uncomment this line and enter the DNS domain created above)
 alias="ims.mnc000.mcc460.3gppnetwork.org"
 
-(uncomment this line, 10.4.128.21 is the internal IP and 172.24.15.30 is the Public/Floating IP)
-listen=udp:10.4.128.21:5060 advertise 172.24.15.30:5060
-listen=tcp:10.4.128.21:5060 advertise 172.24.15.30:5060
+(uncomment this line, 192.168.1.125 is the internal IP and 172.24.15.30 is the Public/Floating IP)
+listen=udp:192.168.1.125:5060 advertise 172.24.15.30:5060
+listen=tcp:192.168.1.125:5060 advertise 172.24.15.30:5060
 
 (Further down, we will need to modify the rtpproxy_sock value to match the CONTROL_SOCK option we set for RTPProxy in /etc/default/rtpproxy)
 modparam("rtpproxy", "rtpproxy_sock", "udp:127.0.0.1:7722")
@@ -1587,8 +1642,8 @@ Upon completion of this test, set “Receive incoming calls” option to disable
 ```
 $ mysql
 <mysql> CREATE DATABASE  `pcscf`;
-<mysl> CREATE DATABASE  `scscf`;
-<mysl> CREATE DATABASE  `icscf`;
+<mysql> CREATE DATABASE  `scscf`;
+<mysql> CREATE DATABASE  `icscf`;
 ```
 In all of the below steps, when prompted for mysql root user password, leave it blank i.e. Press Enter
 ```
@@ -1672,6 +1727,7 @@ $ mysql
 <mysql> INSERT INTO `s_cscf_capabilities` VALUES (1,1,0),(2,1,1);
 ```
 ### 14. Copy pcscf, icscf and scscf configuration files to /etc folder and edit accordingly
+一定要以这几个文件为base做改动，不要用源代码中misc目录中的文件
 ```
 $ cd ~ && git clone https://github.com/herlesupreeth/Kamailio_IMS_Config
 $ cd Kamailio_IMS_Config
@@ -1683,11 +1739,11 @@ $ cp -r kamailio_scscf /etc
 ```
 $ apt install -y bind9
 ```
-Use the below example DNS Zone file to create a DNS Zone file into the bind folder and edit /etc/bind/named.conf.local and /etc/bind/named.conf.options accordingly:
+Use the below example DNS Zone file to create a DNS Zone file into the bind folder and edit /etc/named/named.conf.local and /etc/named/named.conf.options accordingly:
 ```
 $ cd /etc/bind
 ```
-In the below example: Kamailio IMS & DNS server running at 10.4.128.21/172.24.15.30 (Floating IP) and PCRF also at 10.4.128.21/172.24.15.30 (Floating IP)
+In the below example: Kamailio IMS & DNS server running at 192.168.1.125/172.24.15.30 (Floating IP) and PCRF also at 192.168.1.125/172.24.15.30 (Floating IP)
 ```
 $ cat ims.mnc000.mcc460.3gppnetwork.org
 ```
@@ -1702,21 +1758,21 @@ $TTL 1W
                                         1D )            ; minimum
 
                         1D IN NS        ns
-ns                      1D IN A         10.4.128.21
+ns                      1D IN A         192.168.1.125
 
-pcscf                   1D IN A         10.4.128.21
+pcscf                   1D IN A         192.168.1.125
 _sip._udp.pcscf         1D SRV 0 0 5060 pcscf
 _sip._tcp.pcscf         1D SRV 0 0 5060 pcscf
 
-icscf                   1D IN A         10.4.128.21
+icscf                   1D IN A         192.168.1.125
 _sip._udp               1D SRV 0 0 4060 icscf
 _sip._tcp               1D SRV 0 0 4060 icscf
 
-scscf                   1D IN A         10.4.128.21
+scscf                   1D IN A         192.168.1.125
 _sip._udp.scscf         1D SRV 0 0 6060 scscf
 _sip._tcp.scscf         1D SRV 0 0 6060 scscf
 
-hss                     1D IN A         10.4.128.21
+hss                     1D IN A         192.168.1.125
 Create another DNS zone for resolving pcrf domain as follows:
 ```
 ```
@@ -1733,30 +1789,31 @@ $TTL 1W
                                         1D )            ; minimum
 
                         1D IN NS        epcns
-epcns                   1D IN A         10.4.128.21
+epcns                   1D IN A         192.168.1.125
 
-pcrf                    1D IN A         127.0.0.5
-Edit /etc/bind/named.conf.local file as follows:
-
+pcf                    1D IN A         127.0.0.1
+```
+Edit /etc/named/named.conf.local file as follows:
+```
 //
 // Do any local configuration here
 //
 
 // Consider adding the 1918 zones here, if they are not used in your
 // organization
-//include "/etc/bind/zones.rfc1918";
+//include "/etc/named/zones.rfc1918";
 
 zone "ims.mnc000.mcc460.3gppnetwork.org" {
         type master;
-        file "/etc/bind/ims.mnc000.mcc460.3gppnetwork.org";
+        file "/etc/named/ims.mnc000.mcc460.3gppnetwork.org";
 };
 
 zone "epc.mnc001.mcc001.3gppnetwork.org" {
         type master;
-        file "/etc/bind/epc.mnc001.mcc001.3gppnetwork.org";
+        file "/etc/named/epc.mnc001.mcc001.3gppnetwork.org";
 };
 ```
-Edit /etc/bind/named.conf.options file as follows:
+Edit /etc/named/named.conf.options file as follows:
 ```
 options {
         directory "/var/cache/bind";
@@ -1787,24 +1844,39 @@ options {
 };
 ```
 ```
-cp /etc/bind/epc.mnc000.mcc460.3gppnetwork.org /var/named/
-cp /etc/bind/ims.mnc000.mcc460.3gppnetwork.org /var/named/
+cp /etc/named/epc.mnc000.mcc460.3gppnetwork.org /var/named/
+cp /etc/named/ims.mnc000.mcc460.3gppnetwork.org /var/named/
 ```
+
+/etc/bind
+[root@localhost bind]# ls
+bind  epc.mnc000.mcc460.3gppnetwork.org  ims.mnc000.mcc460.3gppnetwork.org  named.conf.local  named.conf.options  pcf.mnc000.mcc460.3gppnetwork.org
+[root@localhost bind]#
+
+[root@localhost named]# ls
+chroot      data     dyndb-ldap                         ims.mnc000.mcc460.3gppnetwork.org  named.empty      named.loopback
+chroot_sdb  dynamic  epc.mnc000.mcc460.3gppnetwork.org  named.ca                           named.localhost  slaves
+[root@localhost named]#
+
 ```
-$ systemctl restart bind9
+$ systemctl restart named
 ```
 Then, test DNS resolution by adding following entries on top of all other entries in /etc/resolv.conf (make sure it persist across reboots)
 ```
 search ims.mnc000.mcc460.3gppnetwork.org
-nameserver 10.4.128.21
+nameserver 192.168.40.53
+```
+安装dig
+```
+yum -y install bind-utils
 ```
 Finally, ping to ensure
 
 ```
 $ ping pcscf
-PING pcscf.ims.mnc000.mcc460.3gppnetwork.org (10.4.128.21) 56(84) bytes of data.
-64 bytes from localhost (10.4.128.21): icmp_seq=1 ttl=64 time=0.017 ms
-64 bytes from localhost (10.4.128.21): icmp_seq=2 ttl=64 time=0.041 ms
+PING pcscf.ims.mnc000.mcc460.3gppnetwork.org (192.168.1.125) 56(84) bytes of data.
+64 bytes from localhost (192.168.1.125): icmp_seq=1 ttl=64 time=0.017 ms
+64 bytes from localhost (192.168.1.125): icmp_seq=2 ttl=64 time=0.041 ms
 ```
 To make changes in /etc/resolv.conf be persistent across reboot edit the /etc/netplan/50-cloud-init.yaml file as follows:
 ```
@@ -1824,7 +1896,7 @@ network:
             nameservers:
                 search: [ims.mnc000.mcc460.3gppnetwork.org,epc.mnc001.mcc001.3gppnetwork.org]
                 addresses:
-                      - 10.4.128.21
+                      - 192.168.1.125
     version: 2
 ```
 $ netplan apply
@@ -1852,7 +1924,7 @@ $ dpkg -i *.deb
 $ cp /etc/rtpengine/rtpengine.sample.conf /etc/rtpengine/rtpengine.conf
 Edit this file as follows under [rtpengine]:
 
-interface = 10.4.128.21
+interface = 192.168.1.125
 Port on which rtpengine binds i.e. listen_ng parameter is udp port 2223. This should be updated in kamailio_pcscf.cfg file at modparam(rtpengine …)
 
 # ----- rtpproxy params -----
@@ -1874,7 +1946,7 @@ Second instance of RTPENGINE can be run as follows (Optional)
 $ iptables -I rtpengine -p udp -j RTPENGINE --id 1
 $ ip6tables -I INPUT -p udp -j RTPENGINE --id 1
 $ echo 'del 1' > /proc/rtpengine/control
-$ /usr/sbin/rtpengine --table=1 --interface=10.4.128.21 --listen-ng=127.0.0.1:2224 --tos=184 --pidfile=ngcp-rtpengine-daemon2.pid --no-fallback --foreground
+$ /usr/sbin/rtpengine --table=1 --interface=192.168.1.125 --listen-ng=127.0.0.1:2224 --tos=184 --pidfile=ngcp-rtpengine-daemon2.pid --no-fallback --foreground
 17. Running I-CSCF, P-CSCF and S-CSCF as separate process
 First, stop the default kamailio SIP server
 
@@ -2081,7 +2153,7 @@ slasheddomain=`echo $domainname | sed 's/\./\\\\\\\\\./g'`
 $ chmod +x configurator.sh
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:10.4.128.21
+IP Adress:192.168.1.125
 
 $ grep -r "open-ims"
 (Change realm name in the below file from open-ims.test to ims.mnc000.mcc460.3gppnetwork.org)
@@ -2096,13 +2168,13 @@ $ cd ../scripts
 $ grep -r "open-ims"
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:10.4.128.21
+IP Adress:192.168.1.125
 
 $ cp configurator.sh ../config/
 $ cd ../config
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:10.4.128.21
+IP Adress:192.168.1.125
 
 $ cd ../src-web
 $ vim WEB-INF/web.xml
@@ -2268,7 +2340,7 @@ Support for Dedicated radio bearer creation
 Make sure to check the DRB configuration with respect to QCI of APN accordingly (QCI 5 for ims)
 On the eNB machine have the following static routes (since internal IP of the VM is advertised in S1AP messages and UE wont find the core in Uplink)
 
-$ ip r add 10.4.128.21/32 via 172.24.15.30
+$ ip r add 192.168.1.125/32 via 172.24.15.30
 23. USIM and UE settings
 Make sure to disable SQN check in Sysmocom SIM cards using sysmo-usim-tool tool https://github.com/herlesupreeth/sysmo-usim-tool
 Tested with OnePlus 5 with following methods (Official Google method is the recommended method to prevent damage to phone)
@@ -2365,7 +2437,6 @@ echo 'add 0' > /proc/rtpengine/control
 iptables -I INPUT -p udp -j RTPENGINE --id $TableID
 ip6tables -I INPUT -p udp -j RTPENGINE --id $TableID
 ```
-```
 
 ## WSL ubuntu安装docker，不使用docker desktop, 可行， 使用下面的镜像。（debian失败）
 1. ubuntu 18.04 网易镜像源- 可用
@@ -2418,6 +2489,7 @@ PS C:\WINDOWS\system32> net start LxssManager
 The LxssManager service is starting.
 The LxssManager service was started successfully.
 ```
+```
 
 ## libcurl
 
@@ -2438,18 +2510,14 @@ The LxssManager service was started successfully.
   - [方法二：yum --downloadonly](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_1)
   - [方法三：reposync](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_2)
 
- 
-
 #### 通过yum命令只下载rpm包不安装
-
-
 
 ##### 方法一：yumdownloader
 
 如果只想通过 yum 下载软件的软件包，但是不需要进行安装的话，可以使用 yumdownloader 命令；  yumdownloader 命令在软件包 yum-utils 里面。
 
 ```
-# yum install yum-utils -y
+yum install yum-utils -y
 ```
 
 常用参数说明：
@@ -2484,8 +2552,6 @@ yum命令的参数有很多，其中就有只是下载而不需要安装的命�
 ```shell
 # yum install yum-plugin-downloadonly
 ```
-
-
 
 ##### 方法三：reposync
 
@@ -2671,8 +2737,6 @@ gpgcheck=0
 yum update curl
 ```
 - [CentOS使用rpm离线安装mariadb](https://www.cnblogs.com/cobcmw/p/11420311.html)
-
-
 
 # 十个 SCP 传输命令例子
 
@@ -2939,3 +3003,92 @@ Label.pdf 100% 3672KB 282.5KB/s 00:131.2.3.4.5.
 
 以上就是关于**SCP**的全部内容了，你可以查看**SCP**的**man页面**来获取更多内容，请随意留下您的评论及建议。
 
+![image-20211017224849305](C:\Users\JerryZ\AppData\Roaming\Typora\typora-user-images\image-20211017224849305.png)
+
+
+## 自启动
+[Unit]
+Description=HTTP/2 proxy
+Documentation=man:nghttpx
+After=network.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/nghttpx --conf=/etc/nghttpx/nghttpx.conf
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillSignal=SIGQUIT
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+Ubuntu Server 中resolv.conf重启时被覆盖的问题
+/etc/resolv.conf中设置dns之后每次重启Ubuntu Server时该文件会被覆盖，针对这种情况找了一些个解决方法
+
+防止/etc/resolv.conf被覆盖的方法
+
+方法一
+
+1.需要创建一个文件/etc/resolvconf/resolv.conf.d/tail
+
+sudo vi /etc/resolvconf/resolv.conf.d/tail
+
+2.在该文件中写入自己需要的dns服务器，格式与/etc/resolv.conf相同
+
+nameserver 8.8.8.8  
+
+3.重启下resolvconf程序
+
+sudo /etc/init.d/resolvconf restart 
+
+再去看看/etc/resolv.conf文件,可以看到自己添加的dns服务器已经加到该文件中
+
+方法二
+
+在/etc/network/interfaces中
+
+复制代码
+###interfaces中#######
+auto eth0    
+iface eth0 inet static    
+address 192.168.3.250    
+netmask 255.255.255.0                  #子网掩码    
+gateway 192.168.3.1                      #网关    
+dns-nameservers 8.8.8.8 8.8.4.4    #设置dns服务器  
+
+避免resolv.conf设置被覆盖(示例代码)
+technologylife 2020-11-19
+
+栏目: 类库 ·
+
+来源: technologylife
+
+作者：technologylife
+
+简介  这篇文章主要介绍了避免resolv.conf设置被覆盖(示例代码)以及相关的经验技巧，文章约974字，浏览量318，点赞数3，值得参考！
+
+resolv.conf文件简介
+/etc/resolv文件是系统指定dns服务器地址的配置文件。下面简称resolv.conf
+
+当系统进行域名解析时，会先读取resolv.conf文件中设置的DNS地址，若DNS地址设置错误或没有resolv.conf文件都会导致域名解析失败。
+通过ifcfg-eth0文件设置dns地址，将生成resolv.conf文件(若存在则覆盖)，若想不覆盖/etc/resolv.conf设置，在ifcfg-eth0中添加PEERDNS=no(系统默认设置为yes)，
+若ifcfg-eth0设置为DHCP模式，同样需要设置PEERDNS=no，否则DHCP获取到的DNS地址会覆盖resolv.conf文件
+保护DNS设置
+在ifcfg配置文件中添加
+
+PEERDNS=no
+这样可防止网络服务使用从 DHCP 服务器接收的 DNS 服务器更新 /etc/resolv.conf。
+
+在ifcfg配置文件中设置DNS
+
+要配置一个接口以便使用具体 DNS 服务器，请如上所述设定 PEERDNS=no，并在 ifcfg 文件中添加以下行：
+
+DNS1=ip-address
+DNS2=ip-address
+其中 ip-address 是 DNS 服务器的地址。这样就会让网络服务使用指定的 DNS 服务器更新 /etc/resolv.conf

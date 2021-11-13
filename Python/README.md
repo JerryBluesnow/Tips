@@ -347,3 +347,21 @@ def main():
 if __name__== '__main__':
     main()
 ```
+
+## python pip更新镜像源
+如果想使用命令行pip命令进行下载：
+
+使用pip的时候在后面加上-i参数，指定pip的下载源
+
+pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+上面命令每次运行需要指定网址，可进行永久修改：
+
+windows下: 在user目录中创建一个pip目录，如：C:\Users（用户）\xx\pip，新建文件pip.ini，内容如下
+
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+linux下: 修改 ~/.pip/pip.conf （如果没有自己创建一个）， 内容如下：
+
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
