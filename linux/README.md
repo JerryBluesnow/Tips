@@ -554,7 +554,8 @@ certbot certonly --standalone -d sam-tech.com
 - [使用Visual Studio 2017开发Linux程序](https://www.cnblogs.com/dongc/p/6599461.html)
 - ssh servers使用docker搭建
 ```
-gdb调试报错warning: Error disabling address space randomization: Operation not permitted
+## gdb调试报错warning: Error disabling address space randomization: Operation not permitted
+
  Canceled
 #I1KPAQ
 Bug
@@ -1097,8 +1098,14 @@ Dokuwiki Page - http://www.kamailio.org/dokuwiki/
 1．依赖包：
 libmysqlclient & libz (zlib) ：mysql DB support (the db_mysql module) Shared libraries
 
+<<<<<<< HEAD
 ```shell
 MySQL-shared-5.1.32-0.glibc23.i386.rpm
+=======
+                        MySQL-shared-5.1.32-0.glibc23.i386.rpm
+    
+                        MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
+>>>>>>> 0e50f1b (from personal pc)
 
 MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
 ```
@@ -1455,7 +1462,7 @@ The kamdbctl will add two users in MySQL user tables:
 ### 9. 安装rtp proxy
 1. 安装依赖包:
 
-   ```
+```
    yum groupinstall "Development Tools"
    yum install glibc-static libstdc++-static
    ```
@@ -1478,7 +1485,7 @@ The kamdbctl will add two users in MySQL user tables:
 
 - 可以参照这个连接进行安装详细访问[Install RTPProxy from source on Ubuntu 20.04/18.04/16.04](https://computingforgeeks.com/how-to-install-rtpproxy-from-source-on-ubuntu-linux/)
 
-```
+   ```
 git clone -b master https://github.com/sippy/rtpproxy.git
 
 cd rtpproxy
