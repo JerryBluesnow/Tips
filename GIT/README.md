@@ -152,3 +152,5 @@ git show <commit-hash-id>查看某次commit的修改内容
 git log -p <filename>查看某个文件的修改历史
 git log -p -2查看最近2次的更新内容
 ```
+##  github加速
+- [多种GitHub加速方式](https://www.cnblogs.com/beilong/p/13763462.html)

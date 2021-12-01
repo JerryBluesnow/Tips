@@ -265,6 +265,8 @@ docker pull boonyadocker/tomcat-allow-remote
     docker run -d -p 9982:22 -p 9528:9528 -p 9529:9529 -p 9530:9530 -p 9531:9531 -p 9906:3306 -p 9004:9004 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
     docker run -d -p 3306:3306 --name=mysql --privileged --cap-add=SYS_PTRACE -e MYSQL_ROOT_PASSWORD=admin --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
 
+    docker run -d -p 9822:22 --name=vonr --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it centos:7.6.1810 /usr/sbin/init
+
     /var/run/mysqld/mysqld.sock
     ssh连接容器
     通过主机端口映射连接：ssh -p 9022 root@主机ip

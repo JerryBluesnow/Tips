@@ -107,8 +107,6 @@ export LD_PRELOAD=/lib64/libc-2.17.so;ln -sf /lib64/libc-2.17.so /lib64/libc.so.
 ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
 /lib/x86_64-linux-gnu/ld-2.31.so /bin/ln -s /lib/x86_64-linux-gnu/ld-2.31.so /lib64/ld-linux-x86-64.so.2
 ```
-
-
 ## 误删了/lib64/ld-linux-x86-64.so.2，ls, cd等等命令失效，命令都失效
 
     --恢复
@@ -120,7 +118,6 @@ ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
 
 ## nvocation of python3.6 via ld-2.17.so segfaults
 - [nvocation of python3.6 via ld-2.17.so segfaults](https://github.com/ContinuumIO/anaconda-issues/issues/8773)
-
 
 The following actions will resolve these dependencies:
 
@@ -135,7 +132,6 @@ The following actions will resolve these dependencies:
 
      Leave the following dependencies unresolved:
 8)     mariadb-client-5.5 recommends libdbd-mysql-perl (>= 1.2202)
-
 
 ## Ubuntu Server源码编译安装MariaDB
 ```
@@ -997,11 +993,13 @@ https://gitee.com/rnxt/vonrptt
 ```
 yum list java
 
+yum install -y wget
+
 yum install -y java-1.8.0-openjdk-devel.x86_64
 
 yum groupinstall -y "Development Tools"
 
-yum install -y json-c json-c-devel
+need to install json-c
 
 yum install -y gcc
 
@@ -1513,7 +1511,7 @@ Edit /etc/default/rtpproxy file as follows:
 CONTROL_SOCK=udp:127.0.0.1:7722
 
 # Additional options that are passed to the daemon.
-EXTRA_OPTS="-l 192.168.1.125 -d DBUG:LOG_LOCAL0"
+EXTRA_OPTS="-l 192.168.2.240 -d DBUG:LOG_LOCAL0"
 ```
 here, <font color="Hotpink">-l <PUBLIC_IP></font>
 
@@ -1538,9 +1536,9 @@ auto_aliases=no
 (uncomment this line and enter the DNS domain created above)
 alias="ims.mnc000.mcc460.3gppnetwork.org"
 
-(uncomment this line, 192.168.1.125 is the internal IP and 172.24.15.30 is the Public/Floating IP)
-listen=udp:192.168.1.125:5060 advertise 172.24.15.30:5060
-listen=tcp:192.168.1.125:5060 advertise 172.24.15.30:5060
+(uncomment this line, 192.168.2.240 is the internal IP and 172.24.15.30 is the Public/Floating IP)
+listen=udp:192.168.2.240:5060 advertise 172.24.15.30:5060
+listen=tcp:192.168.2.240:5060 advertise 172.24.15.30:5060
 
 (Further down, we will need to modify the rtpproxy_sock value to match the CONTROL_SOCK option we set for RTPProxy in /etc/default/rtpproxy)
 modparam("rtpproxy", "rtpproxy_sock", "udp:127.0.0.1:7722")
@@ -1750,7 +1748,7 @@ Use the below example DNS Zone file to create a DNS Zone file into the bind fold
 ```
 $ cd /etc/bind
 ```
-In the below example: Kamailio IMS & DNS server running at 192.168.1.125/172.24.15.30 (Floating IP) and PCRF also at 192.168.1.125/172.24.15.30 (Floating IP)
+In the below example: Kamailio IMS & DNS server running at 192.168.2.240/172.24.15.30 (Floating IP) and PCRF also at 192.168.2.240/172.24.15.30 (Floating IP)
 ```
 $ cat ims.mnc000.mcc460.3gppnetwork.org
 ```
@@ -1765,21 +1763,21 @@ $TTL 1W
                                         1D )            ; minimum
 
                         1D IN NS        ns
-ns                      1D IN A         192.168.1.125
+ns                      1D IN A         192.168.2.240
 
-pcscf                   1D IN A         192.168.1.125
+pcscf                   1D IN A         192.168.2.240
 _sip._udp.pcscf         1D SRV 0 0 5060 pcscf
 _sip._tcp.pcscf         1D SRV 0 0 5060 pcscf
 
-icscf                   1D IN A         192.168.1.125
+icscf                   1D IN A         192.168.2.240
 _sip._udp               1D SRV 0 0 4060 icscf
 _sip._tcp               1D SRV 0 0 4060 icscf
 
-scscf                   1D IN A         192.168.1.125
+scscf                   1D IN A         192.168.2.240
 _sip._udp.scscf         1D SRV 0 0 6060 scscf
 _sip._tcp.scscf         1D SRV 0 0 6060 scscf
 
-hss                     1D IN A         192.168.1.125
+hss                     1D IN A         192.168.2.240
 Create another DNS zone for resolving pcrf domain as follows:
 ```
 ```
@@ -1796,7 +1794,7 @@ $TTL 1W
                                         1D )            ; minimum
 
                         1D IN NS        epcns
-epcns                   1D IN A         192.168.1.125
+epcns                   1D IN A         192.168.2.240
 
 pcf                    1D IN A         127.0.0.1
 ```
@@ -1881,9 +1879,9 @@ Finally, ping to ensure
 
 ```
 $ ping pcscf
-PING pcscf.ims.mnc000.mcc460.3gppnetwork.org (192.168.1.125) 56(84) bytes of data.
-64 bytes from localhost (192.168.1.125): icmp_seq=1 ttl=64 time=0.017 ms
-64 bytes from localhost (192.168.1.125): icmp_seq=2 ttl=64 time=0.041 ms
+PING pcscf.ims.mnc000.mcc460.3gppnetwork.org (192.168.2.240) 56(84) bytes of data.
+64 bytes from localhost (192.168.2.240): icmp_seq=1 ttl=64 time=0.017 ms
+64 bytes from localhost (192.168.2.240): icmp_seq=2 ttl=64 time=0.041 ms
 ```
 To make changes in /etc/resolv.conf be persistent across reboot edit the /etc/netplan/50-cloud-init.yaml file as follows:
 ```
@@ -1903,7 +1901,7 @@ network:
             nameservers:
                 search: [ims.mnc000.mcc460.3gppnetwork.org,epc.mnc001.mcc001.3gppnetwork.org]
                 addresses:
-                      - 192.168.1.125
+                      - 192.168.2.240
     version: 2
 ```
 $ netplan apply
@@ -1931,7 +1929,7 @@ $ dpkg -i *.deb
 $ cp /etc/rtpengine/rtpengine.sample.conf /etc/rtpengine/rtpengine.conf
 Edit this file as follows under [rtpengine]:
 
-interface = 192.168.1.125
+interface = 192.168.2.240
 Port on which rtpengine binds i.e. listen_ng parameter is udp port 2223. This should be updated in kamailio_pcscf.cfg file at modparam(rtpengine …)
 
 # ----- rtpproxy params -----
@@ -1953,7 +1951,7 @@ Second instance of RTPENGINE can be run as follows (Optional)
 $ iptables -I rtpengine -p udp -j RTPENGINE --id 1
 $ ip6tables -I INPUT -p udp -j RTPENGINE --id 1
 $ echo 'del 1' > /proc/rtpengine/control
-$ /usr/sbin/rtpengine --table=1 --interface=192.168.1.125 --listen-ng=127.0.0.1:2224 --tos=184 --pidfile=ngcp-rtpengine-daemon2.pid --no-fallback --foreground
+$ /usr/sbin/rtpengine --table=1 --interface=192.168.2.240 --listen-ng=127.0.0.1:2224 --tos=184 --pidfile=ngcp-rtpengine-daemon2.pid --no-fallback --foreground
 17. Running I-CSCF, P-CSCF and S-CSCF as separate process
 First, stop the default kamailio SIP server
 
@@ -2077,8 +2075,7 @@ $ git clone https://github.com/herlesupreeth/FHoSS
 Compile:
 ```
 $ cd FHoSS
-$ export JAVA_HOME="/usr/lib/jvm/jdk1.7.0_79"
-$ export CLASSPATH="/usr/lib/jvm/jdk1.7.0_79/jre/lib/"
+$ export JAVA_HOME="/usr/lib/jvm/jdk1.7.0_79";export CLASSPATH="/usr/lib/jvm/jdk1.7.0_79/jre/lib/"
 $ ant compile deploy | tee ant_compile_deploy.txt
 ```
 Create configurator.sh using below script to change domain names and IP address in all configuration files
@@ -2160,7 +2157,7 @@ slasheddomain=`echo $domainname | sed 's/\./\\\\\\\\\./g'`
 $ chmod +x configurator.sh
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:192.168.1.125
+IP Adress:192.168.2.240
 
 $ grep -r "open-ims"
 (Change realm name in the below file from open-ims.test to ims.mnc000.mcc460.3gppnetwork.org)
@@ -2175,13 +2172,13 @@ $ cd ../scripts
 $ grep -r "open-ims"
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:192.168.1.125
+IP Adress:192.168.2.240
 
 $ cp configurator.sh ../config/
 $ cd ../config
 $ ./configurator.sh 
 Domain Name:ims.mnc000.mcc460.3gppnetwork.org
-IP Adress:192.168.1.125
+IP Adress:192.168.2.240
 
 $ cd ../src-web
 $ vim WEB-INF/web.xml
@@ -2234,7 +2231,7 @@ $ /root/hss.sh
 ```
 Access the web-interface of HSS: <font color="Hotpink">http://<IMS_VM_FLOATING_IP>:8080/hss.web.console/</font>
 
-For example, http://172.24.15.30:8080/hss.web.console/
+For example, http://192.168.2.240:8080/hss.web.console/
 ```
 user:      hssAdmin
 password:  hss
@@ -2347,7 +2344,7 @@ Support for Dedicated radio bearer creation
 Make sure to check the DRB configuration with respect to QCI of APN accordingly (QCI 5 for ims)
 On the eNB machine have the following static routes (since internal IP of the VM is advertised in S1AP messages and UE wont find the core in Uplink)
 
-$ ip r add 192.168.1.125/32 via 172.24.15.30
+$ ip r add 192.168.2.240/32 via 172.24.15.30
 23. USIM and UE settings
 Make sure to disable SQN check in Sysmocom SIM cards using sysmo-usim-tool tool https://github.com/herlesupreeth/sysmo-usim-tool
 Tested with OnePlus 5 with following methods (Official Google method is the recommended method to prevent damage to phone)
@@ -3099,3 +3096,277 @@ PEERDNS=no
 DNS1=ip-address
 DNS2=ip-address
 其中 ip-address 是 DNS 服务器的地址。这样就会让网络服务使用指定的 DNS 服务器更新 /etc/resolv.conf
+```
+## Install MariaDB Server 10 on CentOS 7 and RHEL 7 by using yum
+```
+https://sharadchhetri.com/install-mariadb-server-10-on-centos-7-and-rhel-7-by-using-yum/
+repo采用下面的页面
+https://mariadb.org/download/?t=repo-config&d=CentOS+7+%28x86_64%29
+```
+
+```
+vi /etc/yum.repos.d/MariaDB.repo
+```
+
+```
+# MariaDB 10.4 CentOS repository list - created 2021-11-23 15:46 UTC
+# https://mariadb.org/download/
+[mariadb]
+name = MariaDB
+baseurl = https://tw1.mirror.blendbyte.net/mariadb/yum/10.4/centos7-amd64
+gpgkey=https://tw1.mirror.blendbyte.net/mariadb/yum/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+```
+rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+```
+
+```
+yum install MariaDB-server MariaDB-client MariaDB-devel MariaDB-shared
+
+mysql_secure_installation
+
+/usr/bin/mysqladmin -u root password 'new-password'
+```
+https://github.com/json-c/json-c
+
+https://blog.csdn.net/xingyu97/article/details/97108108
+
+https://blog.csdn.net/woniu211111/article/details/81839939
+
+1.在http://libevent.org/下载libevent-2.1.8-stable.tar.gz
+
+2.tar -zxvf libevent-2.1.8-stable.tar.gz
+
+3.cd libevent-2.1.8-stable
+
+4./configure --prefix=/usr --libdir=/usr/lib64
+
+5.make
+
+6.make install
+
+
+- [libjson-c编译及安装](turbock79.cn/?p=1923)
+
+1. 数据库 scscf location, pcscf location
+2. kamailio数据库失效出现过一次
+3. n5_aar_delete有一个发不到pcf
+4. hss脚本配置数据库
+5. 集群freeswitch, 会议模式，对讲机模式，电台集群通话。
+6. sip收不到
+7. 卫星: k8s + CentOS
+8. 卫星: uler system
+
+
+## CentOS 7.x iptables/firewalld防火墙
+- [CentOS7:Unit iptables.service not loaded](https://blog.csdn.net/lbb88888888/article/details/102292349)
+```
+```
+
+## resolv.conf被覆盖的问题
+```
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+- [dns配置文件 /etc/resolv.conf中search设置详解](https://blog.csdn.net/x356982611/article/details/105868570)
+- [zhangmingda/etc/resolv.conf文件中的search项作用；如何保持resolv.conf文件内容不被修改](https://www.cnblogs.com/zhangmingda/p/13663541.html)
+- [CentOS的DNS服务器配置文件/etc/resolv.conf重置问题](https://blog.csdn.net/hengrjgc/article/details/42774323?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link
+
+- resolv.conf中search参数作用 转载
+```
+reslov.conf中的search主要是用来补全hostname的，有时候域名太长，可以做一个短域名做主机名字，但是DNS解析需要的是FQDN，而在resolv.conf中设置search能进行补全。
+
+# vim /etc/hosts<br>//添加下面这行
+8.8.8.8 www
+ping www能通，返回就是8.8.8.8，ping会首先解析hosts。
+
+# vim /etc/resolv.conf<br>//添加下面行
+search oliver.ren
+nameserver 223.5.5.5
+这时候
+
+　　# nslookup www
+
+Server:        223.5.5.5
+Address:       223.5.5.5#53
+ 
+Non-authoritative answer:
+Name:    www.oliver.ren
+Address: 8.8.8.8
+
+看到没，search的作用就是补全要访问的短域名
+正确的域名解析顺序是:
+1. 查找/etc/hosts
+2. 根据nameserver查找域名
+3. 如果在nameserver查找不到域名就进行search补全，重新走1~2步
+```
+
+解决方法
+/etc/sysconfig/network-scripts/ifcfg-eth0或者自己网卡配置文件增加一行：『PEERDNS=no』，然后重新启动网络即可。修改后，重启主机等操作便不会使/etc/resolv.conf被dhclient修改
+
+
+
+# 什么是Peer DNS
+
+先认识一下这三个配置文件：
+
+```undefined
+/etc/hosts ：这个是最早的 hostname 对应 IP 的存档；
+/etc/resolv.conf ：当需要解析域名时，读取该文件获得DNS 服务器 IP；
+/etc/nsswitch.conf：这个档案『决定』先使用 /etc/hosts 还是 /etc/resolv.conf 的设定！
+```
+
+当电脑要访问一个域名时，要将域名翻译成IP地址。
+这个过程通常会先访问/etc/hosts，看本地是否有对应的hostname -- IP记录。
+如果没有就去查询DNS服务器，通过/etc/resolv.conf 得到dns服务器地址。
+
+![img](https://upload-images.jianshu.io/upload_images/3720094-5ff7da43182750f9.png?imageMogr2/auto-orient/strip|imageView2/2/w/514/format/webp)
+
+流程如图
+
+当在eth接口启用DHCP后，本地resolv.conf文件将被修改，resolv.conf文件中的DNS地址将被改为从DHCP获取到的地址。这种从DHCP获得的DNS即是Peer DNS。
+
+启用DHCP后即便修改/etc/resolv.conf，不久又恢复成原样。如何解决这个问题？此时，你得要在 /etc/sysconfig/network-scripts/ifcfg-eth0 等相关档案内，增加一行：『PEERDNS=no』，然后重新启动网络即可。
+
+# [Linux服务器，服务管理--systemctl命令详解，设置开机自启动](https://www.cnblogs.com/zdz8207/p/linux-systemctl.html)
+
+Linux服务器，服务管理--systemctl命令详解，设置开机自启动
+
+syetemclt就是service和chkconfig这两个命令的整合，在CentOS 7就开始被使用了。
+
+摘要: systemctl 是系统服务管理器命令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
+
+| 任务                 | 旧指令                        | 新指令                                                       |
+| -------------------- | ----------------------------- | ------------------------------------------------------------ |
+| 使某服务自动启动     | chkconfig --level 3 httpd on  | systemctl enable httpd.service                               |
+| 使某服务不自动启动   | chkconfig --level 3 httpd off | systemctl disable httpd.service                              |
+| 检查服务状态         | service httpd status          | systemctl status httpd.service （服务详细信息） systemctl is-active httpd.service （仅显示是否 Active) |
+| 显示所有已启动的服务 | chkconfig --list              | systemctl list-units --type=service                          |
+| 启动某服务           | service httpd start           | systemctl start httpd.service                                |
+| 停止某服务           | service httpd stop            | systemctl stop httpd.service                                 |
+| 重启某服务           | service httpd restart         | systemctl restart httpd.service                              |
+
+ 
+
+下面以nfs服务为例：
+
+1.启动nfs服务
+
+```
+systemctl start nfs-server.service
+```
+
+**2.设置开机自启动**
+
+```
+systemctl enable nfs-server.service
+```
+
+3.停止开机自启动
+
+```
+systemctl disable nfs-server.service
+```
+
+4.查看服务当前状态
+
+```
+systemctl status nfs-server.service
+```
+
+5.重新启动某服务
+
+```
+systemctl restart nfs-server.service
+```
+
+6.查看所有已启动的服务
+
+```
+systemctl list -units --type=service
+```
+
+开启防火墙22端口
+
+```
+iptables -I INPUT -p tcp --dport 22 -j ACCEPT
+```
+
+如果仍然有问题，就可能是SELinux导致的
+
+关闭SElinux：
+
+**修改/etc/selinux/config文件中的SELINUX=”” 为 disabled，然后重启**
+
+彻底关闭防火墙：
+
+```
+sudo systemctl status  firewalld.service
+sudo systemctl stop firewalld.service          
+sudo systemctl disable firewalld.service
+```
+
+
+
+## systemctl开机启动设置
+
+
+
+### 常用的systemctl命令
+
+```以sshd服务为例，列出常用systemctl命令：
+启动sshd服务：systemctl start ssh.service
+停止sshd服务：systemctl stop ssh.service
+查看sshd服务状态：systemctl status ssh.service
+重启sshd服务：systemctl restart ssh.service
+设置开机自启动：systemctl enable ssh.service
+禁止开机自启动：systemctl disable ssh.service
+查看所有已经启动的服务：systemctl list-units --type=service
+重新加载配置文件：systemctl daemon-reload```
+```
+
+### systemctl启动服务编写
+
+Centos7的服务systemctl脚本存放在：/usr/lib/systemd/目录下，有系统（system）和用户（user）之分，一般需要开机不登录就能运行的程序，就存放在/usr/lib/systemd/system/目录下
+
+每一个服务以.service结尾，一般会分为3部分：[Unit]、[Service]和[Install]，以sshd为实例如下：
+
+```[Unit]
+Description=OpenSSH server daemon
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target sshd-keygen.service
+Wants=sshd-keygen.service
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/sysconfig/sshd
+ExecStart=/usr/sbin/sshd -D $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+[Unit]部分主要是对这个服务的说明，内容包括Description和After，Description 用于描述服务，After用于描述服务类别;
+
+[Service]部分是服务的关键，是服务的一些具体运行参数的设置;
+
+[Install]部分是服务安装的相关设置，可设置为多用户的;
+
+### 配置文件详解
+
+![image-20211201221403629](C:\Users\JerryZ\AppData\Roaming\Typora\typora-user-images\image-20211201221403629.png)
+
+![image-20211201221348237](C:\Users\JerryZ\AppData\Roaming\Typora\typora-user-images\image-20211201221348237.png)
+![image-20211201221331989](C:\Users\JerryZ\AppData\Roaming\Typora\typora-user-images\image-20211201221331989.png)
+
+重新加载配置文件
+
+systemctl daemon-reload
+
+
+- [Linux开机时顺序启动项目并保证项目不挂机(systemctl+supervisor)](https://blog.csdn.net/qq_37822090/article/details/106690226)
