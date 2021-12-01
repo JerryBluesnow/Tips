@@ -499,10 +499,12 @@ Failed to connect to bus: Host is down
 
 例如：centos
 
-docker run -d --name test --privileged=true centos /sbin/init
-docker exec -it test /bin/bash
+docker run -d --name vonr --privileged=true centos /sbin/init
+docker exec -it vonr /bin/bash
 
 PS:–privilaged=true一定要加上的。
+
+docker run -it --name vonr2 --privileged=true centos:centos7.6.1810 /usr/sbin/init
 
 ## 
 1.修改数据库字符集

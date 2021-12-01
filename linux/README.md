@@ -961,6 +961,11 @@ That should cover everything you need to know about adding users to groups on Li
 
 ## yum源
 - [Ubuntu下安装yum和配置yum源](https://blog.csdn.net/qq_38690917/article/details/115261819)
+```
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+下载对应版本repo文件, 放入/etc/yum.repos.d/(操作前请做好相应备份)
+CentOS7   wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
+```
 
 ## kamailio
 
@@ -2361,3 +2366,54 @@ ip6tables -I INPUT -p udp -j RTPENGINE --id $TableID
 ```
 ```
 
+## WSL ubuntu安装docker，不使用docker desktop, 可行， 使用下面的镜像。（debian失败）
+1. ubuntu 18.04 网易镜像源- 可用
+```
+deb http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+```
+2. docker 安装步骤
+```
+https://www.cnblogs.com/LiangSW/p/9842295.html
+
+安装docker
+linux子系统已经收工，下面安装docker。我们可以直接根据docker文档中提供的ubuntu安装docker的方法进行操作 ps：使用管理员打开ubuntu1804
+
+因为都知道的网络原因安装时可能会timeout等其他情况,我们可以使用国内镜像 https://mirrors.tuna.tsinghua.edu.cn/ 清华大学开源软件镜像站替换下面的链接
+https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg
+https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/
+
+sudo apt-get remove docker docker-engine docker.io
+sudo apt-get update
+sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+一顿操作已经安装结束,使用 sudo service docker start 开启docker守护进程
+使用 docker version 查看版本
+```
+3. 以root启动wsl ubuntu
+```
+ubuntu1804.exe config --default-user root
+
+```
+4. 重启WSL ubuntu
+
+```
+PS C:\WINDOWS\system32> net stop LxssManager
+The LxssManager service is stopping.
+The LxssManager service was stopped successfully.
+
+PS C:\WINDOWS\system32> net start LxssManager
+The LxssManager service is starting.
+The LxssManager service was started successfully.
+```
