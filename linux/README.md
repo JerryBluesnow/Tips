@@ -1010,7 +1010,7 @@ yum install -y libmnl-devel
 yum install -y libcurl libcurl-devel
 
 make include_modules="db_mysql xmlrpc cdp cdp_avp ims_auth ims_charging ims_dialog ims_diameter_server ims_icscf ims_ipsec_pcscf ims_isc ims_qos ims_registrar_pcscf ims_registrar_scscf ims_usrloc_pcscf ims_usrloc_scscf presence http_async_client" cfg
-  
+
 make all
 
 make install
@@ -1091,7 +1091,7 @@ Dokuwiki Page - http://www.kamailio.org/dokuwiki/
 libmysqlclient & libz (zlib) ：mysql DB support (the db_mysql module) Shared libraries
 
                         MySQL-shared-5.1.32-0.glibc23.i386.rpm
-
+    
                         MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
 
 
@@ -1316,9 +1316,9 @@ ssh_pwauth: True
 users:
   - name: root
 chpasswd:
-  list: |
+    list: |
     root:admin
-  expire: False
+    expire: False
 runcmd:
   - sed -i -e '/^#PermitRootLogin/s/^.*$/PermitRootLogin yes/' /etc/ssh/sshd_config
   - systemctl restart sshd
@@ -1763,24 +1763,24 @@ options {
         // If there is a firewall between you and nameservers you want
         // to talk to, you may need to fix the firewall to allow multiple
         // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
-
+    
         // If your ISP provided one or more IP addresses for stable
         // nameservers, you probably want to use them as forwarders.
         // Uncomment the following block, and insert the addresses replacing
         // the all-0's placeholder.
-
+    
         //forwarders {
-		// Put here the IP address of other DNS server which could be used if name cannot be resolved with DNS server running in this machine (Optional)
-		//10.4.128.2;
+    	// Put here the IP address of other DNS server which could be used if name cannot be resolved with DNS server running in this machine (Optional)
+    	//10.4.128.2;
         //};
-
+    
         //========================================================================
         // If BIND logs error messages about the root key being expired,
         // you will need to update your keys.  See https://www.isc.org/bind-keys
         //========================================================================
         dnssec-validation no;
         allow-query { any; };
-
+    
         auth-nxdomain no;    # conform to RFC1035
         //listen-on-v6 { any; };
 };
@@ -2047,7 +2047,7 @@ slasheddomain=`echo $domainname | sed 's/\./\\\\\\\\\./g'`
         then 
         printf "exitting...\n"
         break ;
-
+    
       elif [ "$filename" = "all" ]
       then    
           printf "changing: "
@@ -2061,14 +2061,14 @@ slasheddomain=`echo $domainname | sed 's/\./\\\\\\\\\./g'`
          done 
          echo 
          break;
-
+    
         elif [ -w $filename ] 
         then
             printf "changing $filename \n"
             sed -i -e "s/$DDOMAIN/$domainname/g" $filename
             sed -i -e "s/$DSDOMAIN/$slasheddomain/g" $filename
             sed -i -e "s/$DEFAULTIP/$ip_address/g" $filename
-
+    
           else 
           printf "cannot access file $filename. skipping... \n" 
         fi
@@ -2356,7 +2356,7 @@ lsmod | grep xt_RTPENGINE
 # check files
 ls -l /proc/rtpengine/control
 ls -l /proc/rtpengine/list
- 
+
 TableID=0
 # add forwarding table with an ID=$TableID. $TableID is a number between 0-63
 echo 'add 0' > /proc/rtpengine/control
@@ -2416,4 +2416,256 @@ The LxssManager service was stopped successfully.
 PS C:\WINDOWS\system32> net start LxssManager
 The LxssManager service is starting.
 The LxssManager service was started successfully.
+```
+
+## libcurl
+
+- [libcurl库使用方法，好长，好详细](https://www.cnblogs.com/heluan/p/10177475.html)
+
+- [libcurl库安装（Linux）](https://blog.csdn.net/simonyucsdy/article/details/82835268)
+
+## yum只下载不安装
+
+- yum install --downloadonly --downloaddir=/download python-devel
+
+### [Linux-yum只下载不安装](https://www.cnblogs.com/lizhewei/p/11763053.html)
+
+**目录**
+
+- 通过yum命令只下载rpm包不安装
+  - [方法一：yumdownloader](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_0)
+  - [方法二：yum --downloadonly](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_1)
+  - [方法三：reposync](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_2)
+
+ 
+
+#### 通过yum命令只下载rpm包不安装
+
+
+
+##### 方法一：yumdownloader
+
+如果只想通过 yum 下载软件的软件包，但是不需要进行安装的话，可以使用 yumdownloader 命令；  yumdownloader 命令在软件包 yum-utils 里面。
+
+```
+# yum install yum-utils -y
+```
+
+常用参数说明：
+
+```
+--destdir 指定下载的软件包存放路径
+--resolve 解决依赖关系并下载所需的包
+```
+
+示例：
+
+```shell
+# yumdownloader --destdir=/tmp --resolve httpd
+```
+
+##### 方法二：yum --downloadonly
+
+yum命令的参数有很多，其中就有只是下载而不需要安装的命令，并且也会自动解决依赖；通常和 --downloaddir 参数一起使用。
+
+示例：
+
+```shell
+# yum install --downloadonly --downloaddir=/tmp/ vsftpd
+
+# yum reinstall --downloadonly --downloaddir=/tmp/ vsftpd
+```
+
+说明：如果该服务器已经安装了需要下载的软件包，那么使用 install下载就不行，可以使用reinstall下载。 放心（不会真的安装和重新安装，因为后面加了 --downloadonly，表明只是下载。
+
+如果提示没有--downloadonly选项则需要安装yum-plugin-downloadonly软件包；
+
+```shell
+# yum install yum-plugin-downloadonly
+```
+
+
+
+##### 方法三：reposync
+
+该命令更加强大，可以将远端yum仓库里面的包全部下载到本地。这样构建自己的yum仓库，就不会遇到网络经常更新包而头痛的事情了。 该命令也是来自与 yum-utils 里面。
+
+```shell
+# yum install yum-utils -y
+```
+
+常用参数说明：
+
+```
+-r    指定已经本地已经配置的 yum 仓库的 repo源的名称。
+-p    指定下载的路径
+```
+
+示例：
+
+```shell
+# reposync -r epel -p /opt/local_epel
+```
+
+## [curl 支持 http2](https://www.cnblogs.com/brookin/p/10713166.html)
+
+### 源码安装
+
+#### 安装 nghttp2
+
+```shell
+git clone https://github.com/tatsuhiro-t/nghttp2.git
+cd nghttp2
+autoreconf -i
+automake
+autoconf
+./configure --prefix=/user/local/
+make
+sudo make install
+
+add below to .bashrc and source it before compile curl
+export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib
+yum install zlib-devel.x86_64
+```
+
+#### 安装 openssl
+
+```shell
+yum install zlib-devel.x86_6
+
+wget  http://www.openssl.org/source/openssl-1.1.0e.tar.gz
+tar -zxvf openssl-1.1.0e.tar.gz
+cd  ./openssl-1.1.0e
+./config shared zlib  --prefix=/usr/local/openssl && make && make install
+./config -t
+make depend
+cd /usr/local
+ln -s openssl ssl
+echo "/usr/local/openssl/lib" >> /etc/ld.so.conf
+ldconfig
+
+echo "export OPENSSL=/usr/local/openssl/bin" >> /etc/profile
+
+echo "export PATH=$OPENSSL:$PATH:$HOME/bin" >> /etc/profile
+
+source /etc/profile
+
+13、移除老版本的openssl，创建新的软连接；这个地方注意路径
+
+mv /usr/bin/openssl /usr/bin/openssl.old
+mv /usr/include/openssl /usr/include/openssl.old
+ln -s /usr/local/openssl/bin/openssl /usr/bin/openssl
+ln -s /usr/local/openssl/include/openssl /usr/include/openssl
+ln -sf /usr/local/openssl/lib/libcrypto.so.1.0.0 /lib/libcrypto.so.6
+echo "/usr/local/openssl/lib" >>/etc/ld.so.conf 
+
+ldconfig -v
+
+14、依次如下执行：
+
+ldd /usr/local/openssl/bin/openssl
+
+会出现类似如下信息：
+
+        linux-gate.so.1 =>  (0x0079f000)
+        libssl.so.1.1 => /usr/local/openssl/lib/libssl.so.1.1 (0x002a8000)
+        libcrypto.so.1.1 => /usr/local/openssl/lib/libcrypto.so.1.1 (0x00306000)
+        libz.so.1 => /lib/libz.so.1 (0x00775000)
+        libdl.so.2 => /lib/libdl.so.2 (0x00725000)
+        libpthread.so.0 => /lib/libpthread.so.0 (0x0072c000)
+        libc.so.6 => /lib/libc.so.6 (0x00593000)
+        /lib/ld-linux.so.2 (0x0056d000)
+
+15、查看路径
+which openssl
+
+/usr/local/openssl/bin/openssl
+
+16、查看版本
+openssl version
+OpenSSL 1.1.0e  16 Feb 2017
+
+or you can install a develop version
+yum -y install openssl-devel
+```
+
+#### 编译 curl
+
+```shell
+wget http://curl.haxx.se/download/curl-7.80.0.tar.gz
+tar -xvjf curl-7.80.0.tar.gz
+cd curl-7.80.0
+./configure --with-nghttp2=/usr/local --with-ssl
+make && make install
+
+编译时注意观察
+HTTP2 support: enabled (nghttp2)
+
+echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf
+ldconfig
+```
+
+验证
+
+```
+curl --version
+curl 7.64.1 (x86_64-pc-linux-gnu) libcurl/7.64.1 OpenSSL/1.0.2k zlib/1.2.7 nghttp2/1.38.0-DEV
+Release-Date: 2019-03-27
+Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL UnixSockets
+```
+
+#### 测试
+
+```
+curl --http2 -I https://nghttp2.org
+
+HTTP/2 200 
+date: Mon, 15 Apr 2019 12:53:49 GMT
+content-type: text/html
+last-modified: Fri, 08 Mar 2019 12:33:02 GMT
+etag: "5c8260fe-19d8"
+accept-ranges: bytes
+content-length: 6616
+x-backend-header-rtt: 0.011655
+strict-transport-security: max-age=31536000
+server: nghttpx
+via: 2 nghttpx
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+```
+
+附注
+
+```
+ -I, --head 	(HTTP/FTP/FILE) Fetch the HTTP-header only!
+```
+
+------
+
+### yum 安装
+
+#### 安装 yum 源
+
+```
+rpm -ivh http://mirror.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-2-1.rhel7.noarch.rpm
+```
+
+#### 新建 yum 源(功能与 安装 yum 源 相同)
+
+vim /etc/yum.repos.d/city-fan.repo
+
+```
+[cityfan]  
+name=cityfan 
+baseurl=http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/
+enabled=1  
+gpgcheck=0
+```
+
+#### 更新curl
+
+```
+yum update curl
 ```
