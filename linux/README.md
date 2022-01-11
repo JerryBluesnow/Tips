@@ -77,15 +77,22 @@ GCC 源码里自带脚本可以轻松下载依赖包，执行【./contrib/downlo
 ln -s /root/local/bin/gcc /usr/bin/gcc && ln -s /root/local/bin/g++ /usr/bin/g++ && ln -s /root/local/bin/c++ /usr/bin/c++ && ln -s /root/local/bin/gcc /usr/bin/cc && cp /root/local/lib64/libstdc++.so.6.0.27 /usr/lib64 && cd /usr/lib64 && ln -s libstdc++.so.6.0.27 libstdc++.so.6
 
 - [Linux安装GCC 9.2.0](https://blog.csdn.net/lwc5411117/article/details/101200065)
+
 - [CENTOS7编译安装GCC9.2.0及踩坑经历](https://www.cnblogs.com/liranowen/p/11639929.html)
+
 - [第二部份：gcc升级到gcc-9.2.0](https://blog.csdn.net/u012480990/article/details/104277771)
+
 - [CentOS7编译安装Gcc9.2.0，解决mysql等软件编译问题](https://www.51lowkey.com/note-14.html)
 
 - [一次segfault错误的排查过程](https://blog.csdn.net/zhaohaijie600/article/details/45246569)
+
 - [centos7 安装 GNU Make 4.1](https://blog.csdn.net/weixin_41565755/article/details/88564947)
+
 - [在centos上安装最新的glibc](https://blog.csdn.net/zhangpeterx/article/details/96116219)
-export LD_PRELOAD=/opt/glibc-2.19/lib/libc-2.19.so;ln -sf /opt/glibc-2.19/lib/libc-2.19.so /lib64/libc.so.6
-LD_PRELOAD=/lib64/libc-2.17.so; ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
+
+  ```shell
+  LD_PRELOAD=/lib64/libc-2.17.so; ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
+  export LD_PRELOAD=/opt/glibc-2.19/lib/libc-2.19.so;ln -sf /opt/glibc-2.19/lib/libc-2.19.so /lib64/libc.so.6
 
 - [CentOS 7.6 编译安装最新版本glibc2.30 实录](https://blog.csdn.net/RyanFang/article/details/100984938?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param)
 
@@ -121,18 +128,27 @@ ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
 
 The following actions will resolve these dependencies:
 
-     Keep the following packages at their current version:
-1)     libdbd-mysql-perl [Not Installed]
-2)     libdbi-perl [Not Installed]
-3)     libterm-readkey-perl [Not Installed]
-4)     mariadb-client [Not Installed]
-5)     mariadb-client-5.5 [Not Installed]
-6)     mariadb-server [Not Installed]
-7)     mariadb-server-5.5 [Not Installed]
+```shell
+ Keep the following packages at their current version:
+ 
+1. libdbd-mysql-perl [Not Installed]
 
-     Leave the following dependencies unresolved:
-8)     mariadb-client-5.5 recommends libdbd-mysql-perl (>= 1.2202)
+2. libdbi-perl [Not Installed]
 
+3. libterm-readkey-perl [Not Installed]
+
+4. mariadb-client [Not Installed]
+
+5. mariadb-client-5.5 [Not Installed]
+
+6. mariadb-server [Not Installed]
+
+7. mariadb-server-5.5 [Not Installed]
+
+   Leave the following dependencies unresolved:
+
+8. mariadb-client-5.5 recommends libdbd-mysql-perl (>= 1.2202)
+```
 ## Ubuntu Server源码编译安装MariaDB
 ```
  sudo apt-get update
@@ -159,13 +175,6 @@ The following actions will resolve these dependencies:
 
  sudo apt-get install libjemalloc-dev
 
-```
-
-## 每个版本的软件源都不同 - ubuntu16.04更新软件源
-
-- [ubuntu16.04更新软件源](https://blog.csdn.net/lxlong89940101/article/details/89488461)
-
-```
  sudo groupadd mysql
 
  sudo useradd -g mysql mysql
@@ -197,6 +206,10 @@ The following actions will resolve these dependencies:
  sudo ./bin/mysql -u root
 ```
 
+## 每个版本的软件源都不同 - ubuntu16.04更新软件源
+
+- [ubuntu16.04更新软件源](https://blog.csdn.net/lxlong89940101/article/details/89488461)
+
 ## source filename 与 sh filename 及./filename执行脚本的区别
 - 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。./filename是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。
 - sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
@@ -210,7 +223,7 @@ The following actions will resolve these dependencies:
 
 在文件中添加：
 
-```
+```shell
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
@@ -245,58 +258,57 @@ sudo apt install npm
 
 Ubuntu 18.04 TLS，执行以下命令：
 
-```
+```shell
 sudo apt-get install nodejs
 sudo apt install libssl1.0-dev nodejs-dev node-gyp npm
-更新npm的包镜像源，方便快速下载
-sudo npm config set registry https://registry.npm.taobao.org
+sudo npm config set registry https://registry.npm.taobao.org  # 更新npm的包镜像源，方便快速下载
 sudo npm config list
-安装n管理器(用于管理nodejs版本)
-sudo npm install n -g
+sudo npm install n -g   # 安装n管理器(用于管理nodejs版本)
 ```
 
 ## 安装最新的nodejs（stable版本）
-```
+```shell
 sudo n stable
 sudo node -v
 sudo npm -v
 ```
 
 ## vue环境配置
-最好用的就是方法1
-```
-方法1：
++ 方法1 (最好用的就是方法1)：
++ + 如果安装nodejs 8.x版本
 
+```shell
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
-如果安装nodejs 9.x版本
+```
 
++ + 如果安装nodejs 9.x版本
+
+```shell
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 sudo apt-get install -y nodejs
-方法2：
-下载nodejs压缩文件
+```
+
++ 方法2：
+
+```shell
 wget https://nodejs.org/dist/v8.1.0/node-v8.1.0-linux-x64.tar.xz
-解压
 tar -xvf node-v8.1.0-linux-x64.tar.xz
-切换并查看当前node所在路径
 cd node-v8.1.0-linux-x64/bin
-pwd
-查看node版本
 ./node -v
-将node和npm设置为全局
 sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/node /usr/local/bin/node
 sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/npm /usr/local/bin/npm
-pwd
+```
 
-方法三：
-也可以使用ubuntu自带apt-get安装,安装后使用node -v查看版本
++ 方法3：
 
+```shell
 sudo apt-get install nodejs-legacy nodejs
-
-1，输入命令sudo npm config set registry https://registry.npm.taobao.org，把npm的包源设置为淘宝的镜像
-2，输入命令sudo npm install n -g，来安装n这个工具，n这个工具是用于更新node版本的工具
-3，输入命令sudo n stable，安装最新稳定版的nodejs
-4，重启终端，查看node.js和npm版本,node --version,npm  --version
+sudo npm config set registry https://registry.npm.taobao.org # 把npm的包源设置为淘宝的镜像
+sudo npm install n -g 										 # 来安装n这个工具，n这个工具是用于更新node版本的工具
+sudo n stable												 # 安装最新稳定版的nodejs
+node --version
+npm  --version
 ```
 
 ## linux查看系统信息硬件配置
@@ -406,7 +418,7 @@ rpm -qa # 查看所有安装的软件包
 ```
 
 ### 其他常用命令整理如下：
-```
+```shell
 　　查看主板的序列号：dmidecode | grep -i 'serial number'
 　　用硬件检测程序kuduz探测新硬件：service kudzu start ( or restart)
 　　查看CPU信息：cat /proc/cpuinfo [dmesg | grep -i 'cpu'][dmidecode -t processor]
@@ -500,7 +512,7 @@ docker pull docker4cn/debian:buster-aliyun
 
 - [如何制作debian(mips64el) docker镜像并上传到docker官方仓库](https://www.it610.com/article/1278555881058877440.htm)
 
-```
+```shell
 docker pull docker4cn/debian:buster-aliyun
 /etc/apt/sources.list
 https://mirror.tuna.tsinghua.edu.cn/help/debian/
@@ -510,14 +522,15 @@ vi /etc/apt/sources.list
 apt-get update
 apt-get install certbot -y
 certbot certonly --standalone -d sam-tech.com
+```
+
+
 
 - [Certbot-免费的HTTPS证书](https://zhuanlan.zhihu.com/p/80909555)
-
 - [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
 
-
-链接: https://pan.baidu.com/s/1yNdDQ3WgpdxFwRpUQSka_g 提取码: r9sj 复制这段内容后打开百度网盘手机App，操作更方便哦
 ## ubuntu/debian安装多个版本gcc
+
 - [reference link](https://blog.csdn.net/qq_23084801/article/details/80726643)
 
 - 查看系统gcc和g++是什么版本 
@@ -548,8 +561,7 @@ certbot certonly --standalone -d sam-tech.com
 
 ## 使用Visual Studio 2017开发Linux程序
 - [使用Visual Studio 2017开发Linux程序](https://www.cnblogs.com/dongc/p/6599461.html)
-- ssh servers使用docker搭建
-```
+
 ## gdb调试报错warning: Error disabling address space randomization: Operation not permitted
 
  Canceled
@@ -999,7 +1011,7 @@ yum install -y java-1.8.0-openjdk-devel.x86_64
 
 yum groupinstall -y "Development Tools"
 
-need to install json-c
+yum install -y json-c json-c-devel
 
 yum install -y gcc
 
@@ -1007,7 +1019,7 @@ yum install -y bison
 
 yum install -y flex
 
-yum install -y MariaDB-devel MariaDB-client MariaDB-shared
+yum install -y MariaDB-devel MariaDB-client MariaDB-shared MariaDB-server
 
 yum install -y libxml2-devel
 
@@ -1500,7 +1512,7 @@ make install
 
 rtpproxy -l 182.XX.10.17 -s udp:127.0.0.1 7078 -F 
 ```
-Edit /etc/default/rtpproxy file as follows:
+### 9. Edit /etc/default/rtpproxy file as follows:
 ```
 # Defaults for rtpproxy
 
@@ -3008,6 +3020,8 @@ Label.pdf 100% 3672KB 282.5KB/s 00:131.2.3.4.5.
 以上就是关于**SCP**的全部内容了，你可以查看**SCP**的**man页面**来获取更多内容，请随意留下您的评论及建议。
 
 ![image-20211017224849305](C:\Users\JerryZ\AppData\Roaming\Typora\typora-user-images\image-20211017224849305.png)
+```
+- [hyper-v虚拟机centos7网络配置,解决虚拟机不能上网问题](https://blog.csdn.net/weixin_34503526/article/details/104671956?utm_medium=distribute.pc_feed_404.none-task-blog-2~default~OPENSEARCH~default-16.control404&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-2~default~OPENSEARCH~default-16.control40)
 
 
 ## 自启动
@@ -3069,11 +3083,6 @@ dns-nameservers 8.8.8.8 8.8.4.4    #设置dns服务器
 避免resolv.conf设置被覆盖(示例代码)
 technologylife 2020-11-19
 
-栏目: 类库 ·
-
-来源: technologylife
-
-作者：technologylife
 
 简介  这篇文章主要介绍了避免resolv.conf设置被覆盖(示例代码)以及相关的经验技巧，文章约974字，浏览量318，点赞数3，值得参考！
 
@@ -3190,7 +3199,7 @@ nameserver 223.5.5.5
 
 Server:        223.5.5.5
 Address:       223.5.5.5#53
- 
+
 Non-authoritative answer:
 Name:    www.oliver.ren
 Address: 8.8.8.8
@@ -3368,5 +3377,485 @@ WantedBy=multi-user.target
 
 systemctl daemon-reload
 
-
 - [Linux开机时顺序启动项目并保证项目不挂机(systemctl+supervisor)](https://blog.csdn.net/qq_37822090/article/details/106690226)
+
+```
+  在/etc/resolv.conf中增加dns地址，重启网卡服务后，文件内容被清空。
+  解决办法：
+  关闭NetworkManager服务
+  /etc/init.d/NetworkManager stop
+  修改/etc/resolv.conf
+  vim /etc/resolv.conf
+  修改或新增dns地址：
+  nameserver xxx.xxx.xxx.xxx
+  保存退出
+  重启网卡
+  /etc/init.d/network restart
+  避免重启服务器后配置被清空
+  chkconfig NetworkManager off
+
+  写保护你的 DNS 服务器
+  通过修改/etc/resolv.conf来修改你的 DNS 服务器。一旦你作出了修改，写保护这个文件
+  chattr +i /etc/resolv.conf
+  这个+i的选项就是为文件/etc/resolv.conf添加了写保护，因此任何人都不可以修改他，甚至是 root 用户也不行！
+  如果你需要取消写保护，使用下面的命令：
+  chattr -i /etc/resolv.conf
+```
+
+## curl头部设置
+- [libcurl长连接高并发高性能](https://zhuanlan.zhihu.com/p/254801697)
+- [使用 nghttpx 搭建 HTTP/2 代理](https://wzyboy.im/post/1052.html)
+- [常用libcurl异步使用方法](https://www.jianshu.com/p/d7609df995d2)
+- [libcurl长连接高并发多线程](https://www.cnblogs.com/bclshuai/p/13693960.html)
+```
+CURLOPT_HTTPHEADER
+
+构造HTTP头部字段，或代替现有字段（从而移除已有字段）。该选项传递一个指针，这个指针指向HTTP请求中传给server的头部字段链表（linked list）。用curl_slist_append(3)来创建头部字段list，curl_slist_free(3)用来清除list 。例如：增加User-Authertication这个头部字段。
+
+使用libcurl设置HTTP头部字段的方法：
+
+#include
+
+Struct curl_slist *slist = NULL;
+
+Slist = curl_slist_append(slist, “Connection: Keep-Alive”); //http长连接
+
+Curl_easy_setopt(handle, CURLOPT_HTTPHEADER, slist);
+
+Curl_easy_perform(handle);
+
+Curl_slist_free_all(slist);
+
+```
+
+## 于keep-alive的几点疑惑
+```
+一、http的keep-alive与tcp的keep-alive
+http keep-alive：
+在一次tcp连接中可以连续发送多次数据，即可以保持一段时间的tcp连接，在这个保持的通道上有多个request、多个response。而不用每发一次数据就要重新进行三次握手连接，发完一次数据就要立即进行四次挥手释放连接。 这样可以提高性能和吞吐率。
+
+tcp keep-alive：
+为了检测tcp的连接状况。经过设定的时间之后，服务器会发出检测包去确认tcp连接是否还在。如果出现了问题就关闭连接。
+
+小结：http的keep-alive和tcp的keep-alive是完全不同的东西。
+
+二、request header中的http keep-alive与tcp连接
+在http1.1版本之后都会默认设置connection为keep-alive，如果想要关闭这条设置，需要在头信息中更改connection为close。
+
+但是在实际使用中，http头部有了keep-alive这个值并不代表一定会使用长连接，客户端和服务器端都可以无视这个值，每一条TCP通道，只有一次GET，GET完之后，立即有TCP关闭的四次握手，这样写代码更简单。这时候虽然http头有connection: keep-alive，但不能说是长连接。所以是否用了长连接，还是得用抓包工具分析tcp流。
+
+小结：正常情况下客户端浏览器、web服务端都有实现这个标准，因为它们的文件又小又多，保持长连接减少重新开TCP连接的开销很有价值。但是最终到底有没有实现keep-alive还是得看tcp流的情况。
+
+三、http keep-alive的tcp复用与websocket长连接
+http keep-alive：
+http keep-alive只是一种为了达到复用tcp连接的“协商”行为，双方并没有建立正真的连接会话，服务端也可以不认可，也可以随时（在任何一次请求完成后）关闭掉。它是指在一次 TCP 连接中完成多个 http请求，但是对每个请求仍然要单独发 header，所以除了真正的数据部分外，服务器和客户端还要大量交换http header，信息交换效率很低，这样建立的“长连接”都是伪长连接。
+
+websocket：
+websocket不同，它本身就规定了是正真的、双工的长连接，两边都必须要维持住连接的状态。
+
+小结：http协议决定了浏览器端总是主动发起方，http的服务端总是被动的接受、响应请求。http提供的长连接服务器可以不接受。而websocket协议，在连接之后，客户端、服务端是完全平等的。websocket是真正的长连接。
+```
+
+## libcurl
+
+- [libcurl库使用方法，好长，好详细](https://www.cnblogs.com/heluan/p/10177475.html)
+
+- [libcurl库安装（Linux）](https://blog.csdn.net/simonyucsdy/article/details/82835268)
+
+## yum只下载不安装
+
+- yum install --downloadonly --downloaddir=/download python-devel
+
+### [Linux-yum只下载不安装](https://www.cnblogs.com/lizhewei/p/11763053.html)
+
+**目录**
+
+- 通过yum命令只下载rpm包不安装
+  - [方法一：yumdownloader](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_0)
+  - [方法二：yum --downloadonly](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_1)
+  - [方法三：reposync](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_2)
+
+ 
+
+#### 通过yum命令只下载rpm包不安装
+
+
+
+##### 方法一：yumdownloader
+
+如果只想通过 yum 下载软件的软件包，但是不需要进行安装的话，可以使用 yumdownloader 命令；  yumdownloader 命令在软件包 yum-utils 里面。
+
+```
+# yum install yum-utils -y
+```
+
+常用参数说明：
+
+```
+--destdir 指定下载的软件包存放路径
+--resolve 解决依赖关系并下载所需的包
+```
+
+示例：
+
+```shell
+# yumdownloader --destdir=/tmp --resolve httpd
+```
+
+##### 方法二：yum --downloadonly
+
+yum命令的参数有很多，其中就有只是下载而不需要安装的命令，并且也会自动解决依赖；通常和 --downloaddir 参数一起使用。
+
+示例：
+
+```shell
+# yum install --downloadonly --downloaddir=/tmp/ vsftpd
+
+# yum reinstall --downloadonly --downloaddir=/tmp/ vsftpd
+```
+
+说明：如果该服务器已经安装了需要下载的软件包，那么使用 install下载就不行，可以使用reinstall下载。 放心（不会真的安装和重新安装，因为后面加了 --downloadonly，表明只是下载。
+
+如果提示没有--downloadonly选项则需要安装yum-plugin-downloadonly软件包；
+
+```shell
+# yum install yum-plugin-downloadonly
+```
+
+
+
+##### 方法三：reposync
+
+该命令更加强大，可以将远端yum仓库里面的包全部下载到本地。这样构建自己的yum仓库，就不会遇到网络经常更新包而头痛的事情了。 该命令也是来自与 yum-utils 里面。
+
+```shell
+# yum install yum-utils -y
+```
+
+常用参数说明：
+
+```
+-r    指定已经本地已经配置的 yum 仓库的 repo源的名称。
+-p    指定下载的路径
+```
+
+示例：
+
+```shell
+# reposync -r epel -p /opt/local_epel
+```
+
+## [curl 支持 http2](https://www.cnblogs.com/brookin/p/10713166.html)
+
+### 源码安装
+
+#### 安装 nghttp2
+
+```shell
+git clone https://github.com/tatsuhiro-t/nghttp2.git
+cd nghttp2
+autoreconf -i
+automake
+autoconf
+./configure --prefix=/usr/local/
+make
+sudo make install
+
+add below to .bashrc and source it before compile curl
+export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib
+
+```
+
+#### 安装 openssl
+
+```shell
+yum install zlib-devel.x86_64
+
+yum -y install openssl-devel
+```
+
+#### 编译 curl
+
+```shell
+wget http://curl.haxx.se/download/curl-7.80.0.tar.gz
+tar -xvjf curl-7.80.0.tar.gz
+cd curl-7.80.0
+./configure --with-nghttp2=/usr/local --with-ssl
+make && make install
+
+编译时注意观察
+HTTP2 support: enabled (nghttp2)
+
+echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf
+ldconfig
+```
+
+验证
+
+```
+curl --version
+curl 7.64.1 (x86_64-pc-linux-gnu) libcurl/7.64.1 OpenSSL/1.0.2k zlib/1.2.7 nghttp2/1.38.0-DEV
+Release-Date: 2019-03-27
+Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL UnixSockets
+```
+
+#### 测试
+
+```
+curl --http2 -I https://nghttp2.org
+
+HTTP/2 200 
+date: Mon, 15 Apr 2019 12:53:49 GMT
+content-type: text/html
+last-modified: Fri, 08 Mar 2019 12:33:02 GMT
+etag: "5c8260fe-19d8"
+accept-ranges: bytes
+content-length: 6616
+x-backend-header-rtt: 0.011655
+strict-transport-security: max-age=31536000
+server: nghttpx
+via: 2 nghttpx
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+```
+
+附注
+
+```
+ -I, --head 	(HTTP/FTP/FILE) Fetch the HTTP-header only!
+```
+
+------
+
+### yum 安装
+
+#### 安装 yum 源
+
+```
+rpm -ivh http://mirror.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-2-1.rhel7.noarch.rpm
+```
+
+#### 新建 yum 源(功能与 安装 yum 源 相同)
+
+vim /etc/yum.repos.d/city-fan.repo
+
+```
+[cityfan]  
+name=cityfan 
+baseurl=http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/
+enabled=1  
+gpgcheck=0
+```
+
+#### 更新curl
+
+```
+yum update curl
+```
+
+
+#### 安装 openssl
+
+```shell
+yum install zlib-devel.x86_6
+
+wget  http://www.openssl.org/source/openssl-1.1.0e.tar.gz
+tar -zxvf openssl-1.1.0e.tar.gz
+cd  ./openssl-1.1.0e
+./config shared zlib  --prefix=/usr/local/openssl && make && make install
+./config -t
+make depend
+cd /usr/local
+ln -s openssl ssl
+echo "/usr/local/openssl/lib" >> /etc/ld.so.conf
+ldconfig
+
+echo "export OPENSSL=/usr/local/openssl/bin" >> /etc/profile
+
+echo "export PATH=$OPENSSL:$PATH:$HOME/bin" >> /etc/profile
+
+source /etc/profile
+
+13、移除老版本的openssl，创建新的软连接；这个地方注意路径
+
+mv /usr/bin/openssl /usr/bin/openssl.old
+mv /usr/include/openssl /usr/include/openssl.old
+ln -s /usr/local/openssl/bin/openssl /usr/bin/openssl
+ln -s /usr/local/openssl/include/openssl /usr/include/openssl
+ln -sf /usr/local/openssl/lib/libcrypto.so.1.0.0 /lib/libcrypto.so.6
+echo "/usr/local/openssl/lib" >>/etc/ld.so.conf 
+
+ldconfig -v
+
+14、依次如下执行：
+
+ldd /usr/local/openssl/bin/openssl
+
+会出现类似如下信息：
+
+        linux-gate.so.1 =>  (0x0079f000)
+        libssl.so.1.1 => /usr/local/openssl/lib/libssl.so.1.1 (0x002a8000)
+        libcrypto.so.1.1 => /usr/local/openssl/lib/libcrypto.so.1.1 (0x00306000)
+        libz.so.1 => /lib/libz.so.1 (0x00775000)
+        libdl.so.2 => /lib/libdl.so.2 (0x00725000)
+        libpthread.so.0 => /lib/libpthread.so.0 (0x0072c000)
+        libc.so.6 => /lib/libc.so.6 (0x00593000)
+        /lib/ld-linux.so.2 (0x0056d000)
+
+15、查看路径
+which openssl
+
+/usr/local/openssl/bin/openssl
+
+16、查看版本
+openssl version
+OpenSSL 1.1.0e  16 Feb 2017
+```
+
+```
+1、下载与解压
+
+cd ~wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz
+
+tar-xzf openssl-1.1.0f.tar.gz
+
+2、编译与安装
+
+如果没有安装gcc可能会报错，可以直接使用yum安装一下gcc
+
+yum install gcc
+
+cd openssl-1.1.0f
+
+./config
+
+make
+
+make install
+
+3、尝试运行应该会出现下面的这个错误：
+
+/usr/local/bin/openssl version/usr/local/bin/openssl: error while loading shared libraries: libcrypto.so.1.1: cannot open shared object file: No such file or directory
+
+4、下面为相关的解决办法：
+
+创建链接至libssl
+
+ln -s /usr/local/lib64/libssl.so.1.1 /usr/lib64/ln-s /usr/local/lib64/libcrypto.so.1.1 /usr/lib64/
+
+5、创建链接至新的openssl
+
+ln -s /usr/local/bin/openssl /usr/bin/openssl_latest
+
+6、检查openssl_latest的版本号是否是新的版本
+
+openssl_latest version
+
+OpenSSL1.1.0f 25 May 2017
+
+7、重命名旧的openssl文件名，并且将新的文件名改为openssl
+
+cd /usr/bin/mv openssl openssl_old
+
+mv openssl_latest openssl
+```
+
+- [使用VSCode插件CodeRunner一键编译运行Java](https://blog.csdn.net/wuyujin1997/article/details/89323627)
+
+
+
+
+### 在命令的每行输出前添加时间戳
+```
+POSIX外壳
+请记住，由于许多shell在内部将它们的字符串存储为cstring，因此，如果输入包含空字符（\0），则可能导致该行过早结束。
+
+command | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$line"; done
+GNU AWK
+command | gawk '{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0 }'
+佩尔
+command | perl -pe 'use POSIX strftime; print strftime "[%Y-%m-%d %H:%M:%S] ", localtime'
+蟒蛇
+command | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))'
+红宝石
+command | ruby -pe 'print Time.now.strftime("[%Y-%m-%d %H:%M:%S] ")'
+```
+## kamailio日志设置
+shell```
+开启日志，并将日志输出到/var/log/kamailio.log文件
+
+修改配置文件vi /usr/local/etc/kamailio/kamailio.cfg，添加
+
+log_facility=LOG_LOCAL0
+
+log_prefix="{$mt $hdr(CSeq) $ci} "
+
+这样它会把日志交给“LOG_LOCAL0”  ，接下来编辑CentOS的rsyslog配置
+
+vi /etc/rsyslog.conf
+
+插入下面这行
+
+local0.* -/var/log/kamailio.log（可以注释修改人员和日期）
+
+然后重启rsyslog 服务
+
+systemctl stop   rsyslog.service    关闭日志服务
+
+systemctl start   rsyslog.service     开启日志服务
+
+也可直接systemctl restart rsyslog.service 重启日志服务；
+
+重启 kamailio
+
+kamctl restart
+
+之后，通过 tail -f /var/log/kamailio.log 就可以查看日志最新输出了
+
+-f 该参数用于监视File文件增长。退出，按下CTRL+C。
+```
+
+### 参考文档：
+
+https://www.kamailio.org/dokuwiki/doku.php/tutorials:debug-syslog-messages
+
+http://thyrusgorges.com/post/kamailio-log-message-to-custom-log-file/
+
+http://www.kamailio.org/events/2016-KamailioWorld/Day0/W04-Daniel-Constantin.Mierla-Debugging-Kamailio-Config.pdf
+
+https://wiki.4psa.com/display/KB/How+to+debug+Asterisk+and+Kamailio
+
+
+```
+kamailio/opensips/openser 日志分割/logrotate 日志配置_修己度人-程序员宝宝
+技术标签： kamailio  logrotate  openser  sip proxy  opensips  
+
+首先是日志配置：
+debug=3  # debug level, 1 is low and 4 is high (lots of output)
+log_facility=LOG_LOCAL0
+
+loadmodule "xlog.so"
+/etc/syslog.conf   #以下是将日志转存到其他文件
+local0.*                                            -/data/logs/kamailio.log
+the '-' before the name of the file means asynchronous writing, it is important to have it not to add performance penalty
+logrotate  进行日志分隔的规则 具体见logrotate
+#cat /etc/logrotate.d/kamailio /data/logs/kamailio.log {
+        noolddir
+        size 100M
+        rotate 20
+        sharedscripts
+        postrotate
+                /bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || true
+        endscript
+} #/usr/sbin/logrotate -f /etc/logrotate.d/kamailio    #使配置生效
+kamailio/opensips 技术交流QQ群：118791050
+```
+```
+
+## 查找需要的RPM包和只下载不安装
+
+rpm -Uvh --force --nodeps *rpm
+
+yum install --downloadonly --downloaddir=./  libaio-devel

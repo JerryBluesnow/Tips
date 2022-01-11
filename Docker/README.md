@@ -508,6 +508,7 @@ PS:–privilaged=true一定要加上的。
 
 docker run -it --name vonr2 --privileged=true centos:centos7.6.1810 /usr/sbin/init
 
+docker run -it --name vonrx --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.6.1810 /usr/sbin/init
 ## 
 1.修改数据库字符集
 ALTER DATABASE database_name CHARACTER SET utf8
@@ -576,10 +577,6 @@ MySQL文档地址
 
 $ sudo docker images
 一般来说数据库容器不需要建立目录映射
-
-docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:latest
-
-docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d centos/mysql-57-centos7:latest
 
 docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mariadb:latest
 
@@ -744,6 +741,7 @@ sudo apt-get update
 sudo apt-get install docker-ce
 ```
 
+<<<<<<< HEAD
 # WSL2安装使用
 
 https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F144583887)
@@ -880,3 +878,7 @@ rnxt 5g-alpine
 
 docker run -ti --entrypoint=sh 8f23d0491f08 --name=vonrx
 
+=======
+## CentOS 7通过yum安装Docker和docker-compose
+- [CentOS 7通过yum安装Docker和docker-compose](https://blog.csdn.net/hbtj_1216/article/details/104159936)
+>>>>>>> da83367 (新增内容)
