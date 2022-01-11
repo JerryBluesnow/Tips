@@ -109,3 +109,241 @@ http://www.python.org/ftp/python/2.7.6/python-2.7.6.msi
     其中xxx.xxx.xxx.xxx:xx具体的代理，在浏览器的代理中可以查到.
 
 6. [jdBuyMask](https://github.com/JerryBluesnow/jdBuyMask/blob/master/jdBuyMask.py) - github
+
+
+7. [cursor() — 数据库连接操作 python](https://www.cnblogs.com/qixu/p/6133429.html)
+
+```
+python 操作数据库，要安装一个Python和数据库交互的包MySQL-python-1.2.2.win32-py2.5.exe，然后我们就可以使用MySQLdb这个包进行数据库操作了。
+
+     操作步骤如下：
+    1、建立数据库连接
+     import MySQLdb
+     conn=MySQLdb.connect(host="localhost",user="root",passwd="sa",db="mytable")
+　   cursor=conn.cursor()
+    2、执行数据库操作
+     n=cursor.execute(sql,param)
+     我们要使用连接对象获得一个cursor对象,接下来,我们会使用cursor提供的方法来进行工作.
+     这些方法包括两大类:1.执行命令,2.接收返回值
+
+    3、cursor用来执行命令的方法:
+
+　    callproc(self, procname, args):用来执行存储过程,接收的参数为存储过程名和参数列表,返回值为受影响的行数
+　    execute(self, query, args):执行单条sql语句,接收的参数为sql语句本身和使用的参数列表,返回值为受影响的行数
+　    executemany(self, query, args):执行单挑sql语句,但是重复执行参数列表里的参数,返回值为受影响的行数
+　    nextset(self):移动到下一个结果集
+
+　   4、cursor用来接收返回值的方法:
+
+　    fetchall(self):接收全部的返回结果行.
+　    fetchmany(self, size=None):接收size条返回结果行.如果size的值大于返回的结果行的数量,则会返回cursor.arraysize条数据.
+　    fetchone(self):返回一条结果行.
+　    scroll(self, value, mode='relative'):移动指针到某一行.如果mode='relative',则表示从当前所在行移动value条,如果mode='absolute',则表示从结果集的第一 行移动value条.
+    
+    5、下面的代码是一个完整的例子.
+
+    #使用sql语句,这里要接收的参数都用%s占位符.要注意的是,无论你要插入的数据是什么类型,占位符永远都要用%s
+    sql="insert into cdinfo values(%s,%s,%s,%s,%s)"
+    #param应该为tuple或者list
+    param=(title,singer,imgurl,url,alpha)
+    #执行,如果成功,n的值为1
+     n=cursor.execute(sql,param)
+    #再来执行一个查询的操作
+    cursor.execute("select * from cdinfo")
+    #我们使用了fetchall这个方法.这样,cds里保存的将会是查询返回的全部结果.每条结果都是一个tuple类型的数据,这些tuple组成了一个tuple
+    cds=cursor.fetchall()
+    #因为是tuple,所以可以这样使用结果集
+    print cds[0][3]
+    #或者直接显示出来,看看结果集的真实样子
+    print cds
+    #如果需要批量的插入数据,就这样做
+     sql="insert into cdinfo values(0,%s,%s,%s,%s,%s)"
+    #每个值的集合为一个tuple,整个参数集组成一个tuple,或者list
+     param=((title,singer,imgurl,url,alpha),(title2,singer2,imgurl2,url2,alpha2))
+    #使用executemany方法来批量的插入数据.这真是一个很酷的方法!
+     n=cursor.executemany(sql,param)
+     需要注意的是(或者说是我感到奇怪的是),在执行完插入或删除或修改操作后,需要调用一下conn.commit()方法进行提交.这样,数据才会真正保 存在数据库中.我不清楚是否是我的mysql设置问题,总之,今天我在一开始使用的时候,如果不用commit,那数据就不会保留在数据库中,但是,数据 确实在数据库呆过.因为自动编号进行了累积,而且返回的受影响的行数并不为0.
+
+     6、关闭数据库连接
+
+     需要分别的关闭指针对象和连接对象.他们有名字相同的方法
+     cursor.close()
+     conn.close() 
+
+Django操作数据库
+     django是一个出色的用于python的web框架。django连接有操作数据库的api，使用起来十分简洁。我们在settings.py中配置好所要连接的数据库，然后在modules、view、urls中分别写好业务逻辑
+```
+## python操作mysql数据库的相关操作实例
+```
+# -*- coding: utf-8 -*-
+#python operate mysql database
+import MySQLdb
+  
+#数据库名称
+DATABASE_NAME= ''
+#host = 'localhost' or '172.0.0.1'
+HOST= ''
+#端口号
+PORT= ''
+#用户名称
+USER_NAME= ''
+#数据库密码
+PASSWORD= ''
+#数据库编码
+CHAR_SET= ''
+  
+#初始化参数
+def init():
+    global DATABASE_NAME
+    DATABASE_NAME= 'test'
+    global HOST
+    HOST= 'localhost'
+    global PORT
+    PORT= '3306'
+    global USER_NAME
+    USER_NAME= 'root'
+    global PASSWORD
+    PASSWORD= 'root'
+    global CHAR_SET
+    CHAR_SET= 'utf8'
+      
+#获取数据库连接
+def get_conn():
+    init()
+    return MySQLdb.connect(host= HOST, user= USER_NAME, passwd= PASSWORD, db= DATABASE_NAME, charset= CHAR_SET)
+  
+#获取cursor
+def get_cursor(conn):
+    return conn.cursor()
+  
+#关闭连接
+def conn_close(conn):
+    if conn != None:
+        conn.close()
+  
+#关闭cursor
+def cursor_close(cursor):
+    if cursor != None:
+        cursor.close()
+  
+#关闭所有
+def close(cursor, conn):
+    cursor_close(cursor)
+    conn_close(conn)
+  
+#创建表
+def create_table():
+    sql= '''
+    CREATE TABLE `student` (
+    `id` int(11) NOT NULL,
+    `name` varchar(20) NOT NULL,
+    `age` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name` (`name`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    '''
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql)
+    conn.commit()
+    close(cursor, conn)
+    return result
+  
+#查询表信息
+def query_table(table_name):
+    if table_name != '':
+        sql= 'select * from ' + table_name
+        conn= get_conn()
+        cursor= get_cursor(conn)
+        result= cursor.execute(sql)
+        for rowin cursor.fetchall():
+            print(row)
+            #for r in row:      #循环每一条数据
+                #print(r)
+        close(cursor, conn)
+    else:
+        print('table name is empty!')
+  
+#插入数据
+def insert_table():
+    sql= 'insert into student(id, name, age) values(%s, %s, %s)'
+    params= ('1','Hongten_a','21')
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql, params)
+    conn.commit()
+    close(cursor, conn)
+    return result
+  
+#更新数据
+def update_table():
+    sql= 'update student set name = %s where id = 1'
+    params= ('HONGTEN')
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql, params)
+    conn.commit()
+    close(cursor, conn)
+    return result
+  
+#删除数据
+def delete_data():
+    sql= 'delete from student where id = %s'
+    params= ('1')
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql, params)
+    conn.commit()
+    close(cursor, conn)
+    return result
+  
+#数据库连接信息  
+def print_info():
+    print('数据库连接信息:' + DATABASE_NAME+ HOST+ PORT+ USER_NAME+ PASSWORD+ CHAR_SET)
+  
+#打印出数据库中表情况
+def show_databases():
+    sql= 'show databases'
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql)
+    for rowin cursor.fetchall():
+        print(row)
+          
+#数据库中表情况
+def show_tables():
+    sql= 'show tables'
+    conn= get_conn()
+    cursor= get_cursor(conn)
+    result= cursor.execute(sql)
+    for rowin cursor.fetchall():
+        print(row)
+  
+     
+def main():
+    show_tables()
+    #创建表
+    result= create_table()
+    print(result)
+    #查询表
+    query_table('student')
+    #插入数据
+    print(insert_table())
+    print('插入数据后....')
+    query_table('student')
+    #更新数据
+    print(update_table())
+    print('更新数据后....')
+    query_table('student')
+    #删除数据
+    delete_data()
+    print('删除数据后....')
+    query_table('student')
+    print_info()
+    #数据库中表情况
+    show_tables()
+      
+  
+if __name__== '__main__':
+    main()
+```

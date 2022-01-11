@@ -649,7 +649,7 @@
     + + 刷新数据库flush privileges;
 
     + 如果不行采用执行下面的command：
-    UPDATE mysql.user SET authentication_string = PASSWORD('keeninfo123'), plugin = 'mysql_native_password' WHERE User = 'root' AND Host = 'localhost';
+    UPDATE mysql.user SET authentication_string = PASSWORD('admin'), plugin = 'mysql_native_password' WHERE User = 'root' AND Host = 'localhost';
 
     systemctl restart mariadb
     然后就可以了
