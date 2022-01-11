@@ -1,5 +1,8 @@
 # SharedLib
 
+## 动态链接库
+- [linux动态链接库: lib .so .a](./sharedlib/README.md)
+
 ## 1. Reference Link
 
 [Linux系统中“动态库”和“静态库”那点事儿](http://blog.jobbole.com/107977/)

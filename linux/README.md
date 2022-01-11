@@ -1,81 +1,26 @@
 # Tips for linux
 
-## 动态链接库
-- [linux动态链接库: lib .so .a](./sharedlib/README.md)
-
 ## linux下手动安装/升级GCC到较高版本
 ```shell
 一、环境
 VMWare+Centos7
-二、写在前面的话
-安装GCC最简单的方式当然是【yum -y install gcc】
-但是我的机器上安装下来后，其版本是4.8.5，感觉有点低，所以想升级一下（7.2.0, 8.2.0之类的版本）。
-于是需要手动安装。
-三、吃过的坑
-1. 本地没有GCC导致编译不通过
-原因分析：
-安装高版本GCC时，需要依赖其它GCC，所以需要保证有一个较低版本的GCC
-解决方法：
-这个最简单的当然就是通过上面的【yum -y install gcc】进行安装
-g++也一起安装了吧，命令【yum -y install gcc-c++】
-安装后可以【gcc -v】、【g++ -v】进行测试，能打出正常版本表示成功
+yum -y install gcc-c++
+gcc -vg++ -v
  
-2. 上一步中偷懒，没有安装g++
-会有如下报错：
-checking how to run the C++ preprocessor... /lib/cpp
-configure: error: in `/usr/cyh/gcc-8.2.0/host-x86_64-pc-linux-gnu/gcc':
-configure: error: C++ preprocessor "/lib/cpp" fails sanity check
-See `config.log' for more details.
-make[2]: *** [configure-stage1-gcc] 错误 1
-make[2]: 离开目录“/usr/cyh/gcc-8.2.0”
-make[1]: *** [stage1-bubble] 错误 2
-make[1]: 离开目录“/usr/cyh/gcc-8.2.0”
-make: *** [all] 错误 2
-通过【fails sanity check】进行搜索了一上，其实就是没有安装C++编译器
-也就是上面的g++也要一起安装一下，不然一直报这个错
-
-3. 直接在新下载的GCC源码路径中编译
-原因分析：
-GCC的源码目录和安装目录，不要在同一个路径树中
-正例：
-源码目录=/home/cyh/study/, 安装目录=/usr/local/
-官方文档：
-https://gcc.gnu.org/install/configure.html
-原文是【First, we highly recommend that GCC be built into a separate directory from the sources which does not reside within the source tree.】
-四、正式开始安装
-1、下载GCC
-方式有很多，可以通过网页下载再上传到VM、可以直接wget等等
-假设我下载到 /home/cyh/study 目录，分别执行了以下命令：
-cd /home/cyh/study
 wget http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar.gz
 tar -zxvf gcc-7.2.0.tar.gz
 cd gcc-7.2.0
  
-2、配置（不推荐）
-此时可以执行【./configure --prefix=/user/local/】，但是会报错，如下：
-【configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.】
-表示需要这些依赖包，所以继续下载
-GCC 源码里自带脚本可以轻松下载依赖包，执行【./contrib/download_prerequisites】
-如果自动安装成功，会有如下输出：
-【All prerequisites downloaded successfully.】
-依赖下载完成后，再执行【./configure --prefix=/user/local/】
-如果有【configure: error: I suspect your system does not have 32-bit development libraries (libc and headers). If you have them, rerun configure with --enable-multilib. If you do not have them, and want to build a 64-bit-only compiler, rerun configure with --disable-multilib.】这样的报错，则要在上面的命令中加入【--disable-multilib】参数，所以命令变为下面这样【./configure --prefix=/user/local/ --disable-multilib】
+2、配置
+GCC 源码里自带脚本可以轻松下载依赖包，执行
+./contrib/download_prerequisites
+
+./configure --prefix=/user/local/ --disable-multilib
  
-3、配置（推荐）
-既然已经知道了GCC安装时有依赖，那就直接先搞定依赖再来配置
-所以先执行【./contrib/download_prerequisites】
-如果一切顺利，再执行【./configure --prefix=/user/local/ --disable-multilib】即可
- 
-4、make
-直接执行 make 命令（我机器上执行了3小时，OMG）
- 
-5、make install
-直接执行 make install 命令
+3、make
+
+4、make install
 ```
-- [/lib64/libstdc++.so.6: version `CXXABI_1.3.8’ not found](https://blog.csdn.net/EI__Nino/article/details/100086157)
-
-ln -s /root/local/bin/gcc /usr/bin/gcc && ln -s /root/local/bin/g++ /usr/bin/g++ && ln -s /root/local/bin/c++ /usr/bin/c++ && ln -s /root/local/bin/gcc /usr/bin/cc && cp /root/local/lib64/libstdc++.so.6.0.27 /usr/lib64 && cd /usr/lib64 && ln -s libstdc++.so.6.0.27 libstdc++.so.6
-
 - [Linux安装GCC 9.2.0](https://blog.csdn.net/lwc5411117/article/details/101200065)
 
 - [CENTOS7编译安装GCC9.2.0及踩坑经历](https://www.cnblogs.com/liranowen/p/11639929.html)
@@ -96,32 +41,33 @@ ln -s /root/local/bin/gcc /usr/bin/gcc && ln -s /root/local/bin/g++ /usr/bin/g++
 
 - [CentOS 7.6 编译安装最新版本glibc2.30 实录](https://blog.csdn.net/RyanFang/article/details/100984938?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param)
 
-## back
+## 升级libc
+- [/lib64/libstdc++.so.6: version `CXXABI_1.3.8’ not found](https://blog.csdn.net/EI__Nino/article/details/100086157)
+
+```shell
+ln -s /root/local/bin/gcc /usr/bin/gcc && ln -s /root/local/bin/g++ /usr/bin/g++ && ln -s /root/local/bin/c++ /usr/bin/c++ && ln -s /root/local/bin/gcc /usr/bin/cc && cp /root/local/lib64/libstdc++.so.6.0.27 /usr/lib64 && cd /usr/lib64 && ln -s libstdc++.so.6.0.27 libstdc++.so.6 
+
 export LD_PRELOAD=/lib64/libc-2.17.so;ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
+```
 
 - [linux下glibc库升级](https://blog.csdn.net/noobplayer/article/details/52790059)
 
-```[root@localhost lib64]# ln -sf /opt/glibc-2.29/lib/libc-2.29.so /lib64/libc.so.6
-[root@localhost lib64]# export LD_LIBRARY_PATH=/opt/glibc-2.14/lib:$LD_LIBRARY_PATH
-[root@localhost lib64]# ls
-段错误
-[root@localhost lib64]# export L^C
-[root@localhost lib64]# export LD_LIBRARY_PATH=/lib64
-[root@localhost lib64]# export LD_LIBRARY_PATH=/opt/glibc-2.14/lib:$LD_LIBRARY_PATH ^C
-```
-
-```
+```shell
+export LD_LIBRARY_PATH=/opt/glibc-2.14/lib:$LD_LIBRARY_PATH
+运行ls， 出现段错误，表示有些软链接没创建好
+export LD_LIBRARY_PATH=/lib64
+export LD_LIBRARY_PATH=/opt/glibc-2.14/lib:$LD_LIBRARY_PATH
+ln -sf /opt/glibc-2.29/lib/libc-2.29.so /lib64/libc.so.6
 ln -sf /lib64/libc-2.17.so /lib64/libc.so.6
 /lib/x86_64-linux-gnu/ld-2.31.so /bin/ln -s /lib/x86_64-linux-gnu/ld-2.31.so /lib64/ld-linux-x86-64.so.2
 ```
-## 误删了/lib64/ld-linux-x86-64.so.2，ls, cd等等命令失效，命令都失效
 
-    --恢复
-    /lib64/ld-2.17.so /bin/ln -s /lib64/ld-2.17.so /lib64/ld-linux-x86-64.so.2
++ 误删了/lib64/ld-linux-x86-64.so.2，ls, cd等等命令失效，命令都失效， 如何恢复：
 
-## 恢复
-
-    LD_PRELOAD=/lib64/libc-2.17.so ln -s /lib64/libc-2.17.so /lib64/libc.so.6
+```shell
+/lib64/ld-2.17.so /bin/ln -s /lib64/ld-2.17.so /lib64/ld-linux-x86-64.so.2
+LD_PRELOAD=/lib64/libc-2.17.so ln -s /lib64/libc-2.17.so /lib64/libc.so.6
+```
 
 ## nvocation of python3.6 via ld-2.17.so segfaults
 - [nvocation of python3.6 via ld-2.17.so segfaults](https://github.com/ContinuumIO/anaconda-issues/issues/8773)
@@ -149,8 +95,8 @@ The following actions will resolve these dependencies:
 
 8. mariadb-client-5.5 recommends libdbd-mysql-perl (>= 1.2202)
 ```
-## Ubuntu Server源码编译安装MariaDB
-```
+## Ubuntu Server源码编译安装MariaDB[centos推荐使用repo安装]
+```shell
  sudo apt-get update
 
  sudo apt-get install make
@@ -232,25 +178,22 @@ set hls
 
 ## git log显示中文
 
-后查询相关资料，现将解决办法总结如下：
+```shell
+git config --global i18n.commitencoding utf-8  # --注释：该命令表示提交命令的时候使用utf-8编码集提交
 
-1、运行Git Bash窗口，在该窗口导航条（即最上面）右键，选择Options−>Text，找到下面两处
-　　Locale:选择 zh_CN 
-　　Charector set:选择 UTF-8 
-2、到Git Bash命令窗口输入如下设置命令语句
+git config --global i18n.logoutputencoding utf-8 # --注释：该命令表示日志输出时使用utf-8编码集显示
 
-git config --global i18n.commitencoding utf-8  --注释：该命令表示提交命令的时候使用utf-8编码集提交
+export LESSCHARSET=utf-8  # --注释：设置LESS字符集为utf-8
+```
 
-git config --global i18n.logoutputencoding utf-8 --注释：该命令表示日志输出时使用utf-8编码集显示
 
-export LESSCHARSET=utf-8  --注释：设置LESS字符集为utf-8
 
 ## 安装npm （这个命令最管用）
 curl -L https://npmjs.com/install.sh | sh
 
 Ubuntu 16.04 TLS，执行以下命令：
 
-```
+```shell
 sudo apt-get install nodejs
 sudo apt install nodejs-legacy
 sudo apt install npm
@@ -314,7 +257,7 @@ npm  --version
 ## linux查看系统信息硬件配置
 ### 系统
 
-```
+```shell
 　　# uname -a # 查看内核/操作系统/CPU信息
 
 　　# head -n 1 /etc/issue # 查看操作系统版本
@@ -334,7 +277,7 @@ npm  --version
 
 ### 资源
 
-```
+```shell
 　　# free -m # 查看内存使用量和交换区使用量
 
 　　# df -h # 查看各分区使用情况
@@ -352,7 +295,7 @@ npm  --version
 
 ### 磁盘和分区
 
-```
+```shell
 　　# mount | column -t # 查看挂接的分区状态
 
 　　# fdisk -l # 查看所有分区
@@ -366,7 +309,7 @@ npm  --version
 
 ### 网络
 
-```
+```shell
 　　# ifconfig # 查看所有网络接口的属性
 
 　　# iptables -L # 查看防火墙设置
@@ -381,7 +324,7 @@ npm  --version
 ```
 
 ### 进程
-```
+```shell
 　　# ps -ef # 查看所有进程
 
 　　# top # 实时显示进程状态
@@ -389,7 +332,7 @@ npm  --version
 
 ### 用户
 
-```
+```shell
 　　# w # 查看活动用户
 
 　　# id <用户名> # 查看指定用户信息
@@ -405,7 +348,7 @@ npm  --version
 
 ### 服务
 
-```
+```shell
 　　# chkconfig --list # 列出所有系统服务
 
 　　# chkconfig --list | grep on # 列出所有启动的系统服务
@@ -526,8 +469,9 @@ certbot certonly --standalone -d sam-tech.com
 
 
 
+## https 证书
+
 - [Certbot-免费的HTTPS证书](https://zhuanlan.zhihu.com/p/80909555)
-- [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
 
 ## ubuntu/debian安装多个版本gcc
 
@@ -960,22 +904,16 @@ That should cover everything you need to know about adding users to groups on Li
 
 ## 构建rpm包
 
-```
 - [如何构建 RPM 包](https://zhuanlan.zhihu.com/p/47868584)
 - [Building RPMs with Mock](https://ithiriel.com/content/2011/10/13/building-rpms-mock)
 - [在 Ubuntu 下直接将二进制文件制作成 rpm 包](https://blog.konghy.cn/2015/11/13/rpmbuild/)
 - [ubuntu制作简陋的deb/rpm包](https://blog.csdn.net/evglow/article/details/103351348)
 - [Centos RPM安装包制作](https://blog.csdn.net/q1009020096/article/details/110953465)
 - [一步步制作RPM包](https://blog.51cto.com/laoguang/1103628)
-```
-## yum源
-- [Ubuntu下安装yum和配置yum源](https://blog.csdn.net/qq_38690917/article/details/115261819)
-
-  mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-  下载对应版本repo文件, 放入/etc/yum.repos.d/(操作前请做好相应备份)
-  CentOS7   wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
 
 ## kamailio
+
+[学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
 
 ```
 以前装好的kamailio sip服务器经常在启动的时候经常遇到这个错误：
@@ -984,6 +922,7 @@ ERROR: PID file /var/run/kamailio/kamailio.pid does not exist -- Kamailio start 
 使用PS 命令查看kamialio相关进程：ps axw | /usr/bin/egrep kamailio
 ```
 ps -ef|grep kamailio|grep -v grep|cut -c 9-15|xargs kill -9
+
 ```
 - [ubuntu上kamailio+rtpproxy+mediaproxy环境搭建](https://www.jianshu.com/p/9e2ffbf853fc)
 
@@ -1108,14 +1047,11 @@ Dokuwiki Page - http://www.kamailio.org/dokuwiki/
 1．依赖包：
 libmysqlclient & libz (zlib) ：mysql DB support (the db_mysql module) Shared libraries
 
-<<<<<<< HEAD
 ```shell
 MySQL-shared-5.1.32-0.glibc23.i386.rpm
-=======
                         MySQL-shared-5.1.32-0.glibc23.i386.rpm
     
                         MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
->>>>>>> 0e50f1b (from personal pc)
 
 MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
 ```
@@ -2590,6 +2526,12 @@ yum命令的参数有很多，其中就有只是下载而不需要安装的命�
 # reposync -r epel -p /opt/local_epel
 ```
 
+## 查找需要的RPM包和只下载不安装
+
+rpm -Uvh --force --nodeps *rpm
+
+yum install --downloadonly --downloaddir=./  libaio-devel
+
 ## [curl 支持 http2](https://www.cnblogs.com/brookin/p/10713166.html)
 
 ### 源码安装
@@ -2727,7 +2669,13 @@ x-content-type-options: nosniff
 
 ------
 
-### yum 安装
+## yum 安装 / yum源
+
+- [Ubuntu下安装yum和配置yum源](https://blog.csdn.net/qq_38690917/article/details/115261819)
+
+  mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+  下载对应版本repo文件, 放入/etc/yum.repos.d/(操作前请做好相应备份)
+  CentOS7   wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
 
 #### 安装 yum 源
 
@@ -2739,7 +2687,7 @@ rpm -ivh http://mirror.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-2-
 
 vim /etc/yum.repos.d/city-fan.repo
 
-```
+```shell
 [cityfan]  
 name=cityfan 
 baseurl=http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/
@@ -2747,11 +2695,6 @@ enabled=1
 gpgcheck=0
 ```
 
-#### 更新curl
-
-```
-yum update curl
-```
 - [CentOS使用rpm离线安装mariadb](https://www.cnblogs.com/cobcmw/p/11420311.html)
 
 # 十个 SCP 传输命令例子
@@ -3402,11 +3345,16 @@ systemctl daemon-reload
   chattr -i /etc/resolv.conf
 ```
 
+
+
 ## curl头部设置
+
 - [libcurl长连接高并发高性能](https://zhuanlan.zhihu.com/p/254801697)
 - [使用 nghttpx 搭建 HTTP/2 代理](https://wzyboy.im/post/1052.html)
 - [常用libcurl异步使用方法](https://www.jianshu.com/p/d7609df995d2)
 - [libcurl长连接高并发多线程](https://www.cnblogs.com/bclshuai/p/13693960.html)
+- [libcurl库使用方法，好长，好详细](https://www.cnblogs.com/heluan/p/10177475.html)
+- [libcurl库安装（Linux）](https://blog.csdn.net/simonyucsdy/article/details/82835268)
 ```
 CURLOPT_HTTPHEADER
 
@@ -3456,12 +3404,6 @@ websocket不同，它本身就规定了是正真的、双工的长连接，两�
 小结：http协议决定了浏览器端总是主动发起方，http的服务端总是被动的接受、响应请求。http提供的长连接服务器可以不接受。而websocket协议，在连接之后，客户端、服务端是完全平等的。websocket是真正的长连接。
 ```
 
-## libcurl
-
-- [libcurl库使用方法，好长，好详细](https://www.cnblogs.com/heluan/p/10177475.html)
-
-- [libcurl库安装（Linux）](https://blog.csdn.net/simonyucsdy/article/details/82835268)
-
 ## yum只下载不安装
 
 - yum install --downloadonly --downloaddir=/download python-devel
@@ -3475,11 +3417,7 @@ websocket不同，它本身就规定了是正真的、双工的长连接，两�
   - [方法二：yum --downloadonly](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_1)
   - [方法三：reposync](https://www.cnblogs.com/lizhewei/p/11763053.html#_label0_2)
 
- 
-
 #### 通过yum命令只下载rpm包不安装
-
-
 
 ##### 方法一：yumdownloader
 
@@ -3521,8 +3459,6 @@ yum命令的参数有很多，其中就有只是下载而不需要安装的命�
 ```shell
 # yum install yum-plugin-downloadonly
 ```
-
-
 
 ##### 方法三：reposync
 
@@ -3766,24 +3702,43 @@ mv openssl_latest openssl
 
 
 
-
 ### 在命令的每行输出前添加时间戳
-```
+
+------
+
 POSIX外壳
 请记住，由于许多shell在内部将它们的字符串存储为cstring，因此，如果输入包含空字符（\0），则可能导致该行过早结束。
 
+```shell
 command | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$line"; done
+```
+
 GNU AWK
+
+```shell
 command | gawk '{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0 }'
+```
 佩尔
+
+```shell
 command | perl -pe 'use POSIX strftime; print strftime "[%Y-%m-%d %H:%M:%S] ", localtime'
+```
+
 蟒蛇
+
+```shell
 command | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))'
+```
+
 红宝石
+
+```shell
 command | ruby -pe 'print Time.now.strftime("[%Y-%m-%d %H:%M:%S] ")'
 ```
+
 ## kamailio日志设置
-shell```
+
+```shell
 开启日志，并将日志输出到/var/log/kamailio.log文件
 
 修改配置文件vi /usr/local/etc/kamailio/kamailio.cfg，添加
@@ -3817,31 +3772,49 @@ kamctl restart
 -f 该参数用于监视File文件增长。退出，按下CTRL+C。
 ```
 
-### 参考文档：
+### Separate Log File for Kamailio
 
-https://www.kamailio.org/dokuwiki/doku.php/tutorials:debug-syslog-messages
+```shell
+In order to create a separate log file for kamailio, you would need to edit two files.
 
-http://thyrusgorges.com/post/kamailio-log-message-to-custom-log-file/
+First , set the log_facility directive :
 
-http://www.kamailio.org/events/2016-KamailioWorld/Day0/W04-Daniel-Constantin.Mierla-Debugging-Kamailio-Config.pdf
+vi kamailio.cfg
 
-https://wiki.4psa.com/display/KB/How+to+debug+Asterisk+and+Kamailio
-
-
-```
-kamailio/opensips/openser 日志分割/logrotate 日志配置_修己度人-程序员宝宝
-技术标签： kamailio  logrotate  openser  sip proxy  opensips  
-
-首先是日志配置：
-debug=3  # debug level, 1 is low and 4 is high (lots of output)
 log_facility=LOG_LOCAL0
 
-loadmodule "xlog.so"
-/etc/syslog.conf   #以下是将日志转存到其他文件
-local0.*                                            -/data/logs/kamailio.log
-the '-' before the name of the file means asynchronous writing, it is important to have it not to add performance penalty
+Edit the syslog configuration file depending upon your daemon
+
+vi /etc/rsyslog.conf
+
+or
+
+vi /etc/syslog.conf
+
+local0.* -/var/log/kamailio.log
+
+service kamailio restart
+
+service syslog/rsyslog restart
+
+Rotating Kamailio Logs :
+
+vi /etc/logrotate.d/kamailio.log
+
+/var/log/kamailio.log { 
+	missingok 
+	size=50M 
+	create 0644 root root 
+	postrotate 
+	/bin/kill -HUP cat /var/run/syslogd.pid 2> /dev/null 2> /dev/null || true 
+	endscript 
+}
+
 logrotate  进行日志分隔的规则 具体见logrotate
-#cat /etc/logrotate.d/kamailio /data/logs/kamailio.log {
+
+cat /etc/logrotate.d/kamailio 
+
+/var/log/kamailio.log {
         noolddir
         size 100M
         rotate 20
@@ -3849,13 +3822,17 @@ logrotate  进行日志分隔的规则 具体见logrotate
         postrotate
                 /bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || true
         endscript
-} #/usr/sbin/logrotate -f /etc/logrotate.d/kamailio    #使配置生效
-kamailio/opensips 技术交流QQ群：118791050
+} 
+
+/usr/sbin/logrotate -f /etc/logrotate.d/kamailio    #使配置生效
 ```
-```
 
-## 查找需要的RPM包和只下载不安装
+### 参考文档：
 
-rpm -Uvh --force --nodeps *rpm
++ https://www.kamailio.org/dokuwiki/doku.php/tutorials:debug-syslog-messages
 
-yum install --downloadonly --downloaddir=./  libaio-devel
++ http://thyrusgorges.com/post/kamailio-log-message-to-custom-log-file/
+
++ http://www.kamailio.org/events/2016-KamailioWorld/Day0/W04-Daniel-Constantin.Mierla-Debugging-Kamailio-Config.pdf
+
++ https://wiki.4psa.com/display/KB/How+to+debug+Asterisk+and+Kamailio
