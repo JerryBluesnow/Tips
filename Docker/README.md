@@ -514,6 +514,7 @@ PS:–privilaged=true一定要加上的。
 docker run -it --name vonr2 --privileged=true centos:centos7.6.1810 /usr/sbin/init
 
 docker run -it --name vonrx --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.6.1810 /usr/sbin/init
+
 ## 
 1.修改数据库字符集
 ALTER DATABASE database_name CHARACTER SET utf8
@@ -758,4 +759,195 @@ grep vm.max_map_count /etc/sysctl.conf
 vm.max_map_count=262144
 立即生效
 sysctl -w vm.max_map_count=262144
+## WSL2安装使用
+
+https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F144583887)
+
+### wsl2是windows内置的linux子系统，安装步骤如下：
+
+#### 1.Win10 版本号为 2004（内部版本19041或更高）即可，如果低于此版本可使用 Windows 10 易升工具手动升级。下载 Windows 10 易升工具：
+
+```
+https://www.microsoft.com/zh-cn/software-download/windows10
+```
+
+#### 2. 如果之前没有用过 WSL，那么首先需要为Linux启用Windows子系统:
+
+```
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
+
+#### 3. 安装 WSL 2 之前，必须启用“虚拟机平台”可选功能
+
+`dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart`
+重新启动计算机以完成WSL安装并更新到WSL 2。
+
+#### 4. 下载Linux内核更新程序包
+
+[下载地址](https://links.jianshu.com/go?to=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwsl%2Finstall-win10)
+[https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi](https://links.jianshu.com/go?to=https%3A%2F%2Fwslstorestorage.blob.core.windows.net%2Fwslblob%2Fwsl_update_x64.msi)
+
+#### 5、安装 Linux 分发版本
+
+打开微软应用商店，搜索 Ubuntu，在列表中选择最新的长期支持版本 20.04 LTS 并安装。
+
+
+
+![img](https://upload-images.jianshu.io/upload_images/9766611-8198b6228065a78c.png?imageMogr2/auto-orient/strip|imageView2/2/w/740/format/webp)
+
+image.png
+
+#### 6. 使用任一终端，输入以下命令查看 WSL 版本，确保 WSL 的版本为 2.0：
+
+
+
+```ruby
+$ wsl -l -v
+  NAME            STATE           VERSION
+* Ubuntu-20.04    Stopped         2
+```
+
+##### 7. 如果显示当前不是 WSL 2 版本，可以通过以下命令设置 WSL 的默认版本：
+
+
+
+```bash
+wsl --set-version Ubuntu-20.04 2
+```
+
+##### 8. 如果安装有问题的话，勾选此选项：
+
+![img](https://upload-images.jianshu.io/upload_images/9766611-53d3b718ba477c6a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1133/format/webp)
+
+image.png
+
+### 9. 进入wsl2终端:
+
+打开任一命令行工具，输入 `wsl`
+
+![img](https://upload-images.jianshu.io/upload_images/9766611-f05b7f66e7232609.png?imageMogr2/auto-orient/strip|imageView2/2/w/976/format/webp)
+
+image.png
+
+
+
+### 关于使用WSL2出现“参考的对象类型不支持尝试的操作”的解决方法。
+
+[https://zhuanlan.zhihu.com/p/151392411](https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F151392411)
+下载此软件：
+链接: [https://pan.baidu.com/s/12_cAA9L0wNCqxpquuWjNeQ](https://links.jianshu.com/go?to=https%3A%2F%2Fpan.baidu.com%2Fs%2F12_cAA9L0wNCqxpquuWjNeQ) 提取码: pir4
+管理员身份运行CMD输入:
+`NoLsp.exe C:\windows\system32\wsl.exe`
+执行成功会显示 success!
+
+#### 解决无法安装sshpass的问题：
+
+首选运行命令,更新清单：：
+
+```csharp
+sudo apt-get update 
+```
+
+然后检查包是否可用:
+
+```undefined
+ apt-cache search sshpass 
+```
+
+然后就可以安装了
+
+```undefined
+sudo apt install sshpass
+```
+
+#### 编写sh脚本,用sshpass 进行ssh自动登录操作：
+
+需要先手动用命令进行ssh登录，这样本地会有一个ssh登录缓存，然后才能运行sh脚本
+
+1. 本地ssh登录,输入密码
+
+```css
+ssh root@xxx.xxx.xx.xx
+password:
+
+exit
+```
+
+1. sshpass 脚本操作：
+
+```tsx
+export SSHPASS='xxxxxxxx'
+cd /dir/
+sshpass -e rsync -z -r   root@xxx.xxx.xx.xx:/dir/
+```
+
+###### 解决Linux下编译.sh文件报错 “[: XXXX: unexpected operator”
+
+直接在cmd，git bash下执行sh脚本没问题，而再wsl下执行报上面的错误
+原因是Ubuntu默认的sh是连接到dash的,而dash跟bash是不兼容的；
+解决：wsl下执行命令sudo dpkg-reconfigure dash，选择no,意思就是不默认使用dash命令行
+
+
+####
+135.252.30.200 builder1， builder1
+
+rnxt 5g-alpine
+
+docker run -ti --entrypoint=sh 8f23d0491f08 --name=vonrx
+
+## CentOS 7通过yum安装Docker和docker-compose
+- [CentOS 7通过yum安装Docker和docker-compose](https://blog.csdn.net/hbtj_1216/article/details/104159936)
+
+
+
+## docker desktop 登录到宿主host, 修改配置问题导致的无法启动
+
+```text
+docker run --net=host --ipc=host --uts=host --pid=host -it --security-opt=seccomp=unconfined --privileged --rm -v /:/host alpine /bin/sh
+```
+
+最后登陆到宿主host就能操作所有容器文件了:
+
+```text
+chroot /host
+```
+
+例如你要操作某一个容器的文件，例如es01，可以通过命令查看es01容器的：
+
+```text
+docker inspect es01
+```
+
+
+## CentOS7.6安装docker-compose
+
+```
+
+Centos7.6安装docker-compose
+官网地址:https://docs.docker.com/compose/install/
+
+运行此命令以下载Docker Compose的当前稳定版本
+
+curl -L "https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+对二进制文件应用可执行权限：
+
+chmod +x /usr/local/bin/docker-compose
+```
+
+## 设置docker开机自启动 docker compose设置容器自启动
+```
+Docker启动命令
+
+systemctl start docker
+Docker开机自启动
+
+systemctl enable docker
+Docker设置容器为自启动
+
+--restart=always
+Docker修改容器状态为自启动
+
+docker update --restart=always 容器ID(或者容器名)
+docker compose设置容器自启动
 ```

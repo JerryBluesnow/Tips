@@ -1,8 +1,9 @@
 
 # [Download](https://golang.google.cn/dl/)
 
-# 
+# [golang 2022.1永久激活](http://www.javatiku.cn/goland/1429.html) 
 
+<<<<<<< HEAD
 - [Go 语言到底适合干什么？](https://www.zhihu.com/question/296426314)
 
 - [GOLANG HTTPS SERVER](https://www.freesion.com/article/8416588126/)
@@ -70,3 +71,17 @@ const (
 )
 /** 兼容windows end */
 ```
+=======
+
+# go mod init
+
+# GOPROXY=https://goproxy.cn,direct
+
+- [Go 语言到底适合干什么？](https://www.zhihu.com/question/296426314)
+
+- [golang http2 client 和server 使用非TLS 模式(h2c)](https://www.jianshu.com/p/ff16b0308e7c)
+
+- [Go 语言中文开源图书、资料或文档](books.studygolang.com)
+
+- [Go菜鸟教程](https://www.runoob.com/go/go-constants.html)
+>>>>>>> 5be2f62 (上传personalPC)

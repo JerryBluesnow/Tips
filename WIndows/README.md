@@ -262,3 +262,46 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsSelfHost
 //以管理员权限运行cmd
 net stop LxssManager	//停止
 net start LxssManager	//启动
+
+## 压缩WSL2系统的vhdx文件
+
+wsl --shutdown
+
+PS C:\Users\JerryZ\AppData\Local\Docker\wsl\data> diskpart
+
+Microsoft DiskPart 版本 10.0.22567.1
+
+Copyright (C) Microsoft Corporation.
+在计算机上: JERRYZ
+
+DISKPART> select vdisk file = "C:\Users\JerryZ\AppData\Local\Docker\wsl\data\ext4.vhdx"
+
+DiskPart 已成功选择虚拟磁盘文件。
+
+DISKPART> compact vdisk
+
+## 迁移docker wsl2 VHDX 文件的方法
+像任何使用Windows子系统Linux的人一样，我们都很兴奋在WSL2最终发布时。
+
+使用WSL2，映像/容器存储在虚拟机的VHDX映像中。清除映像/容器时，VHDX中的空间将被释放，但决不会释放回主机操作系统。这会导致VHDX文件开始失控，如果主引导驱动器空间不足，则会出现问题。这是一个已知的问题，这个GitHub问题有一个缩小映像的解决方法（下面列出了其中的一些步骤）。
+
+要解决这个问题，可以将VHDX移动到不同的驱动器/分区。下面是一个PowerShell脚本do do it（使用风险自负）：
+```
+$ErrorActionPreference = "Stop"
+
+$newLocation = "E:\VMs\WSL2\"
+
+cd ~\AppData\Local\Docker\wsl\data
+wsl --shutdown
+Optimize-VHD .\ext4.vhdx -Mode Full
+mkdir $newLocation -Force
+mv ext4.vhdx $newLocation
+cd ..
+rm data
+New-Item -ItemType SymbolicLink -Path "data" -Target $newLocation
+```
+只要更改$newLocation参数，它就会将VHDX文件移动到新位置。如果您使用的是windows10home，那么可以将此解决方法用于optimizevhd命令。这将停止WSL，优化VHD（将VHDX中未分配的空间释放回主机操作系统），将VHDX移动到新位置，并用指向新位置的符号链接替换“data”文件夹。
+
+我做了有限的测试，一切似乎都按预期进行。如果你遇到问题，请在评论中告诉我！
+
+注意：如果您运行的是不带WSL/WSL2的Docker for Windows，那么这些步骤可能适用于DockerDesktop.vhdx文件…但是在这种情况下，您可能只需要更改Hyper-V VM实例中的VHDX位置。

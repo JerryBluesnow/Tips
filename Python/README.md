@@ -65,6 +65,7 @@ http://www.python.org/ftp/python/2.7.6/python-2.7.6.msi
 ## 如果当前电脑里所有的python程序访问网页或者服务器的时候都需要用到代理可以去python库的源文件修改代理，这样所有用到该源文件访问
     例如我在使用tushare访问数据的时候，实际上默认程序是不走代理的，虽然系统中配置了代理，依然不起任何作用，这个时候发现tushare在访问网页/服务器的时候，
     最终调用的是urlib2.py， 而平时在自己写脚本的时候在脚本中使用build一个新的ProxyHandler就可以了，如下：
+```python
     # -*- coding: utf-8 -*-
     import urllib
     import urllib2
@@ -99,7 +100,7 @@ http://www.python.org/ftp/python/2.7.6/python-2.7.6.msi
         html = content.decode(infoencode,'ignore').encode(typeEncode)##先转换成unicode编码，然后转换系统编码输出
     
     print html
-    
+```  
     但是在大量应用中很难做到直接去修改所有的库去build proxyhandler， 所以我们可以采用修改基础库urllib2中的ProxyHandler __init__的constext默认参数设置代理
     class ProxyHandler(BaseHandler):
     ...
@@ -113,7 +114,7 @@ http://www.python.org/ftp/python/2.7.6/python-2.7.6.msi
 
 7. [cursor() — 数据库连接操作 python](https://www.cnblogs.com/qixu/p/6133429.html)
 
-```
+```python
 python 操作数据库，要安装一个Python和数据库交互的包MySQL-python-1.2.2.win32-py2.5.exe，然后我们就可以使用MySQLdb这个包进行数据库操作了。
 
      操作步骤如下：
@@ -174,7 +175,7 @@ Django操作数据库
      django是一个出色的用于python的web框架。django连接有操作数据库的api，使用起来十分简洁。我们在settings.py中配置好所要连接的数据库，然后在modules、view、urls中分别写好业务逻辑
 ```
 ## python操作mysql数据库的相关操作实例
-```
+```python
 # -*- coding: utf-8 -*-
 #python operate mysql database
 import MySQLdb
@@ -514,3 +515,21 @@ NSIS, Inno
 - [22个Python绘图包汇总，超实用的那种](https://blog.51cto.com/u_11215354/5192554)
 
 - [python工具——diagrams](https://www.cnblogs.com/baby123/p/14246824.html?ivk_sa=1024320u)
+## 文字识别
+- [文字识别在线工具- 转易侠](https://www.zhuanyixia.cn/online/onlinepdfconvert-ocr.html)
+- [python 图片识别_Python利用百度文字识别(OCR)服务实现图片文字提取，准确率超高...](https://blog.csdn.net/weixin_39563827/article/details/110973675?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-110973675-blog-112391012.pc_relevant_default&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
+
+- [python调用百度ocr识别](https://blog.csdn.net/residualIce/article/details/112391012)
+
+## python Excel 
+
+- [全网最全 Python 操作 Excel 教程，建议收藏！](https://blog.csdn.net/XMWS_IT/article/details/118331444)
+
+- [使用 Python 第三方库 xlwt 写入数据到 Excel 工作表](https://blog.csdn.net/weixin_43252521/article/details/122180830)
+
+## try-catch
+
+- [python中的try-catch-finally-else简介](https://blog.csdn.net/lwgkzl/article/details/81059433)
+
+## 对象比较
+- [python定义对象的比较方法](https://blog.csdn.net/qq_42604176/article/details/122150888)

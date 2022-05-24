@@ -160,3 +160,13 @@ git merge --no-ff simba
 ## gerrit is not registered in your account, and you lack ‘forge author‘ permission.
 
 git commit --amend --reset-author
+
+## set remote
+```
+git remote set-url origin git@git.samxtec.com:bbluesnow/kamaililo.git
+
+git remote set-url origin git@gitee.com:rnxt/vonrptt.git
+
+https://gitee.com/rnxt/vonrptt
+
+```

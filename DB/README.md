@@ -589,6 +589,13 @@
     Customers.CustomerID= Orders.CustomerID) 
 </details>
 
+## update 数据库
+UPDATE impu SET barring = REPLACE(barring, 1, 0) where display_name = 13912345000;
+UPDATE impu SET barring = REPLACE(barring, 1, 0) where identity like '%tel%';
+
+UPDATE impu SET barring = REPLACE(barring, 1, 0) where identity like '%tel%';
+UPDATE impu SET barring = REPLACE(barring, 0, 1) where identity like '%tel%';
+UPDATE nds_trusted_domains SET trusted_domain = REPLACE(trusted_domain, "ims.mnc001.mcc001.3gppnetwork.org", "ims.mnc000.mcc460.3gppnetwork.org") where trusted_domain like '%ims.mnc%';
 
 ## install mysql
     https://www.cnblogs.com/fanshudada/p/9781794.html
