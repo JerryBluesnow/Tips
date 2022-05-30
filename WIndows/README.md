@@ -226,13 +226,9 @@ Hyper-V并不能对物理机的网卡进行识别，所以需要借助虚拟网�
 
 　　以上就是Win10系统内置虚拟机Hyper-V联网和无法打开解决方法的详细教程。Hyper-V是虚拟机，是一种虚拟机软件，依靠硬件技术实现虚拟技术，你的Win10设备是64位，还得开启虚拟化技术，也就是说，你的CPU硬件支持虚拟技术VT，但是默认关闭，你得在BIOS这个主板芯片程序里开启，这是前提。然后就可以在[win10](http://www.jiaochengzhijia.com/win10/)中随心所欲使用虚拟机。关注教程之家，解锁更多系统教程。
 
-
-
 # 宿主机上新建虚拟机_Hyper-V安装Windows 10虚拟机
 
 https://blog.csdn.net/weixin_35589827/article/details/112487233
-
-
 
 # WIN10 Hyper-V 新建虚拟机 步骤以及一些有坑的地方说明
 
@@ -244,7 +240,6 @@ https://blog.csdn.net/zfr_xuexiao66/article/details/80525970
 
 https://xiaoheiswz001.lanzoui.com/ievBmquyflg
 
-
 然后打开windows预览计划，如果闪退
 
 windows+R 输入regedit定位到
@@ -255,8 +250,15 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsSelfHost
 
 2.删除红框中的子项
 
-
 现在再打开预览计划应该就正常了 https://www.bilibili.com/read/cv11947720 出处：bilibili
 
 ## 磁盘清理
 - [Dism++，也许是最强的实用工具](https://www.chuyu.me/zh-Hans/index.html)
+
+## win10自带Hyper-V安装CentOS7.6.1810
+- [win10自带Hyper-V安装CentOS7及网络配置图文教程](https://blog.csdn.net/fengdong1996/article/details/95041109)
+
+## WSL-Ubuntu18.04 LTS重启方法
+//以管理员权限运行cmd
+net stop LxssManager	//停止
+net start LxssManager	//启动

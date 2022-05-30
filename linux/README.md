@@ -157,6 +157,7 @@ The following actions will resolve these dependencies:
 - [ubuntu16.04更新软件源](https://blog.csdn.net/lxlong89940101/article/details/89488461)
 
 ## source filename 与 sh filename 及./filename执行脚本的区别
+
 - 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。./filename是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。
 - sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
 - source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
@@ -185,8 +186,6 @@ git config --global i18n.logoutputencoding utf-8 # --注释：该命令表示日
 
 export LESSCHARSET=utf-8  # --注释：设置LESS字符集为utf-8
 ```
-
-
 
 ## 安装npm （这个命令最管用）
 curl -L https://npmjs.com/install.sh | sh
@@ -405,7 +404,6 @@ rpm -qa # 查看所有安装的软件包
 　　proc – process information pseudo-filesystem 进程信息伪装文件系统
 ```
 
-
 ## centos install
 
 - [centos官网](https://www.centos.org/download/)
@@ -423,15 +421,14 @@ rpm -qa # 查看所有安装的软件包
 
 - https://cdimage.debian.org/debian-cd/10.7.0/amd64/iso-dvd/
 
-
 ### Debian 制作U盘启动安装盘
-+ 1,工具：Universal-USB-Installer（据经验软碟通UltraISOl不是很100%成功）
++  工具：Universal-USB-Installer（据经验软碟通UltraISOl不是很100%成功）
 
     官网下载地址： http://www.pendrivelinux.com/  我下载的是 Universal-USB-Installer-1.9.9.0版本
 
-+ 2 .U盘一个(4G/8G)根据系统的大小决定
++ U盘一个(4G/8G)根据系统的大小决定
 
-+ 3.下载Debian镜像文件，目前最新的是debian-10.3.0-i386-netinst .iso 及debian-10.3.0-i386-xfce-CD-1.iso 及debian-10.3.0-i386-DVD-1.iso的DVD均可，从这里选择下载https://www.debian.org/distrib/  只需下载 下载第1个镜像文件 debian-8.1.0-amd64-DVD-1 或 CD即可 。
++ 下载Debian镜像文件，目前最新的是debian-10.3.0-i386-netinst .iso 及debian-10.3.0-i386-xfce-CD-1.iso 及debian-10.3.0-i386-DVD-1.iso的DVD均可，从这里选择下载https://www.debian.org/distrib/  只需下载 下载第1个镜像文件 debian-8.1.0-amd64-DVD-1 或 CD即可 。
 
     1）将U盘插入电脑，注意提前备份该U盘上的数据，制作安装盘的过程将格式化U盘
     
@@ -466,8 +463,6 @@ apt-get update
 apt-get install certbot -y
 certbot certonly --standalone -d sam-tech.com
 ```
-
-
 
 ## https 证书
 
@@ -508,7 +503,7 @@ certbot certonly --standalone -d sam-tech.com
 
 ## gdb调试报错warning: Error disabling address space randomization: Operation not permitted
 
- Canceled
+```
 #I1KPAQ
 Bug
 独奏曲
@@ -571,13 +566,10 @@ Please follow instructions at https://gitee.com/openeuler/community/blob/master/
 
 ## performance 
 
-[gperftools](https://github.com/gperftools)/**[gperftools](https://github.com/gperftools/gperftools)**
+- [gperftools](https://github.com/gperftools)/**[gperftools](https://github.com/gperftools/gperftools)**
 
-[善用工具-程序性能分析Gperftools初探(libwind+pprof+Kcachegrind)](https://blog.csdn.net/aganlengzi/article/details/62893533?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_aggregation-15-62893533.pc_agg_rank_aggregation&utm_term=kcachegrind+分析&spm=1000.2123.3001.4430)
+- [善用工具-程序性能分析Gperftools初探(libwind+pprof+Kcachegrind)](https://blog.csdn.net/aganlengzi/article/details/62893533?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_aggregation-15-62893533.pc_agg_rank_aggregation&utm_term=kcachegrind+分析&spm=1000.2123.3001.4430)
 
-```
-
-```
 
 ## 函數邏輯關係圖
 
@@ -780,8 +772,6 @@ a)修改/etc/default/grub 然后update-grub2
 
 一般建议修改/etc/default/grub（第一行是让用户登录时命令行login，第二行时grub选择系统界面为命令行）
 
-
-
 GRUB_CMDLINE_LINUX_DEFAULT="quiet text"
 
 GRUB_TERMINAL=console
@@ -820,17 +810,18 @@ gateway 192.168.1.1 # 网关
 
 ```
 service networking restart
+```
 ## 后台运行
 ```
 nohup npm run dev >/dev/null 2>&1
 ```
 
 ## 上下文切换的定义
+
 - [Context Switch Definition](http://www.linfo.org/context_switch.html)
 - [进程上下文切换 – 残酷的性能杀手（上）](https://www.cnblogs.com/emperor_zark/archive/2012/12/11/context_switch_1.html)
 - [进程/线程上下文切换会用掉你多少CPU？](https://zhuanlan.zhihu.com/p/79772089)
 - [这么多监控组件，总有一款适合你](https://cloud.tencent.com/developer/article/1511761)
-
 
 ## [Add a User to a Group (or Second Group) on Linux](http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/)
 
@@ -901,6 +892,7 @@ You can easily add a user to more than one group by simply specifying them in a 
 usermod -a -G ftp,admins,othergroup <username>
 
 That should cover everything you need to know about adding users to groups on Linux.
+```
 
 ## 构建rpm包
 
@@ -913,17 +905,17 @@ That should cover everything you need to know about adding users to groups on Li
 
 ## kamailio
 
-[学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
+- [OpenSER(OpenSIPS/Kamailio) 和FreeSWITCH间的区别](qiusuoge.com/17742.html)
+- [学习资料之Kaimailio and rtpengine安装使用](https://blog.csdn.net/weixin_41486034/article/details/106249598)
 
 ```
 以前装好的kamailio sip服务器经常在启动的时候经常遇到这个错误：
 ERROR: PID file /var/run/kamailio/kamailio.pid does not exist -- Kamailio start failed
 经过自己尝试发现可能引起的原因是因为在使用kamctl start之前使用了kamailio 导致启动了一些进程。
 使用PS 命令查看kamialio相关进程：ps axw | /usr/bin/egrep kamailio
-```
 ps -ef|grep kamailio|grep -v grep|cut -c 9-15|xargs kill -9
-
 ```
+
 - [ubuntu上kamailio+rtpproxy+mediaproxy环境搭建](https://www.jianshu.com/p/9e2ffbf853fc)
 
 - [kamailio docs](http://kamailio.org/docs/db-tables/kamailio-db-5.5.x.html)
@@ -1041,11 +1033,15 @@ Documentation
 Main Documentation Page - http://www.kamailio.org/docs/
 Dokuwiki Page - http://www.kamailio.org/dokuwiki/
 我们使用Kamailio主要用在SIP dispatcher server，即SIP redirect server
-安装及配置手册如下
+```
 
-一．安装
-1．依赖包：
+#### 安装及配置手册如下
+
+#### 一. 安装
+- 1．依赖包：
+```
 libmysqlclient & libz (zlib) ：mysql DB support (the db_mysql module) Shared libraries
+```
 
 ```shell
 MySQL-shared-5.1.32-0.glibc23.i386.rpm
@@ -1056,17 +1052,22 @@ MySQL-shared-5.1.32-0.glibc23.i386.rpm
 MySQL-devel-community-5.1.32-0.rhel5.i386.rpm
 ```
 
+```
 libxml2：cpl-c (Call Processing Language) or the presence modules (presence and pua*)
 libperl：perl scripting from you config file (perl module)
-2．源代码安装
+```
+
+- 2．源代码安装
+```
 make，make modules，make install
 或者make all，make install
-参考：
-3．启动：kamctl start
-4．重启：kamctl restart
-5．监控服务状态：kamctl moni
-6．MySQL配置：
-1）安装：
+```
+- 3．启动：kamctl start
+- 4．重启：kamctl restart
+- 5．监控服务状态：kamctl moni
+- 6．MySQL配置：
+- - 1）安装：
+```
 edit Makefile.var files to include the MySQL module
 vim Makefile.vars
 Uncomment the next line in the file:
@@ -1083,34 +1084,39 @@ SIP_DOMAIN=pryko.com
   - DEFAULT_DB_URL="mysql://opensips:opensipsrw@localhost/opensips"
   - r/w user: openser; passwd: openserrw
   - r/o user: openserro; passwd: openserro
+```
+- - 二．配置
 
-二．配置
-1．配置文件 kamailio.cfg
+- - - 1．配置文件 kamailio.cfg
+```
 /usr/local/etc/kamailio/kamailio.cfg
-2．配置文件 kamctlrc
+```
+- - - 2．配置文件 kamctlrc
+```
 /usr/local/etc/kamailio/kamctlrc
+```
 
-三．脚本
 参考文档：
-Kamailio Wiki
-http://www.kamailio.com/dokuwiki
-Cookbooks and Reference
-http://www.kamailio.com/dokuwiki/doku.php/core-cookbook:1.5.x
-Kamalio 1.5.x Module Functions Index
-http://www.kamailio.com/dokuwiki/doku.php/modules:1.5.x:index-functions
-
+- [Kamailio Wiki](http://www.kamailio.com/dokuwiki)
+- [Cookbooks and Reference](http://www.kamailio.com/dokuwiki/doku.php/core-cookbook:1.5.x)
+- [Kamalio 1.5.x Module Functions Index](http://www.kamailio.com/dokuwiki/doku.php/modules:1.5.x:index-functions)
 
 四．负载均衡Load Balancing
-参考：http://www.kamailio.org/dokuwiki/doku.php/asterisk:load-balancing-and-ha
-4.1配置文件 kamailio.cfg
+
+- 参考：http://www.kamailio.org/dokuwiki/doku.php/asterisk:load-balancing-and-ha
+
+- 4.1配置文件 kamailio.cfg
 loadmodule("dispatcher.so")
 modparam("dispatcher", "list_file", "/usr/local/etc/kamailio/dispatcher.list")
 modparam("dispatcher", "force_dst", 1)
-4.2 ---dispatcher.list----文件
+- 4.2 ---dispatcher.list----文件
+```
 # group sip addresses of your * units
 1 sip:221.5.152.171:5060
 1 sip:221.5.152.170:5060
-4.3 kamctl命令：kamctl dispatcher show
+```
+- - 4.3 kamctl命令：kamctl dispatcher show
+```
 -- command 'dispatcher' - manage dispatcher
   * Examples:  dispatcher addgw 1 sip:1.2.3.1:5050 1 'outbound gateway'
   *            dispatcher addgw 2 sip:1.2.3.4:5050 3 ''
@@ -1121,18 +1127,15 @@ dispatcher dump ..................... show in memory dispatcher gateways
 dispatcher addgw <setid> <destination> <flags> <description>
             .......................... add gateway
 dispatcher rmgw <id> ................ delete gateway
+```
+- 查看载入的配置：
+```kamctl dispatcher dump```
+- 修改后重新载入配置：```kamctl dispatcher reload```
 
-查看载入的配置：kamctl dispatcher dump
-修改后重新载入配置：kamctl dispatcher reload
-
- 
-
-如需使用，需安装MySQL-client-community-5.1.32-0.rhel5.i386.rpm
-否则报错：ERROR: This command requires a database engine - none was loaded
-
-
+- 如需使用，需安装MySQL-client-community-5.1.32-0.rhel5.i386.rpm, 否则报错：ERROR: This command requires a database engine - none was loaded
 
 五．与Asterisk对接负载均衡
+```
 注意事项：sip.conf
 注释如下行
 ;canreinvite=no ; Asterisk by default tries to redirect
@@ -1192,8 +1195,9 @@ forward();
 测试：
 登录10.10.10.57上的6000，登录10.10.10.56上的5000
 从6000呼叫5000，会呼叫10.10.10.136上的5000，10.136重定向到10.56
-
+```
 六．按号码段重定向网关
+```
 配置kamailio.cfg
 使用正则表达式
 route{
@@ -1295,9 +1299,7 @@ libssl-dev libcurl4-openssl-dev libxml2-dev libpcre3-dev bash-completion g++ aut
 libradcli4
 ```
 + CentOS
-```
 
-```
 ### 4. Clone Kamailio repository and checkout 5.3 version of repository
 ```
 $ mkdir -p /usr/local/src/
@@ -1431,7 +1433,7 @@ The kamdbctl will add two users in MySQL user tables:
 
 - 可以参照这个连接进行安装详细访问[Install RTPProxy from source on Ubuntu 20.04/18.04/16.04](https://computingforgeeks.com/how-to-install-rtpproxy-from-source-on-ubuntu-linux/)
 
-   ```
+```
 git clone -b master https://github.com/sippy/rtpproxy.git
 
 cd rtpproxy
@@ -1448,7 +1450,9 @@ make install
 
 rtpproxy -l 182.XX.10.17 -s udp:127.0.0.1 7078 -F 
 ```
-### 9. Edit /etc/default/rtpproxy file as follows:
+
+### 9. Edit /etc/default/rtpproxy file as follows
+
 ```
 # Defaults for rtpproxy
 
@@ -1494,6 +1498,7 @@ modparam("rtpproxy", "rtpproxy_sock", "udp:127.0.0.1:7722")
 If you changed the password for the ‘kamailio’ user of MySQL, you have to update the value for ‘DBURL’ parameters.
 
 ### 11. The init.d script
+
 The init.d script can be used to start/stop the Kamailio server in a nicer way. A sample of init.d script for Kamailio is provided at:
 ```
 /usr/local/src/kamailio/pkg/kamailio/deb/debian/kamailio.init
@@ -1536,7 +1541,8 @@ $ systemctl start kamailio.service
 ```
 check running processes with: ps axw egrep kamailio
 
-### 12. A quick check for the basic working of SIP server can be done as follows:
+### 12. A quick check for the basic working of SIP server can be done as follows
+
 Create new subscriber accounts. A new account can be added using kamctl tool via kamctl add <username> <password> (When asked for entering MySQL password for user kamailio@localhost: type kamailiorw, as provided in kamailio.cfg)
 ```
 $ kamctl add test testpasswd
@@ -1800,7 +1806,7 @@ options {
 cp /etc/named/epc.mnc000.mcc460.3gppnetwork.org /var/named/
 cp /etc/named/ims.mnc000.mcc460.3gppnetwork.org /var/named/
 ```
-
+```
 /etc/bind
 [root@localhost bind]# ls
 bind  epc.mnc000.mcc460.3gppnetwork.org  ims.mnc000.mcc460.3gppnetwork.org  named.conf.local  named.conf.options  pcf.mnc000.mcc460.3gppnetwork.org
@@ -1810,8 +1816,6 @@ bind  epc.mnc000.mcc460.3gppnetwork.org  ims.mnc000.mcc460.3gppnetwork.org  name
 chroot      data     dyndb-ldap                         ims.mnc000.mcc460.3gppnetwork.org  named.empty      named.loopback
 chroot_sdb  dynamic  epc.mnc000.mcc460.3gppnetwork.org  named.ca                           named.localhost  slaves
 [root@localhost named]#
-
-```
 $ systemctl restart named
 ```
 Then, test DNS resolution by adding following entries on top of all other entries in /etc/resolv.conf (make sure it persist across reboots)
@@ -1851,11 +1855,12 @@ network:
                 addresses:
                       - 192.168.2.240
     version: 2
-```
 $ netplan apply
 $ ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 $ systemctl restart systemd-resolved.service
+```
 16. Install RTPEngine
+```
 Check for dependencies, install dependencies and build .deb packages
 
 $ export DEB_BUILD_PROFILES="pkg.ngcp-rtpengine.nobcg729"
@@ -1900,9 +1905,11 @@ $ iptables -I rtpengine -p udp -j RTPENGINE --id 1
 $ ip6tables -I INPUT -p udp -j RTPENGINE --id 1
 $ echo 'del 1' > /proc/rtpengine/control
 $ /usr/sbin/rtpengine --table=1 --interface=192.168.2.240 --listen-ng=127.0.0.1:2224 --tos=184 --pidfile=ngcp-rtpengine-daemon2.pid --no-fallback --foreground
+```
 17. Running I-CSCF, P-CSCF and S-CSCF as separate process
-First, stop the default kamailio SIP server
 
+First, stop the default kamailio SIP server
+```
 $ systemctl stop kamailio
 $ systemctl disable kamailio
 $ systemctl mask kamailio
@@ -1914,8 +1921,9 @@ $ mkdir -p /var/run/kamailio_scscf
 $ kamailio -f /etc/kamailio_scscf/kamailio_scscf.cfg -P /kamailio_scscf.pid -DD -E -e
 $ mkdir -p /var/run/kamailio_icscf
 $ kamailio -f /etc/kamailio_icscf/kamailio_icscf.cfg -P /kamailio_icscf.pid -DD -E -e
+```
 18. Install Open5GS in the same machine as Kamailio IMS - Install Open5GS from source
-Please refer to instructions at https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+- Please refer to instructions at https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 
 If you are using OpenStack, installing Open5GS and Kamailio IMS on the same machine is very important because the Framed-IP-Address in the AAR request via Rx interface takes received IP address and port in ims_qos module, hence, if the Open5GS is on a separate VM/machine, the IP and port received in received_ip and received_port values seen by Kamailio IMS will be the NATed IP of the Open5GS machine resulting in failing of AAR request.
 
@@ -1927,7 +1935,7 @@ Define P-CSCF address in the pgw configuration
 Define a ConnectPeer for pcscf.ims.mnc000.mcc460.3gppnetwork.org with its IP and port in PCRF freediameter configuration
 Setup IP tables for the UE pools defined and create appropriate tun interfaces
 Below startup script can be used for setting up interfaces:
-
+```
 #!/bin/bash
 
 sudo sysctl -w net.ipv4.ip_forward=1
@@ -1950,8 +1958,9 @@ ip link set ogstun2 mtu 1400
 ip link set ogstun2 up
 iptables -I INPUT -i ogstun2 -j ACCEPT
 ip6tables -I INPUT -i ogstun2 -j ACCEPT
+```
 Add users with following APN settings in Open5GS:
-
+```
 APN Configuration:
 ---------------------------------------------------------------------------------------------------------------------
 | APN      | Type | QCI | ARP | Capability | Vulnerablility | MBR DL/UL(Kbps)     | GBR DL/UL(Kbps) | PGW IP        |
@@ -1962,15 +1971,18 @@ APN Configuration:
 |          |      | 1   | 2   | Enabled    | Enabled        | 128/128             | 128/128         |               |
 |          |      | 2   | 4   | Enabled    | Enabled        | 128/128             | 128/128         |               |
 ---------------------------------------------------------------------------------------------------------------------
+```
 Finally, make sure of the following in Open5GS
 
 PCO options which indicate the address of the Proxy-CSCF
 Need to indicate support for Voice-over-Packet-Switched (VoPS) in NAS message to UE from EPC
+
 19. Setup FoHSS in order to talk with I-CSCF and S-CSCF
+
 Requirements for FoHSS: Install Java JDK and ant
 
 Download Oracle Java 7 JDK from following link using a browser:
-
+```
 https://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
 $ mkdir -p  /usr/lib/jvm/
 $ tar -zxf jdk-7u79-linux-x64.tar.gz -C /usr/lib/jvm/
@@ -2021,7 +2033,7 @@ Download:
 
 $ git clone https://github.com/herlesupreeth/FHoSS
 Compile:
-```
+
 $ cd FHoSS
 $ export JAVA_HOME="/usr/lib/jvm/jdk1.7.0_79";export CLASSPATH="/usr/lib/jvm/jdk1.7.0_79/jre/lib/"
 $ ant compile deploy | tee ant_compile_deploy.txt
@@ -2194,8 +2206,9 @@ root@epc-ims:~# cat /etc/hosts
 127.0.0.1	epc-ims
 ```
 20. Add IMS subscription use in FoHSS as follows from the Web GUI
-Assuming IMSI of the user as 001010123456791 and MSISDN is 0198765432100
 
+Assuming IMSI of the user as 001010123456791 and MSISDN is 0198765432100
+```
 Login to the HSS web console.
 Navigate to the User Identities page	
 Create the IMSU 
@@ -2205,10 +2218,13 @@ Name = 001010123456791
 Capabilities Set = cap_set1
 Preferred S-CSCF = scsf1
 Click Save
-
+```
 Create the IMPI and Associate the IMPI to the IMSU
+
 Click Create & Bind new IMPI
+
 Enter:
+```
 Identity = 001010123456791@ims.mnc000.mcc460.3gppnetwork.org
 Secret Key = 8baf473f2f8fd09487cccbd7097c6862 (Ki value as in Open5GS HSS database)
 Authentication Schemes - All
@@ -2216,27 +2232,34 @@ Default = Digest-AKAv1-MD5
 AMF = 8000 (As in Open5GS HSS database)
 OP = 11111111111111111111111111111111 (As in Open5GS HSS database)
 SQN = 000000021090 (SQN value as in Open5GS HSS database)
+```
 Click Save
 
 Create and Associate IMPI to IMPU
+
 Click Create & Bind new IMPU
+
 Enter:
+```
 Identity = sip:001010123456791@ims.mnc000.mcc460.3gppnetwork.org
 Barring = Yes
 Service Profile = default_sp
 Charging-Info Set = default_charging_set
 IMPU Type = Public_User_Identity
+```
 Click Save
 
 Add Visited Network to IMPU
 Enter:
+```
 Visited Network = ims.mnc000.mcc460.3gppnetwork.org
+```
 Click Add
 
 Now, goto Public User Identity and create further IMPUs as following
 
 1. tel:0198765432100
-
+```
 Public User Identity -IMPU-
 Identity = tel:0198765432100
 Service Profile = default_sp
@@ -2253,9 +2276,9 @@ Click Add
 Associate IMPI(s) to IMPU
 IMPI Identity = 001010123456791@ims.mnc000.mcc460.3gppnetwork.org
 Click Add
-
+```
 2. sip:0198765432100@ims.mnc000.mcc460.3gppnetwork.org
-
+```
 Public User Identity -IMPU-
 Identity = sip:0198765432100@ims.mnc000.mcc460.3gppnetwork.org
 Service Profile = default_sp
@@ -2272,38 +2295,50 @@ Click Add
 Associate IMPI(s) to IMPU
 IMPI Identity = 001010123456791@ims.mnc000.mcc460.3gppnetwork.org
 Click Add
-
+```
 And, finally add these IMPUs as implicit set of IMSI derived IMPU in HSS i.e sip:001010123456791@ims.mnc000.mcc460.3gppnetwork.org as follows:
-
+```
 1. Goto to IMPU sip:001010123456791@ims.mnc000.mcc460.3gppnetwork.org
 2. In "Add IMPU(s) to Implicit-Set" section give IMPU Identity created above to be added to this IMPU
+```
 21. APN settings
+
 Clear all previous APN settings
 
 Then, create APN as follows:
 
 First create internet APN, APN name: internet, APN type: default –> Save APN
-Then, create ims APN, APN name: ims, APN type: ims –> Save APN
-22. eNB settings
-Must have in the eNB:
 
+Then, create ims APN, APN name: ims, APN type: ims –> Save APN
+
+22. eNB settings
+
+Must have in the eNB:
+```
 Support for QoS
 Support for Dedicated radio bearer creation
 Make sure to check the DRB configuration with respect to QCI of APN accordingly (QCI 5 for ims)
 On the eNB machine have the following static routes (since internal IP of the VM is advertised in S1AP messages and UE wont find the core in Uplink)
 
 $ ip r add 192.168.2.240/32 via 172.24.15.30
+```
 23. USIM and UE settings
+```
 Make sure to disable SQN check in Sysmocom SIM cards using sysmo-usim-tool tool https://github.com/herlesupreeth/sysmo-usim-tool
 Tested with OnePlus 5 with following methods (Official Google method is the recommended method to prevent damage to phone)
 (Official Google method) - Please follow the instructions in the following link @herlesupreeth/CoIMS_Wiki to force enable VoLTE using Carrier Privileges
 (Risky method) With modfication to enable force IMS registration is a must or else UE will not even attempt to connect to P-CSCF. Need to apply the fix back after each update. https://forum.xda-developers.com/oneplus-5t/how-to/guide-volte-vowifi-german-carriers-t3817542
+```
 24. Start IMS components and FoHSS followed by Open5GS and eNB, then try connecting the phones
+
 25. Test voice call
+```
 Assuming IMSI of the user1 as 001010123456791 and MSISDN is 0198765432100 and IMSI of the user2 as 001010123456792 and MSISDN is 0298765432100. Try calling user2 from user1 by dialing its MSISDN ie. 0298765432100
 
 You can see the sample traffic. – [volte.pcapng].
+```
 26. For debugging
+```
 Debug using wireshark at Open5GS machine and following wireshark display filter
 
 s1ap || gtpv2 || pfcp || diameter || diameter.3gpp || sip
@@ -2319,7 +2354,6 @@ Sukchan Lee
 acetcom@gmail.com
 open5gs
 Open5GS is a C-language implementation of 5G Core and EPC, i.e. the core network of NR/LTE network (Release-16)
-```
 ```
 
 ## 安装rtpengine
@@ -2441,7 +2475,6 @@ PS C:\WINDOWS\system32> net start LxssManager
 The LxssManager service is starting.
 The LxssManager service was started successfully.
 ```
-```
 
 ## libcurl
 
@@ -2528,9 +2561,11 @@ yum命令的参数有很多，其中就有只是下载而不需要安装的命�
 
 ## 查找需要的RPM包和只下载不安装
 
+```
 rpm -Uvh --force --nodeps *rpm
 
 yum install --downloadonly --downloaddir=./  libaio-devel
+```
 
 ## [curl 支持 http2](https://www.cnblogs.com/brookin/p/10713166.html)
 
@@ -3836,3 +3871,41 @@ cat /etc/logrotate.d/kamailio
 + http://www.kamailio.org/events/2016-KamailioWorld/Day0/W04-Daniel-Constantin.Mierla-Debugging-Kamailio-Config.pdf
 
 + https://wiki.4psa.com/display/KB/How+to+debug+Asterisk+and+Kamailio
+
+
+## CentOS镜像源
+```
+1. 备份原来的yum源
+
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+
+2.设置aliyun的yum源
+
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+3.添加EPEL源
+
+EPEL（http://fedoraproject.org/wiki/EPEL）是由 Fedora 社区打造，为 RHEL 及衍生发行版如 CentOS、Scientific Linux 等提供高质量软件包的项目。装上 EPEL后，可以像在 Fedora 上一样，可以通过 yum install package-name，安装更多软件。
+
+wget -P /etc/yum.repos.d/ http://mirrors.aliyun.com/repo/epel-7.repo
+
+4.清理缓存并生成新的缓存
+
+yum clean all
+yum makecache
+```
+
+## Hyper-v下Centos使用LVM实现动态扩容磁盘
+- [Hyper-v下Centos使用LVM实现动态扩容磁盘](https://blog.csdn.net/u012151597/article/details/88041186)
+- [hyper虚拟机下对centos进行动态扩容](https://www.cnblogs.com/theluther/p/4055593.html)
+最后一步使用：
+xfs_growfs /dev/mapper/centos-root
+
+
+## 解决“Cmake error :generator: Ninja“问题
+
+原因在于版本不统一，之前编译过CMakeLists.txt后，产生了缓存文件CMakeCache.txt，
+
+解决方案：删除CMakeCache.txt文件，解决。
+
+rm -f `find -name CMakeCache.txt`

@@ -154,3 +154,6 @@ git log -p -2查看最近2次的更新内容
 ```
 ##  github加速
 - [多种GitHub加速方式](https://www.cnblogs.com/beilong/p/13763462.html)
+
+
+git merge --no-ff simba

@@ -768,7 +768,7 @@ https://mariadb.com/kb/en/set-password/
 + select * from fusion.radio_info where radio_id in (select radio_id from fusion.usr_authority where usr_au=5 AND usr_id=#{usrId}) AND radio_type = #{typeCode} order by radio_id ASC
 
 selectByTypeWithUsrAuthority
-
+```
 select * from usr_info;
 +----+----------+----------+-----------------+---------------------+
 | id | username | password | description     | created_date        |
@@ -781,16 +781,16 @@ select * from usr_info;
 | 16 | test     | test     | test            | 2021-03-09 14:40:28 |
 +----+----------+----------+-----------------+---------------------+
 6 rows in set (0.000 sec)
-
+```
 
 select table_name from information_schema.tables where table_schema='fusion';
 
 select * from radio_info;
 
 select * from usr_authority where usr_id=13;
-
+```
 | usr_id | radio_id | radio_type | usr_au |
-
+```
 countClusterVHFRadio
 
 selectCluterRadios
@@ -811,7 +811,7 @@ insert into communicating_info values(”,’glchengang’,’深圳一中’,�
 
 insert into radio_info values(101, '深圳101'， 'Radio', 'QD', 3, 1, 1, 1, '2020-08-27 23:11:52');
 
-
+```
 | radio_info | CREATE TABLE `radio_info` (
   `radio_id` int(16) NOT NULL DEFAULT 0,
   `radio_name` varchar(50) NOT NULL DEFAULT '',
@@ -824,13 +824,13 @@ insert into radio_info values(101, '深圳101'， 'Radio', 'QD', 3, 1, 1, 1, '20
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`radio_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 |
+```
 
-
-# alter table cere_buyer_bank change bank_card bank_card varchar(50) character set utf8;
+alter table cere_buyer_bank change bank_card bank_card varchar(50) character set utf8;
 
 show create table cere_buyer_bank;
 
-# 解决mariadb无法访问的问题
+## 解决mariadb无法访问的问题
 ```
 root in idomall in mysql on  master [+]
 ⚡️ mysql -upackmall -ppackmall -h 127.0.0.1
@@ -866,8 +866,6 @@ root in idomall in mysql on  master [+]
 ⚡️ ls
 conf  docker-compose.yaml  initdb
 
-
-
 grant all privileges on *.* to 'root'@'%' identified by 'password';
 update `mysql`.`user` set `Grant_priv` = 'Y' where `user` = 'root';
 delete from user where user='root' and host='localhost';
@@ -887,7 +885,7 @@ FLUSH PRIVILEGES;
 docker run --name mysql --restart=always -d -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql --entrypoint "/usr/bin/mysqld_safe" mysql_image
 ```
 
-# mysql连接docker报错_本地宿主机通过mysql命令连接mysql Docker容器中的服务器报错 ERROR 2002 (HY000)...
+## mysql连接docker报错_本地宿主机通过mysql命令连接mysql Docker容器中的服务器报错 ERROR 2002 (HY000)...
 ```
 1、具体所错与下所示：[user@cluster2 ~]$ mysql -uroot -p
 
@@ -956,12 +954,4 @@ sudo chown -R polkitd:input mysql
 这样在运行mysql -uroot -p输入密码就能正常连接，docker容器中的mysql服务了。
 
 4、本地主机只需要安装mysql-community-client包就可以了。具体参考百度。
-————————————————
-版权声明：本文为CSDN博主「张梅雪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/weixin_31630721/article/details/114902635
 ```
-
-
- yum install epel-release
-
-  yum install cmake3

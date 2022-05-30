@@ -4,6 +4,7 @@
 - [Makefile C与C++混编的简单写法](https://blog.csdn.net/qq_33195791/article/details/100584342)
 - [C/C++ 编写一个通用的Makefile 来编译.c .cpp 或混编](https://www.cnblogs.com/sylar-liang/p/4792514.html)
 - [大型工程多级目录代码Makefile编写](https://www.cnblogs.com/jchen2020fighting/p/12175788.html)
+- [跟我一起写 Makefile-陈皓](https://blog.csdn.net/haoel/article/details/2886)
 
 ## C HOOK
 - This is for C HOOK for Game
@@ -123,3 +124,239 @@ repoze.profile – 只需要设置cachegrind_filename
 
 - [The International Obfuscated C Code Contest](www.ioccc.org)
 - [你见过哪些令你瞠目结舌的C/C++代码技巧？](https://www.zhihu.com/question/37692782/answer/74409370)
+
+## RapidJSON
+
+- [RapidJSON 文档](rapidjson.org/zh-cn/)
+- [RapidJSON简介及使用](https://blog.csdn.net/fengbingchun/article/details/91139889/)
+- [jsoncpp VS rapidjson](https://www.zhihu.com/question/23654513)
+
+## C++：字符串和数字的转换
+```cpp
+
+一、数字转字符串
+
+1.1）使用 std::stringstream
+
+1.2）使用 std 的内置函数
+
+1.3）std 内置的数字转字符串函数列表
+
+二、字符串转数字
+
+2.1）使用 std::stringstream
+
+2.2）使用 std 的内置函数
+
+2.3）std 内置的字符串转数字函数列表
+
+2.4）对 std::stringstream 进行包装
+
+三、参考
+
+一、数字转字符串
+1.1）使用 std::stringstream
+#include <iostream>
+#include <sstream>
+ 
+int main(int argc, char*argv[])
+{
+    for(int i = 0; i < 5; i++)
+    {
+        std::stringstream ss;
+        std::string str;
+        ss << i;
+        ss >> str;
+        std::cout << str.data() << " ";
+    }
+    std::cout << std::endl;
+ 
+    return 0;
+}
+1.2）使用 std 的内置函数
+#include <string>
+#include <iostream>
+ 
+int main(int argc, char*argv[])
+{
+    for(int i = 0; i < 5; i++)
+    {
+        std::cout << std::to_string(i).data() << " ";
+    }
+    std::cout << std::endl;
+ 
+    return 0;
+}
+1.3）std 内置的数字转字符串函数列表
+std::string to_string(int value);   
+std::string to_string(long value);   
+std::string to_string(long long value);
+std::string to_string(unsigned value);
+std::string to_string(unsigned long value);
+std::string to_string(unsigned long long value);
+std::string to_string(float value);
+std::string to_string(double value);
+std::string to_string(long double value);
+二、字符串转数字
+2.1）使用 std::stringstream
+#include <iostream>
+#include <sstream>
+ 
+int main(int argc, char *argv[])
+{
+    for(int i = 0; i < 5; i++)
+    {
+        std::stringstream ss;
+        std::string strNum = std::to_string(i);
+        int num;
+        ss << strNum;
+        ss >> num;
+        std::cout << num * num << " ";
+    }
+    std::cout << std::endl;
+}
+2.2）使用 std 的内置函数
+#include <iostream>
+#include <sstream>
+ 
+int main(int argc, char *argv[])
+{
+    for(int i = 0; i < 5; i++)
+    {
+        std::stringstream ss;
+        std::string strNum = std::to_string(i);
+        int num = std::stoi(strNum);
+        std::cout << num * num << " ";
+    }
+    std::cout << std::endl;
+}
+2.3）std 内置的字符串转数字函数列表
+int std::stoi(const std::string& str,std::size_t* pos=0,int base = 10);
+int std::stoi(const std::wstring& str,std::size_t* pos=0,int base = 10);
+long std::stol(const std::string& str,std::size_t* pos=0,int base = 10);
+long std::stol(const std::wstring& str,std::size_t* pos=0,int base = 10);
+long long std::stoll(const std::string& str,std::size_t* pos=0,int base = 10);
+long long  std::stoll(const std::wstring& str,std::size_t* pos=0,int base = 10);
+unsigned long stoul(const std::string& str,std::size_t* pos=0,int base = 10);
+unsigned long stoul(const std::wstring& str,std::size_t* pos=0,int base = 10);
+unsigned long long stoull(const std::string& str,std::size_t* pos=0,int base = 10);
+unsigned long long stoull(const std::wstring& str,std::size_t* pos=0,int base = 10);
+float std::stof(const std::string& str,std::size_t* pos=0);
+float std::stof(const std::wstring& str,std::size_t* pos=0);
+double std::stod(const std::string& str,std::size_t* pos=0);
+double std::stod(const std::wstring& str,std::size_t* pos=0);
+long double std::stold(const std::string& str,std::size_t* pos=0);
+long double std::stold(const std::wstring& str,std::size_t* pos=0);
+2.4）对 std::stringstream 进行包装
+使用 template 可以对接口进行统一操作：
+
+#include <iostream>
+#include <string>
+#include <sstream>
+ 
+template <typename T>
+T toNumber(std::string strNum)
+{
+    T num = 0;
+    std::stringstream ss;
+    ss << strNum;
+    ss >> num;
+    return static_cast<T>(num);
+}
+ 
+int main(int argc, char *argv[])
+{
+    auto num1 = toNumber<char>("0");
+    std::cout << "type " << typeid(num1).name() << " : " << num1 << std::endl;
+ 
+    auto num2 = toNumber<int>("1");
+    std::cout << "type " << typeid(num2).name() << " : " << num2 << std::endl;
+ 
+    auto num3 = toNumber<long>("2");
+    std::cout << "type " << typeid(num3).name() << " : " << num3 << std::endl;
+ 
+    std::cout << toNumber<int>("1") + toNumber<long>("2") << std::endl;
+ 
+    return 0;
+}
+运行结果：
+
+$ ./template-string-to-number 
+type c : 0
+type i : 1
+type l : 2
+3
+三、参考
+https://zhuanlan.zhihu.com/p/188390082
+```
+
+## C++11可变参模板
+- [C++ 11 新特性：可变形参](https://blog.csdn.net/qq_22660775/article/details/89362858)
+- [Nebula](https://github.com/Bwar/Nebula)
+- [可变参数模板](https://zhuanlan.zhihu.com/p/56242617)
+- [C 可变长参数 VS C++11 可变长模板](https://blog.csdn.net/zj510/article/details/36633603)
+- [C++11——可变参数模板](https://blog.csdn.net/qq_33232152/article/details/113845739)
+- [typeinfo、typeid、 typeof 介绍](https://blog.csdn.net/weixin_40539125/article/details/103000291)
+```shell
+省略号的作用
+说明一个包含0到n任意模板参数的参数包
+在模板定义的右边，可以将参数展成一个个独立的参数
+C++11可以使用递归函数的方式展开参数包，获得每个参数的值。那么就需要
+一个参数包展开的函数
+一个递归终止的函数
+两个函数若是重载，谁比较特化，就调用谁
+
+int maximum(int n){	
+	return n;
+}
+template<typename... Args>
+int maximum(int n, Args...args)
+{	
+	return std::max(n, maximum(args...));
+}
+```
+
+```
+一个变参模板可以有以下步骤
+
+形参包定义 template<typename ... Args>
+若是函数模板，函数参数定义 f(Args ... args)
+函数或类内部包展开：f(args...)或f(args)...
+```
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Example {
+private:
+    vector<double> Vec;
+
+public:
+    template <typename T>
+    void setVector(T arg) {
+        Vec.emplace_back(arg);
+    }
+
+    template <typename T, typename... Args>
+    void setVector(T arg, Args... args) {
+        setVector(arg);
+        setVector(std::forward<Args>(args)...);
+    }
+
+    void printVector() {
+        for (auto _ : Vec) {
+            cout << _ << '\t';
+        }
+        cout << '\n';
+    }
+};
+
+int main() {
+    Example a;
+    a.setVector(1.2, 2.3, 3.6, 4.6, 6.9);
+    a.printVector();
+}
+```
