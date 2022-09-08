@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 # python的安装
 
@@ -366,7 +365,6 @@ linux下: 修改 ~/.pip/pip.conf （如果没有自己创建一个）， 内容�
 
 [global]
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
-=======
 
 # python的安装
 
@@ -509,4 +507,10 @@ NSIS, Inno
 ```
 - [使用开源安装包制作工具Inno Setup制作软件安装包](https://blog.csdn.net/wangzhichunnihao/article/details/108637473)
 - [Inno SetUp Offical](https://jrsoftware.org/isdl.php#stable)
->>>>>>> aa11997 (update from personal pc)
+
+
+## 绘图
+
+- [22个Python绘图包汇总，超实用的那种](https://blog.51cto.com/u_11215354/5192554)
+
+- [python工具——diagrams](https://www.cnblogs.com/baby123/p/14246824.html?ivk_sa=1024320u)

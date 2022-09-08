@@ -227,3 +227,5 @@ boolan c++设计模式
 设计模式
 c++
 ```
+
+- [纯净天空-代码示例](https://vimsky.com/examples/detail/python-method-google.protobuf.message.ParseFromString.html)

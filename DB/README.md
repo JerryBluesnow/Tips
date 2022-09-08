@@ -955,3 +955,7 @@ sudo chown -R polkitd:input mysql
 
 4、本地主机只需要安装mysql-community-client包就可以了。具体参考百度。
 ```
+
+## postgres to mysql
+
+- [pg2mysql](http://www.lightbox.ca/pg2mysql.php)

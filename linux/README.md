@@ -3909,3 +3909,49 @@ xfs_growfs /dev/mapper/centos-root
 解决方案：删除CMakeCache.txt文件，解决。
 
 rm -f `find -name CMakeCache.txt`
+
+
+## CentOS 安装 debuginfo-install
+
+安装debuginfo相关的包步骤如下：
+
+1、 修改文件/etc/yum.repos.d/CentOS-Debuginfo.repo中的enabled参数，将其值修改为1
+
+2、 使用命令：
+
+yum install nss-softokn-debuginfo –nogpgcheck
+yum install yum-utils
+
+
+
+## perf
+
+perf top -p 98255 -v -g
+perf top -p 98255 -v -g --no-children
+
+perf top --call-graph graph
+
+perf annotate显示perf.data函数代码；
+perf annotate --stdio -l --symbol=IBCFproc_cac_query_rsp -p 25478
+
+perf record -a -g ./fork：会在当前目录生成perf.data文件。
+perf record -a -g -p 25478
+perf report --call-graph none结果如下,后面结合perf timechart分析.
+
+- [用Perf寻找程序中的性能热点](https://zhuanlan.zhihu.com/p/134721612)
+
+- [在Linux下做性能分析3：perf](https://zhuanlan.zhihu.com/p/22194920)
+
+- [红帽性能调优——perf使用](https://www.jianshu.com/p/675a850365eb)
+
+- [Profiling CPU usage in real time with perf top](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/monitoring_and_managing_system_status_and_performance/profiling-cpu-usage-in-real-time-with-top_monitoring-and-managing-system-status-and-performance)
+
+- [手把手教你系统级性能分析工具perf的介绍与使用（超详细）](https://zhuanlan.zhihu.com/p/471379451)
+
+- [perf-让CPU消耗无处遁形](https://blog.51cto.com/u_5646435/3172871)
+
+- [火焰图](git clone https://github.com/brendangregg/FlameGraph)
+
+- [如何用Perf解开服务器消耗的困境](https://rdc.hundsun.com/portal/article/637.html)
+
+- [perf Tutorial](https://perf.wiki.kernel.org/index.php/Tutorial)

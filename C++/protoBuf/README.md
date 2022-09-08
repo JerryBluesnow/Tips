@@ -42,3 +42,94 @@ protobuf的二进制可读性不好，远不如json的可读性，工程中有�
 - [高并发之protobuf通信协议设计|c/c++|linux|服务器开发(1)](https://www.zhihu.com/zvideo/1375819094705557505)
 
 - [c++后端绕不开的7个开源项目，每一个源码值得深入研究(1)](https://www.zhihu.com/zvideo/1433454379010043904)
+
+## probobuf内存释放
+
+```cpp
+package proto;
+ 
+message SubItem
+{
+	required int32 id = 1;
+	required int32 type = 2;
+	required int32 value = 3;
+}
+ 
+message ConfigItem
+{
+	repeated SubItem items = 1;
+}
+
+#include<memory>
+#include"client.pb.h"
+ 
+using std::shared_ptr;
+ 
+void readCfg_verson1()
+{
+	proto::ConfigItem config;
+	for ( int idx = 0; idx < 1000; idx++ )
+	{
+		auto item = config.add_items();
+		item->set_id(idx);
+		item->set_type(idx);
+		item->set_value(idx);
+	}
+}
+ 
+void readCfg_version2()
+{
+	proto::ConfigItem *pconfig = new proto::ConfigItem;
+	for ( int idx = 0; idx < 1000; idx++ )
+	{
+		auto item = pconfig->add_items();
+		item->set_id(idx);
+		item->set_type(idx);
+		item->set_value(idx);
+	}
+	delete pconfig;
+}
+ 
+class Foo
+{
+public:
+ 
+	Foo():pconfig_(new proto::ConfigItem){}
+ 
+	shared_ptr<proto::ConfigItem> pconfig_;
+ 
+	void readCfg_version3()
+	{
+		for ( int idx = 0; idx < 1000; idx++ )
+		{
+			auto item = pconfig_->add_items();
+			item->set_id(idx);
+			item->set_type(idx);
+			item->set_value(idx);
+		}
+	}
+};
+ 
+int main(void)
+{
+	//1.protobuf对象作为栈对象自动析构
+	readCfg_verson1();
+ 
+	//2.protobuf对象堆对象使用delete手动析构
+	readCfg_version2();
+ 
+	//3.protobuf对象作为成员变量借用shared_ptr的reset()接口调用析构函数
+	Foo* proom = new Foo();
+	proom->readCfg_version3();
+ 
+	//千万注意：使用protobuf自带的Clear()函数,相当于对C数组进行memset操作,跟STL容器的clear()接口作用不一样
+	proom->pconfig_->Clear();
+ 
+	//正确做法：//借助智能指针shared_ptr的reset()接口调用析构函数
+	proom->pconfig_.reset(new proto::ConfigItem);
+ 
+	//todo ...
+ 
+	return 0;
+}
+```

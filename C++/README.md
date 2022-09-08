@@ -79,6 +79,22 @@
 
 - [有哪些值得推荐的c/c++开源框架与库]h(ttps://zhuanlan.zhihu.com/p/71707672)
 
+- [GoogleTest进阶——参数测试、Mock测试、耗时测试、类型测试](https://blog.csdn.net/aiyanzielf/article/details/124886079)
+
+- [gtest参数化](https://blog.csdn.net/weixin_38988633/article/details/93312474)
+
+- [gtest参数化测试代码示例](t.zoukankan.com/coderzh-p-gtest_demo.html)
+
+- [Google TestExtending Google Test by Handling Test Events](https://www.cnblogs.com/jycboy/p/gtest_handlingEvent.html)
+
+- [GoogleTest系列：TEST_P的基本用法](https://blog.csdn.net/wwwsctvcom/article/details/119173452)
+
+- [gtest学习笔记--3 值参数化TEST_P](https://blog.csdn.net/qq_28691955/article/details/108140988?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-108140988-blog-119173452.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-108140988-blog-119173452.pc_relevant_default&utm_relevant_index=2)
+
+- [Google Mock进阶篇 (Google Mock Cookbook译文)](https://blog.51cto.com/u_15284125/3051274)
+
+- [Google Mock - GoogleTest（九）](https://blog.csdn.net/u012294613/article/details/124685144)
+
 ## 内存
 
 - [C++堆，栈，RAII](https://zhuanlan.zhihu.com/p/354611651)
@@ -88,6 +104,8 @@
 - [C++成员函数在内存中的存储方式](https://www.cnblogs.com/rednodel/p/9300729.html)
 
 - [C++类的实例化对象的大小之sizeof()](https://blog.csdn.net/houqd2012/article/details/40264943)
+
+- [https://zhuanlan.zhihu.com/p/375742507](https://zhuanlan.zhihu.com/p/375742507)
 
 ## 代碼分析工具
 
@@ -360,3 +378,28 @@ int main() {
     a.printVector();
 }
 ```
+
+
+## map vs unordered_map
+
+http://supercomputingblog.com/windows/ordered-map-vs-unordered-map-a-performance-study/
+
+![](2022-07-20-11-28-01.png)
+
+## Hashmaps Benchmarks - Overview
+
+- [Hashmaps Benchmarks - Overview](https://martin.ankerl.com/2019/04/01/hashmap-benchmarks-01-overview/)
+
+- [Benchmarking performance of gnu std::unordered_map vs boost::unordered_map- Delete and Add](https://gist.github.com/camolezi/a5a39539a8c7252d74ec8e6f17f6aa37)
+
+- [C++string优化、map优化、算法优化详细讲解及实例分析](cache.baiducontent.com/c?m=kjaDAwfdDbSEPhsbADB0c9oGIaSAytZitHp6CLbwhS7KGAzG8whbp9lXAU-VHFwU8o5vUM-6JWm1xtHJawAHu4uXFcF2Ahw1bQU4HWRAhUi&p=8d49cf1786cc42af5aa7d22d0214cf&newp=8a759a46d6c152b404b4c7710f5997231610db2151d4d1176b82c825d7331b001c3bbfb422211006d4c57f610baf435ae0fb3270310923a3dda5c91d9fb4c574799b3c6829&s=9c7dacde14145778&user=baidu&fm=sc&query=std%3A%3Amap%B4%E6%B4%A2std%3A%3Astring%D0%A7%C2%CA&qid=c5220d43002efda5&p1=10)
+
+- [C++11新特性— auto 和 decltype 区别和联系](https://blog.csdn.net/y1196645376/article/details/51441503)
+
+- [C++11六大函数（构造函数，移动构造函数，移动赋值操作符，复制构造函数，赋值操作符，析构函数）](https://blog.csdn.net/xujianjun229/article/details/120658478)
+
+- [【C++深陷】之“decltype”](https://blog.csdn.net/u014609638/article/details/106987131/)
+
+## random
+
+- [c++ 11中的随机数 ——random](https://blog.csdn.net/qq_34784753/article/details/79600809)

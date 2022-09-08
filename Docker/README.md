@@ -265,9 +265,12 @@ docker pull boonyadocker/tomcat-allow-remote
     docker run -d -p 9982:22 -p 9528:9528 -p 9529:9529 -p 9530:9530 -p 9531:9531 -p 9906:3306 -p 9004:9004 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
     docker run -d -p 3306:3306 --name=mysql --privileged --cap-add=SYS_PTRACE -e MYSQL_ROOT_PASSWORD=admin --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
 
-    docker run -d -p 9822:22 --name=vonr --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it centos:7.6.1810 /usr/sbin/init
+    docker run -d -p 9822:22 --name=vonr --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it centos:centos7.6.1810 /usr/sbin/init
 
     docker run -d --name=sbc_cmake --privileged=true -it 9db7bc2e6245 /usr/sbin/init
+
+    [SBC CMAKE UT]
+    docker run -it --name sbcx --privileged=true -v /home/jzhan107/sbc-sig:/home/jzhan107/sbc-sig d51fbc83a86c /usr/sbin/init
 
     /var/run/mysqld/mysqld.sock
     ssh连接容器
@@ -581,6 +584,7 @@ $ sudo docker images
 一般来说数据库容器不需要建立目录映射
 
 docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mariadb:latest
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:5.7
 
 docker run -p 3306:3306 --name mysql  -v /d/WorkSpace/mysql/my.cnf:/etc/mysql/my.cnf -e MYSQL_ROOT_PASSWORD=admin -d mysql:latest
 –name：容器名，此处命名为mysql
