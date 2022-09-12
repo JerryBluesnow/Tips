@@ -24,7 +24,6 @@
 - [go安装包下载](https://studygolang.com/dl)
 
 - [Centos 安装 golang]()
-
 ```shell
 cd /usr/local
 

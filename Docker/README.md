@@ -249,6 +249,8 @@ root@default:/mnt/sda1/var/lib/docker/aufs/diff#
 
 ## prepare in jerryubuntu
 
+- [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
+
 ```
 docker search boonyadocker/tomcat-allow-remote  
 docker pull boonyadocker/tomcat-allow-remote 
@@ -258,9 +260,8 @@ docker pull boonyadocker/tomcat-allow-remote
     docker run -d -p 10000:22 -it jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -d -p 23:22 -itd jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -it debian /bin/bash --registry-mirror=https://docker.mirrors.ustc.edu.cn
+    docker run -it --restart=always --privileged --network=host --name vonras -v /etc/resolv.conf:/etc/resolv.conf centos:centos7.6.1810 /usr/sbin/init
 
-
-    - [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
     docker run -d -p 9982:22 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v6
     docker run -d -p 9982:22 -p 9528:9528 -p 9529:9529 -p 9530:9530 -p 9531:9531 -p 9906:3306 -p 9004:9004 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
     docker run -d -p 3306:3306 --name=mysql --privileged --cap-add=SYS_PTRACE -e MYSQL_ROOT_PASSWORD=admin --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
@@ -324,11 +325,17 @@ docker push jerry4docker/jerry4docker:v7
 - [reference link](https://www.cnblogs.com/hgwang/p/10279023.html)
 
 ## Docker configure ssh login
+
 - [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
+
 - [Linux主机如何用ssh去登录docker容器的步骤](https://blog.csdn.net/ypbsyy/article/details/80529101)
+
 - [docker新建ubuntu容器，设置ssh与物理机登陆](https://www.cnblogs.com/winchua/p/4942837.html)
+
 - [Linux系统安装docker并用ssh登录docker容器的操作方法](https://www.jb51.net/article/164010.htm)
+
 - [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
+
 - [docker安装Ubuntu以及ssh连接](https://www.cnblogs.com/mengw/p/11413461.html)
 
 ```
@@ -921,7 +928,6 @@ chroot /host
 ```text
 docker inspect es01
 ```
-
 
 ## CentOS7.6安装docker-compose
 
