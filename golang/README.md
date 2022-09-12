@@ -3,7 +3,6 @@
 
 # [golang 2022.1永久激活](http://www.javatiku.cn/goland/1429.html) 
 
-<<<<<<< HEAD
 - [Go 语言到底适合干什么？](https://www.zhihu.com/question/296426314)
 
 - [GOLANG HTTPS SERVER](https://www.freesion.com/article/8416588126/)
@@ -25,6 +24,7 @@
 - [go安装包下载](https://studygolang.com/dl)
 
 - [Centos 安装 golang]()
+
 ```shell
 cd /usr/local
 
@@ -71,8 +71,6 @@ const (
 )
 /** 兼容windows end */
 ```
-=======
-
 # go mod init
 
 # GOPROXY=https://goproxy.cn,direct
@@ -84,4 +82,22 @@ const (
 - [Go 语言中文开源图书、资料或文档](books.studygolang.com)
 
 - [Go菜鸟教程](https://www.runoob.com/go/go-constants.html)
->>>>>>> 5be2f62 (上传personalPC)
+
+- [在goland下使用makefile](https://blog.csdn.net/qq_31877515/article/details/117131494)
+
+```shell
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    choco
+    choco install make
+```
+![](2022-06-08-20-37-40.png)
+
+- [Golang+Vue构建全功能Web应用](https://blog.csdn.net/u012986012/article/details/122667314)
+- - [JerryBluesnow/ming](https://github.com/JerryBluesnow/ming)
+- - [qingwave/weave](https://github.com/qingwave/weave)
+
+- [GitHub Top 10 + Go 语言开源项目（2021版）](https://zhuanlan.zhihu.com/p/407882351)
+
+- [GitHub Top 10 + Vue 开源项目（2021版)](https://zhuanlan.zhihu.com/p/409241661)
+
+- [高并发微服务网关设计与实现](https://zhuanlan.zhihu.com/p/387378721)

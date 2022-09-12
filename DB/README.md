@@ -24,7 +24,7 @@
         然后使用source命令，后面参数为脚本文件(如这里用到的.sql)  
         mysql>source wcnc_db.sql  
     B:使用mysqldump命令  
-        mysqldump -u username -p dbname < filename.sql  
+        mysqldump -u username -p dbname > filename.sql  
     C:使用mysql命令  
         mysql -u username -p -D dbname < filename.sql  
     一、启动与退出  

@@ -271,6 +271,7 @@ docker pull boonyadocker/tomcat-allow-remote
 
     [SBC CMAKE UT]
     docker run -it --name sbcx --privileged=true -v /home/jzhan107/sbc-sig:/home/jzhan107/sbc-sig d51fbc83a86c /usr/sbin/init
+    docker run -d -p 9722:22 --name=diameter --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it centos:7.6.1810 /usr/sbin/init
 
     /var/run/mysqld/mysqld.sock
     ssh连接容器
@@ -514,6 +515,9 @@ PS:–privilaged=true一定要加上的。
 docker run -it --name vonr2 --privileged=true centos:centos7.6.1810 /usr/sbin/init
 
 docker run -it --name vonrx --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.6.1810 /usr/sbin/init
+
+docker run -it --name vonransible --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
+docker run -it --name vonransible2 --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
 
 ## 
 1.修改数据库字符集
@@ -951,3 +955,32 @@ Docker修改容器状态为自启动
 docker update --restart=always 容器ID(或者容器名)
 docker compose设置容器自启动
 ```
+## docker desktop 启动卡主
+管理员权限
+.\DockerCli.exe -SwitchDaemon
+
+原因：
+-PauseHDL /pause/events server not replying: Get "http://ipc/pause/events": open \\.\pipe\dockerProcd: The system cannot find the file specified.
+
+if not works, open dev-sidecar for proxy the network
+
+### cpu-rt-runtime
+Docker容器在默认运行的时候由于安全原因，限制了一些功能，如果需要开启需在运行时进行配置。
+
+要使用实时调度需要 --cpu-rt-runtime 来运行容器。
+
+sched_setscheduler()函数要求sys_nice能力，Docker容器在运行的时候默认是不开启的。
+
+所以需要在运行的时候运行：docker run -ti --cpu-rt-runtime=95000 --ulimit rtprio=99 --cap-add=sys_nice ubuntu
+
+在使用上述命令是可能会遇到错误cpu-rt-runtime写入失败，原因是cgroup parent 的cpu-rt-runtime比你要修改的小。
+
+运行 docker run -it --privileged --pid=host ubuntu nsenter -t 1 -m
+
+cd /sys/fs/cgroup/cpu/docker 
+
+查看 cpu.rt_runtime_us是多少
+
+cat cpu.rt_runtime_us
+
+将它修改为950000
