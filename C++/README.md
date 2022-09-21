@@ -43,6 +43,8 @@
 - [HOOK API（四）—— 进程防终止](https://www.cnblogs.com/fanling999/p/4601118.html)
 - [PChunter里边有个扫描指定进程中所有钩子的功能，原理是什么？](https://bbs.pediy.com/thread-210688.htm)
 
+- [从超过100万个项目中搜索C++ (Cpp)代码示例](https://cpp.hotexamples.com/zh/examples/-/-/SSL_pending/cpp-ssl_pending-function-examples.html)
+
 ## 驱动级注入
     教程:1、打开驱动级别的dll注入器.exe 2、加载驱动 填写要操作的进程名  填写要注入  dll的路径   3 点设置完毕  注意不要关掉
     可以打开要注入的进程测试一下，可注入大部分有保护的游戏

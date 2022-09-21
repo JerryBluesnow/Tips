@@ -11,6 +11,8 @@
 
 - [智能指针shared_ptr基本用法和原理](https://blog.csdn.net/bandaoyu/article/details/107133606)
 
+- [C++11之 std::unique_ptr详解](https://blog.csdn.net/lemonxiaoxiao/article/details/108603916)
+
 ## C++11/14之STD::SHARED_PTR作为引用参数，普通参数
 1. c++中使用std::shared_ptr类型做为构造函数参数，并使用std::move()初始化成员变量。
 使用std::shared_ptr类型作为形参，shared_ptr会被复制，使用std::move()之后，形参对象就没有内容了。

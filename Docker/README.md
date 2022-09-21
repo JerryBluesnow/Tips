@@ -770,6 +770,7 @@ grep vm.max_map_count /etc/sysctl.conf
 vm.max_map_count=262144
 立即生效
 sysctl -w vm.max_map_count=262144
+```
 ## WSL2安装使用
 
 https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F144583887)
@@ -990,3 +991,41 @@ cd /sys/fs/cgroup/cpu/docker
 cat cpu.rt_runtime_us
 
 将它修改为950000
+```
+## 如何给运行中的docker容器增加映射端口
+```
+方式二: 命令行操作
+#1、查看容器的信息
+docker ps -a
+ 
+#2、查看容器的端口映射情况，在容器外执行：
+docker port 容器ID 或者 docker port 容器名称
+ 
+#3、查找要修改容器的全ID
+docker inspect 容器ID |grep Id
+ 
+#4、进到/var/lib/docker/containers 目录下找到与全 Id 相同的目录，修改 其中的hostconfig.json 和 config.v2.json文件：
+ 
+#注意：若该容器还在运行中，需要先停掉
+docker stop 容器ID 或者 docker stop 容器名称
+ 
+#再停掉docker服务
+systemctl stop docker
+#可能会提示错误 Warning: Stopping docker.service, but it can still be activated by:
+  docker.socket 不要管他 这是docker在关闭状态下被访问自动唤醒机制，很人性化，即这时再执行任意docker命令会直接启动
+ 
+#5、修改hostconfig.json如下
+#	格式如："{容器内部端口}/tcp":[{"HostIp":"","HostPort":"映射的宿主机端口"}]
+"PortBindings":{"22/tcp":[{"HostIp":"","HostPort":"3316"}],"80/tcp":[{"HostIp":"","HostPort":"801"}]}
+ 
+#6、修改config.v2.json在ExposedPorts中加上要暴露的端口
+#	两个地方
+"ExposedPorts":{"3306/tcp":{},"80/tcp":{}}"
+"Ports":{"3306/tcp":[{"HostIp":"0.0.0.0","HostPort":"33061"}],"80/tcp":[{"HostIp":"","HostPort":"801"}]}"
+最后改完之后，重启docker服务就行了
+
+systemctl restart docker
+————————————————
+版权声明：本文为CSDN博主「new_PHP大神」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/my476530/article/details/125658365
+```
