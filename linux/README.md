@@ -2128,7 +2128,7 @@ websocket不同，它本身就规定了是正真的、双工的长连接，两�
 #### 安装 openssl
 
 ```shell
-yum install zlib-devel.x86_6
+yum install zlib-devel.x86_64
 
 wget  http://www.openssl.org/source/openssl-1.1.0e.tar.gz
 tar -zxvf openssl-1.1.0e.tar.gz
