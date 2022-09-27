@@ -525,6 +525,7 @@ docker run -it --name vonrx --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:r
 
 docker run -it --name vonransible --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
 docker run -it --name vonransible2 --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
+docker run -it --name shaken --privileged=true -v /home/jenkins/tls:/home/shaken --net=host -p 8080:8080 -p 8081:8081 sbc-docker-releases.repo.lab.pl.alcatel-lucent.com/shaken:latest
 
 ## 
 1.修改数据库字符集
