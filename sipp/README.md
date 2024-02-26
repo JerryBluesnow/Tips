@@ -11,6 +11,8 @@ tar -xvf sipp-3.3.990.built.tar.gz
 
 cd sipp-3.3.990
 
+make
+
 make install
 
 脚本暂时使用 docker container vonrconftest:/root/src/sipp/

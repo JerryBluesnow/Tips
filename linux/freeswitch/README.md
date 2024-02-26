@@ -1,44 +1,21 @@
 
 - [Freeswitch Download](https://files.freeswitch.org/windows/installer/x64/)
 
+- [FreeSWITCH在呼叫失败的情况下如何播放语音提示-Jerry 参考](http://www.dujinfang.com/2013/01/10/freeswitch-zai-hu-jiao-shi-bai-de-qing-kuang-xia-ru-he-bo-fang-yu-yin-ti-shi.html)
+
+- [SIPp测试freeswitch用户注册](https://www.cnblogs.com/yjmyzz/p/sipp-authentication.html)
+
+- [FreeSWITCH分机忙处理](https://www.cnblogs.com/hezhixiong/p/8487598.html)
+
+- [freeswitch笔记(2)-voip初体验](https://www.cnblogs.com/yjmyzz/p/zoiper-and-yateclient-turotial.html)
+
 - [【FreeSwitch开发实践】专栏简介](https://xiao2macf.blog.csdn.net/article/details/125951053)
 
-```
-专栏内容
-本专栏包含如下内容：
+- [centos7 安装freeswitch](t.zoukankan.com/allen-zhang-p-11797876.html)
 
-FreeSwitch的编译安装
+- https://github.com/nickvsnetworking/FreeSWITCH_AMR_Codec/blob/master/Dockerfile
 
-FreeSwitch基本配置
-
-FreeSwitch ESL
-
-FreeSwitch WSS连接
-
-FreeSwitch 录音配置
-
-FreeSwitch 自定义模块
-
-FreeSwitch 事件相关及自定义事件
-
-FreeSwitch media bug及电话语音流获取
-
-FreeSwitch 语音播放
-
-FreeSwitch MRCP ASR
-
-持续更新中~
-
-已完成内容目录
-【FreeSwitch开发实践】centos7下编译安装freeswitch及常见编译问题的解决
-【FreeSwitch开发实践】freeswitch配置wss
-【FreeSwitch开发实践】freeswitch配置wss证书问题 Encrypted Alert/Certification Unknown
-【FreeSwitch开发实践】ESL简介
-【FreeSwitch开发实践】ESL配置
-【FreeSwitch开发实践】在nodejs中用ESL连接FreeSwitch
-【FreeSwitch开发实践】C语言中使用ESL连接FreeSwitch
-【FreeSwitch开发实践】死锁问题解决Over Session Limit 1000ocked, Waiting on external entities
-```
+- [公网Kamailio 代理 freeswitch 和做 sbc](https://blog.csdn.net/Java_lilin/article/details/108882310)
 
 - [unimrcp-voice-activity语音检测](https://www.cnblogs.com/damizhou/p/11308236.html)
 
@@ -66,15 +43,84 @@ http://www.voidcn.com/tag/FreeSwitch/list-2.html
 
 https://shelu.net/outofmemoryerror-from-freeswitch-esl-client/
 
- 
+
 http://www.voidcn.com/article/p-exyuatat-bpb.html
 
 
 - [一个关于freeswitch的公开教程](https://zhuanlan.zhihu.com/p/451981734)
 
+- [voipmaker](https://blog.csdn.net/voipmaker)
+
+- [freeswitch系列二 kamailio 5.0安装及实现kamailio集成freeswitch](https://blog.csdn.net/hry2015/article/details/77338341)
+
+- [OpenIMSCore的搭建过程-application server](https://www.likecs.com/show-204197680.html)
+![](2022-10-21-00-07-37.png)
+![](2022-10-21-00-08-03.png)
+![](2022-10-21-00-08-21.png)
+
+- [freeSWITCH从0开始搭建记录- sipjs 完整能打电话](https://juejin.cn/post/7021092627030376478)
+
+- [手把手教你部署验证freeswitch（避免踩坑）](https://blog.csdn.net/springhub/article/details/117047308)
+
+- [《FreeSWITCH: VoIP实战》：SIP 模块 - mod_sofia](www.ctiforum.com/news/guandian/330988.html)
+
+- [FreeSWITCH中文网,电话机器人开发网](freeswitch.net.cn/201509.html)
+
 ## freeswitch测试container: vonrconftest2
 
-### 安装方法1 CENTOS7.6
+### 记录手动编译安装freeswitch 
+
+- [FreeSWITCH 安装配置的 各种坑, 填坑](https://www.cnblogs.com/lzpong/p/6740188.html)
+- [流媒体服务器FreeSWITCH的安装、配置与启动](https://blog.csdn.net/TangVim/article/details/88235050?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-5-88235050-blog-106893293.t5_download_comparev1&spm=1001.2101.3001.4242.4&utm_relevant_index=7)
+- [centos.pkgs.org](https://centos.pkgs.org/7/centos-x86_64/nss-3.44.0-7.el7_7.i686.rpm.html)
+
+```shell
+#FreeSWITCH with AMR Support (BYO Licencing)
+FROM debian:buster-slim
+
+RUN apt-get update && apt-get install -yq gnupg2 wget lsb-release vim tcpdump sngrep
+RUN wget -O - https://files.freeswitch.org/repo/deb/debian-release/fsstretch-archive-keyring.asc | apt-key add -
+RUN echo "deb http://files.freeswitch.org/repo/deb/debian-release/ `lsb_release -sc` main" > /etc/apt/sources.list.d/freeswitch.list
+RUN echo "deb-src http://files.freeswitch.org/repo/deb/debian-release/ `lsb_release -sc` main" >> /etc/apt/sources.list.d/freeswitch.list
+RUN apt-get update
+
+# # Install dependencies required for the build
+#Install OpenJRE first because Java is a jerk
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get install openjdk-11-jre-headless:amd64 -y
+RUN apt-get build-dep freeswitch -y
+
+WORKDIR /usr/src/
+
+#Install Opencore-AMR
+RUN apt-get install libopencore-amrwb-dev libopencore-amrwb0 libopencore-amrwb0-dbg libvo-amrwbenc-dev libvo-amrwbenc0 vo-amrwbenc-dbg
+
+# # then let's get the source. Use the -b flag to get a specific branch
+WORKDIR /usr/src/
+RUN git clone https://github.com/signalwire/freeswitch.git -bv1.10 freeswitch
+WORKDIR /usr/src/freeswitch
+RUN git config pull.rebase true
+#Copy over AMR files
+RUN cp /usr/include/opencore-amrnb/interf_enc.h /usr/src/freeswitch/src/mod/codecs/mod_amr/
+RUN cp /usr/include/opencore-amrnb/interf_dec.h /usr/src/freeswitch/src/mod/codecs/mod_amr/
+RUN cp /usr/include/opencore-amrwb/dec_if.h  /usr/src/freeswitch/src/mod/codecs/mod_amrwb/
+RUN cp /usr/include/vo-amrwbenc/enc_if.h /usr/src/freeswitch/src/mod/codecs/mod_amrwb/
+
+RUN ./bootstrap.sh -j
+
+#Add AMR WB to modules list
+RUN sed -i '/#codecs\/mod_amrwb/s/^#//g' modules.conf
+
+RUN ./configure
+RUN make
+RUN make install
+
+#Add sounds
+RUN make cd-sounds-install cd-moh-install
+
+CMD ["/usr/local/freeswitch/bin/freeswitch"]
+```
+### freeswitch安装方法1 in CENTOS7.6
 
 ```shell
 echo "signalwire" > /etc/yum/vars/signalwireusername
@@ -153,716 +199,452 @@ wget --http-user=signalwire --http-password=pat_1X8EQXH6EvgajWaBVWSJCG51 -O /usr
 
 - [CentOS下安装libjpeg库及编译GD库](http://t.zoukankan.com/vania-p-10383964.html)
 
+## 注册打电话
 
+MicroSIP注册到freeswitch，port 5065. microsip配置如下
 
-###
-freeswitch+kamailio+unimrcp
-安装freeswitch和unimrcp
-1.准备
-2.安装顺序：
-安装freeswitch：
-安装unimrcp
-3.开始配置 freeswitch 和unimrcp
-启动freeswitch
-配置freeswitch
-unimrcpserver-mrcp2 对应的是一个配置：
-配置freeswitch对应的 unimrcp
-启动unimrcp
-用sip客户端拨打
-4.配置负载均衡kamailio
-1.日志设置：
-2.负载均衡mrcp的配置
-3.freeswitch端口修改
-4.图结构
-5.sip的h5的客户端的配置wss
-需求
-问题：
-需要修改的内容：
-freeswitch基本命令：
-生成wss的key
-配置freeswitch
-配置nginx
-其他参考
-6.FAQ
-问题1：freeswitch内网无声音的问题（外网ip导致的问题）
-问题2：407等认证问题
-问题3： 480
-问题4：没有声音的问题
-安装freeswitch和unimrcp
-1.准备
-freeswitch-1.8.7.tar.gz
-下载
-https://files.freeswitch.org/releases/freeswitch/freeswitch-1.8.7.tar.gz
+![](2022-10-05-23-33-17.png)
 
-unimrcp-deps-1.3.0
-下载：https://www.unimrcp.org/project/component-view/dependencies/unimrcp-deps-1-3-0-tar-gz
+windows hosts文件如下：
 
-unimrcp.tar.gz
+![](2022-10-05-23-34-47.png)
 
-git clone git@github.com:unispeech/unimrcp.git 
-目前测过的 commit版本：
 
-commit 7c8703d6fe4d9816bf635b2848e3657606729fe3
-Merge: 373d886 ebeaff6
-Author: Arsen Chaloyan <achaloyan@gmail.com>
-Date:   Sat Apr 18 19:02:17 2020 -0700
-    Merge pull request #269 from ladenedge/master
-    Supply OPTIONS request when responding in offline mode. Fixes #268.
-libsndfile-1.0.28.tar.gz
+- [sipp学习笔记](https://www.cnblogs.com/yjmyzz/p/sipp-tutorial.html)
 
-wget http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz
-ivr-welcome.wav
-这个必须有 ，否则websocket的音频传不出来，是freeswitch需要的音频流的文件
+## 配置外部电话呼入sip软电话
+- [refer](https://blog.csdn.net/weixin_43439748/article/details/116454265)
+外部电话呼入需要购买带有FXO端口的硬件设备，具体连接配置方式参照硬件供应商提供的产品说明(后文以讯时网关为例说明)
 
-sofia-sip.tar.gz
+外部电话信号转发至FreeSwitch平台后需要配置拨号计划。具体配置如下：
 
-git clone https://github.com/freeswitch/sofia-sip.git
-2.安装顺序：
-1.安装freeswitch：
-libsndfile-1.0.28.tar.gz
-freeswitch-1.8.7.tar.gz
+进入文件目录
+#cd /usr/local/freeswitch/conf/dialplan/
+1
+dialplan文件夹说明
+#ls
+default  default.xml  features.xml  public  public.xml  skinny-patterns  skinny-patterns.xml
+default.xml和public.xml分别是内部拨号规则和对外拨号规则的配置。
 
-2.安装unimrcp：
-
-unimrcp-deps-1.3.0.tar.gz
-sofia-sip.tar.gz
-unimrcp.tar.gz
-
-安装freeswitch：
-yum install sqlite sqlite-devel -y
-yum install yasm -y
-yum install lua-devel -y
- yum install autoconf automake -y
- yum install libtool -y
-yum install openssl-devel -y
-yum install speex-devel -y
-yum install ldns-devel ldns -y 
-yum install libedit-devel -y
-yum install libtiff-devel -y
-yum install curl-devel -y
-############# libsndfile-1.0.28.tar.gz #############
-
-./configure 
-
-make
-
-make install
-
-cp /usr/local/lib/pkgconfig/sndfile.pc /usr/lib64/pkgconfig
-
-
-wget http://www.ijg.org/files/jpegsrc.v6a.tar.gz
-tar zxvf jpegsrc.v8a.tar.gz
-cd jpeg-8a
-./configure --enable-shared
-make && make install`
-
-#然后 重新 configure FreeSWITCH , 再 make
-
-#如果还是报这个错误,就修改这两行,在 Makefile 末尾:
-
-#vim src/mod/formats/mod_sndfile/Makefile
-
-修改这两行
-
-#install: install-am
-#all: install
-freeswitch-1.8.7.tar.gz  
-./devel-bootstrap.sh
-vim  modules.conf
-#codecs/mod_opus
-#applications/mod_signalwire
-打开： 这个先不打开
-
-#asr_tts/mod_unimrcp
-./configure  --disable-signalwire --prefix=/usr/local/freeswitch
-make 
-make install  
-cd /root/freeswitch-1.8.7/libs/unimrcp
-autoreconf -fiv
-cd /root/freeswitch-1.8.7/src/mod/asr_tts/mod_unimrcp
-make
-make install 
-检查
-
-/usr/local/freeswitch/lib/freeswitch/mod
-
-是否有mod_unimrcp.la mod_unimrcp.so
-
-sofia-sip.tar.gz
-
-./bootstrap.sh
-./configure --prefix=/usr/local/sofia-sip
-make
-make install 
-export PKG_CONFIG_PATH=/usr/local/sofia-sip/lib/pkgconfig:${PKG_CONFIG_PATH}
-ldconfig
-unimrcp-deps-1.3.0.tar.gz
-
-这个如果装，可能会出现 错误：…/…/platforms/libunimrcp-client/.libs/libunimrcpclient.so: undefined reference to `apr_pool_mutex_set’
-
-./build-dep-libs.sh
-
-安装unimrcp
-export UNIMRCP_APR_INCLUDES=" -I/root/unimrcp-deps-1.3.0/libs/apr/include "
-export UNIMRCP_APR_LIBS=" -L/root/unimrcp-deps-1.3.0/libs/apr/.libs/ -lapr-1 "
-./bootstrap
-./configure --prefix=/usr/local/unimrcp --with-sofia-sip=/usr/local/sofia-sip
-make
-make install 
-3.开始配置 freeswitch 和unimrcp
-unimrcp基本不用改
-
-观察一下端口号：
-
-启动freeswitch
-/usr/local/unimrcp/bin/unimrcpserver -o 3 -d
-
-netstat -nltp|grep unimrcp
-
-8060
-配置freeswitch
-触发 unimrcp的lua脚本
-
-/usr/local/freeswitch/share/freeswitch/scripts/names.lua
-
---打印日志
-
-session:consoleLog("info","hao--------------进入欢迎的语音菜单");
-
---要执行answer才能给对方播放语音菜单
-
-session:answer();
-
---设置这一行才会在lua执行完毕以后不自动挂断
-
-session:setAutoHangup(false)
-
---在死循环里面必定要判断当前会话还有没有效
-
-while(session:ready()==true) do
-
-        --播放语音，告诉对方，每个拨号的选项
-
-        session:consoleLog("info","hao--------------循环里面");
-
-        session:streamFile("/usr/share/freeswitch/ivr-welcome.wav");
-
-        --这里获取对端输入的dtmf信息，也就算按下的是多少
-
-        local digit = session:getDigits(2, "#", 1000);
-
-         --下面对数字逐一判断 选择执行
-
-        if(digit == "1") then
-
-             session:consoleLog("info","hao------>>>>>1>>>begin");
-
-             session:set_tts_parms("unimrcp", "xiaofang");
-
-             session:speak("我是个帅哥")
-
-             session:consoleLog("info","hao------>>>>>1>>>end");
-
-        end
-
-        if(digit == "0") then
-
-                --若是匹配按下的是0，进入call center，call center是一个APP，默认没用call center模块，须要在源码自行安装而且 须要load mod_callcenter加载
-
-                session:consoleLog("info","hao------>>>>>>>>进入callcenter");
-
-                session:execute("callcenter","necoagent");
-
-        end
-
-end
-修改配置：
-
-/usr/local/freeswitch/etc/freeswitch
-
-/usr/local/freeswitch/etc/freeswitch/autoload_configs/modules.conf.xml
-
-检查是否启用了
-
-/usr/local/freeswitch/etc/freeswitch/autoload_configs/unimrcp.conf.xml
-
-<configuration name="unimrcp.conf" description="UniMRCP Client">
-
-  <settings>
-
-    
-
-    
-
-    <param name="default-tts-profile" value="unimrcpserver-mrcp2"/>
-
-    
-
-    
-
-    <param name="default-asr-profile" value="unimrcpserver-mrcp2"/>
-
-    
-
-    <param name="log-level" value="DEBUG"/>
-
-    
-
-    <param name="enable-profile-events" value="false"/>
-
-    <param name="max-connection-count" value="100"/>
-
-    <param name="offer-new-connection" value="1"/>
-
-    <param name="request-timeout" value="3000"/>
-
-  settings>
-
-  <profiles>
-
-    <X-PRE-PROCESS cmd="include" data="../mrcp_profiles/*.xml"/>
-
-  profiles>
-
-configuration>
-unimrcpserver-mrcp2 对应的是一个配置：
-新增：
-
-/usr/local/freeswitch/etc/freeswitch/mrcp_profiles/unimrcpserver-mrcp-v2.xml
-
+电话信号从外部进入Freeswitch平台，使用public.xml文件配置信息。新增配置信息直接在public文件夹新建xml文件即可自动加载
+[root@localhost public]# cat 00_inbound_did.xml
+```xml
 <include>
-
-  
-
-  <profile name="unimrcpserver-mrcp2" version="2">
-
-    <param name="server-ip" value="10.48.172.157"/>
-
-    <param name="server-port" value="8060"/>
-
-    <param name="resource-location" value=""/>
-
-    <param name="speechsynth" value="speechsynthesizer"/>
-
-    <param name="speechrecog" value="speechrecognizer"/>
-
-    
-
-    <param name="rtp-ip" value="auto"/>
-
-    <param name="rtp-port-min" value="4000"/>
-
-    <param name="rtp-port-max" value="5000"/>
-
-    
-
-    
-
-    
-
-    <param name="codecs" value="PCMU PCMA L16/96/8000"/>
-
-    
-
-    <synthparams>
-
-    synthparams>
-
-    
-
-    <recogparams>
-
-      
-
-    recogparams>
-
-  profile>
-
-注意改一下本机ip
-
-配置freeswitch对应的 unimrcp
-unimrcpserver-mrcp2 这里对应的就是 autoload_configs/unimrcp.conf.xml 中的配置default-tts-profile
-
-修改触发ivr按键 拨号号码：
-
-/usr/local/freeswitch/etc/freeswitch/dialplan/default.xml
-
-新增
-
-    <extension name="unimrcp">
-
-     <condition field="destination_number" expression="^5001$">
-
-        <action application="answer"/>
-
-        <action application="lua" data="names.lua"/>
-
-     condition>
-
-    extension>
-mkdir -p /usr/share/freeswitch/
-
-cp ivr-welcome.wav /usr/share/freeswitch/
-
-yum install -y git alsa-lib-devel autoconf automake bison broadvoice-devel bzip2 curl-devel libdb4-devel e2fsprogs-devel erlang flite-devel g722_1-devel gcc-c++ gdbm-devel gnutls-devel ilbc2-devel ldns-devel libcodec2-devel libcurl-devel libedit-devel libidn-devel  libmemcached-devel libogg-devel libsilk-devel libsndfile-devel libtheora-devel libtiff-devel libtool libuuid-devel libvorbis-devel libxml2-devel lua-devel lzo-devel  ncurses-devel net-snmp-devel openssl-devel opus-devel pcre-devel perl perl-ExtUtils-Embed pkgconfig portaudio-devel postgresql-devel python-devel python-devel soundtouch-devel speex-devel sqlite-devel unbound-devel unixODBC-devel wget which yasm zlib-devel libshout-devel libmpg123-devel lame-devel rpm-build libX11-devel libyuv-devel
-启动freeswitch：
-
-/usr/local/freeswitch/bin/freeswitch -nonat -ncwait
-
-如果
-
-Cannot Initialize [[error near line 6896]: unexpected closing tag ]
-
-检查配置文件是否出错
-
-启动unimrcp
-/usr/local/unimrcp/bin/unimrcpserver -o 3 -d
-观察两个log
-
-一个是unimrcp的：
-
-/usr/local/unimrcp/log
-
-tail -f unimrcpserver_current.log
-
-/usr/local/freeswitch/var/log/freeswitch
-
-tail -f freeswitch.log
-用sip客户端拨打
-输入ip
-
-账号1001
-
-密码默认的1234
-
-5001
-
-按键 1 触发tts的unimrcp 参考names.lua脚本
-
-按键0 退出挂断
-如果
-freeswitch报错：
-Invalid TTS module unimrcp
-检查modules.conf.xml 是否
-加载
-4.配置负载均衡kamailio
-1.日志设置：
-https://blog.csdn.net/feiying5829/article/details/82666377
-
-etc/kamailio/kamailio.cfg
-
-log_facility=LOG_LOCAL0
-
-vi /etc/rsyslog.conf
-
-local0.* -/var/log/kamailio.log
-
-systemctl stop   rsyslog.service    关闭日志服务
-
-systemctl start   rsyslog.service     开启日志服务
-如果配置不成功
-
-默认日志还是去/var/log/message里面去看
-
-2.负载均衡mrcp的配置
-kamailio.cfg
-
-代码块
-
-#add by hao begin
-loadmodule "dispatcher.so"
-#modparam("tm", "reparse_invite", 0)
-modparam("dispatcher", "list_file", "/usr/local/kamailio/etc/kamailio/dispatcher.list")
-route {
-    if(method=="INVITE"){
-    # dst_select( "GROUP", "HASH METHOD")
-      ds_select_dst("1","4");
-      #sl_send_reply("100","Trying");
-      forward();#uri:host, uri:port);
-      exit();
-    }
-}
-#modparam("dispatcher", "force_dst", 1)
-###add by hao end
-需要处理 INVITE 的第一个包，否则不对
-
-dispatcher.list
-
-1 sip:10.48.127.22:8060
-1 sip:10.48.172.157:8060
-22和157配置了两个unimrcp的服务 ，端口都是8086
-
-kamctlrc 配置数据库的一些信息
-
-SIP_DOMAIN=haoning.org
-DBENGINE=MYSQL
-DBHOST=localhost
-DBNAME=kamailio
-DBRWUSER="root"
-DBRWPW="haoning"
-3.freeswitch端口修改
-由于kamailio用的是5060
-
-freeswitch用的也是5060
-
-把freeswitch的端口改成5062 （5061也已经被freeswitch占用了）
-
-netstat -nltpu |grep freeswitch
-
-freeswitch/etc/freeswitch/vars.xml
-
-<X-PRE-PROCESS cmd="set" data="internal_sip_port=5062"/>
-4.图结构
-freeswitch ----kamailio----->两个unimrcp
-
-5.sip的h5的客户端的配置wss
-需求
-建立一个浏览器打电话的功能：可以任何设备都可以随时测试我们的tts等功能
-
-h5------nginx---->freeswitch---->unimrcp+tts
-
-问题：
-浏览器使用音频功能需要https
-https的websocket需要wss
-https和wss都需要证书
-前提条件
-freeswitch体统了websocket
-ws的端口是5066
-wss的端口是7443
-nginx搭建的web代码使用的端口是80 ，https的端口是默认的443
-
-需要修改的内容：
-1.生成证书 和key给nginx使用 和给freeswitch使用
-2.配置freeswitch的证书wss.pem
-3.配置nginx的证书crt 和 key
-
-freeswitch基本命令：
-查看变量
-
-fs_cli
-eval $${certs_dir}
-/usr/local/freeswitch/etc/freeswitch/tls
-eval $${conf_dir}
-/usr/local/freeswitch/etc/freeswitch
-fs_cli -x 'sofia status profile internal' | grep WSS-BIND-URL
-生成wss的key
-参考https://freeswitch.org/confluence/display/FREESWITCH/WebRTC#WebRTC-InstallCertificates
-
-key的生成 ，服务器的ip是：10.189.160.70 ， 如果是域名，就把key更换成域名
-
-mkdir /usr/local/freeswitch/certs
-
-cd /usr/local/freeswitch/certs
-
-wget http://files.freeswitch.org/downloads/ssl.ca-0.1.tar.gz
-
-tar zxfv ssl.ca-0.1.tar.gz
-
-cd ssl.ca-0.1/
-
-perl -i -pe 's/md5/sha256/g' *.sh
-
-perl -i -pe 's/1024/4096/g' *.sh
-
-./new-root-ca.sh
-
-输入密码 三次
-
-Country Name (2 letter code) [MY]:CN
-
-State or Province Name (full name) [Perak]:HN
-
-Locality Name (eg, city) [Sitiawan]:CS
-
-Organization Name (eg, company) [My Directory Sdn Bhd]:my_ca
-
-Organizational Unit Name (eg, section) [Certification Services Division]:machu
-
-Common Name (eg, MD Root CA) []:10.189.160.70
-
-Email Address []:killinux@163.com
-
-./new-server-cert.sh 10.189.160.70
-
-Country Name (2 letter code) [MY]:CN
-
-State or Province Name (full name) [Perak]:HN
-
-Locality Name (eg, city) [Sitiawan]:CS
-
-Organization Name (eg, company) [My Directory Sdn Bhd]:my_server
-
-Organizational Unit Name (eg, section) [Secure Web Server]:manong
-
-Common Name (eg, www.domain.com) []:10.189.160.70
-
-Email Address []:killinux@163.com
-
-./sign-server-cert.sh 10.189.160.70
-
-一路y
-
-cat 10.189.160.70.crt 10.189.160.70.key > /usr/local/freeswitch/certs/wss.pem
-配置freeswitch
-vim  /usr/local/freeswitch/conf/sip_profiles/internal.xml
-
-#Set these params and save the file:
-
-<param name="tls-cert-dir" value="/usr/local/freeswitch/certs"/>
-
-<param name="wss-binding" value=":7443"/>
-
-fs_cli -x 'sofia status profile internal' | grep WSS-BIND-URL
-配置nginx
-nginx配置：主要是https
-
-    map $http_upgrade $connection_upgrade {
-        default upgrade;
-          ''      close;
-    }
-    server {
-         listen       80;
-         listen       443 ssl;
-         root         /usr/local/nginx/html;
-         proxy_read_timeout 3600;
-         proxy_http_version 1.1;
-         proxy_set_header Upgrade $http_upgrade;
-         proxy_set_header Connection $connection_upgrade;
-         ssl_certificate      /usr/local/freeswitch/certs/ssl.ca-0.1/10.189.160.70.crt;
-         ssl_certificate_key  /usr/local/freeswitch/certs/ssl.ca-0.1/10.189.160.70.key;
-         location / {
-             if ($scheme = 'http') {
-                 set $ws_port 5066;
-             }
-             if ($scheme = 'https') {
-                 set $ws_port 7443;
-             }
-             if ($http_upgrade = 'websocket') {
-                 proxy_pass    $scheme://$server_addr:$ws_port;
-             }
-         }
-    }
-###################
-
-   map $http_upgrade $connection_upgrade {
-        default upgrade;
-          ''      close;
-    }
-    server {
-         listen       80;
-         listen       443 ssl;
-         root         /usr/local/nginx/html;
-         proxy_read_timeout 3600;
-         proxy_http_version 1.1;
-         proxy_set_header Upgrade $http_upgrade;
-         proxy_set_header Connection $connection_upgrade;
-         ssl_certificate      /usr/local/freeswitch/certs/ssl.ca-0.1/10.189.160.70.crt;
-         ssl_certificate_key  /usr/local/freeswitch/certs/ssl.ca-0.1/10.189.160.70.key;
-         location / {
-             root   html;
-             index  index.html index.htm;
-         }
-    }
-其他参考
-生成证书：
-https://blog.csdn.net/Rookie_Manito/article/details/112765729
-配置freeswitch：
-https://blog.csdn.net/Rookie_Manito/article/details/112771183
-wss.pem的位置
-https://blog.csdn.net/weixin_42275389/article/details/89183536/
-
-客户端ios也可以直接用 Adore SIP Client
-
-6.FAQ
-问题1：freeswitch内网无声音的问题（外网ip导致的问题）
-如果报 MEDIA_TIMEOUT 等错误，并不是播放的基础库没装，可能是网络问题
-
-配置里的ip有两个，一个是内部的，一个是外部的ext-rtp-ip，外网进入的ip，这个如果是局域网内访问，非外网访问，可能会存在端口不通。
-
-参考：
-
-https://blog.csdn.net/sinat_33384251/article/details/95059763
-
-填坑指南，可能存在ipv6的问题，把配置文件备份。https://www.cnblogs.com/lmsthoughts/p/9322816.html
-
-常用命令：https://www.jianshu.com/p/2ffc55c8da83 http://diseng.github.io/assets/sip-test-guide/appendix/appendix-three.html
-
-查看sofia模块状态：sofia status
-查看freeswitch状态：status
-查看通话命令： show calls
-查看channel命令： show channels
-打开log命令：console loglevel 7
-关闭log命令：console loglevel 0
-重新加载xml： reloadxml
-开启全局信令追踪：sofia global siptrace on
-关闭全局信令追踪：sofia global siptrace off
-发起一个通话：originate 呼叫字符串 &fsApp
-挂断所有通话：hupall
-退出fs_cli：/bye
-显示在线用户:show registration
-开启sip消息显示：sofia global siptrace on
-关闭sip消息显示：sofia global siptrace off
-fs_cli中呼叫指定号码，并且回传语音：originate user/1000 &echo
-启动 freeswitch ：/usr/local/freeswitch/bin/freeswitch -nonat -ncwait
-
-客户端登录：/usr/local/freeswitch/bin/fs_cli
-查看内网的配置：
-
-sofia status profile internal
-Ext-RTP-IP Ext-SIP-IP 指向的是外网的美团云的ip ，这个ip的 5080和5060是不通的
-
-去配置文件搜索
-
-grep -nR ext-rtp-ip *
-
-找到 四个配置文件里面有
-
-因为是内网使用，我们只改internel
-
-$${external_rtp_ip} 这个变量是取外网地址，我们改成相同的内网地址就可以了
-
-sip_profiles/internal.xml
-    
-    <param name="ext-rtp-ip" value="10.189.160.70"/>
-    
-    <param name="ext-sip-ip" value="10.189.160.70"/>
-如果sipp不通也可能是这个问题
-
-问题2：407等认证问题
-grep -nR accept-blind-auth *
-sip_profiles/internal.xml:249:
-
- <param name="accept-blind-auth" value="true"/>
-这个注释打开
-
-问题3： 480
-dialplan/public.xml
-
-  <extension name="public_extensions">
-     <condition field="destination_number" expression="^(10[01][0-9])$">
-   <action application="transfer" data="$1 XML default"/>
-     condition>
-   extension>
-改成
-
-10改成50
-
-  <extension name="public_extensions">
-     <condition field="destination_number" expression="^(50[01][0-9])$">
-   <action application="transfer" data="$1 XML default"/>
-     condition>
-   extension>
-问题4：没有声音的问题
-如果没有声音可能是nat的问题
-
-https://blog.csdn.net/daitu3201/article/details/80096630?utm_medium=distribute.pc_relevant.none-task-blog-2defaultbaidujs_baidulandingword~default-0.control&spm=1001.2101.3001.4242
-
-修改ext-rtp-ip和ext-sip-ip为freeswitch公网地址
-
-<param name="ext-rtp-ip" value="10.48.127.22"/>
-<param name="ext-sip-ip" value="10.48.127.22"/>
-参考freeswitch内网无声音的问题（外网ip导致的问题
-
+  <extension name="public_did">
+        <!-- 12345678 为电话局端为你分配的电话号码 -->
+    <condition field="destination_number" expression="^(12345678)$">
+
+      	<action application="set" data="domain_name=$${domain}"/>
+   <!-- 1.指定坐席 电话转接至 账号1001 坐席 -->
+     	<action application="transfer" data="1001 XML "/>
+   <!-- 2.配置静态坐席 坐席也可动态迁入迁出-->
+   		<!-- 
+        <action application="set" data="fifo_music=$${hold_music}"/> 
+        <action application="fifo" data="my_fifo in"/>   
+        -->
+   <!-- 3.配置ivr流程 -->
+		<!--        
+        <action application="answer" data=""/>
+        <action application="seleep" data="100"/>
+        <action application="ivr" data="new_demo_ivr"/> 
+		-->
+  </condition>
+  </extension>
+</include>
+```
+## 小技巧---FreeSWITCH在多张网卡的情况下指定IP
+很多同学问，在FreeSWITCH有多张网卡的情况下怎么指定走哪一张。其实，FreeSWITCH是不知道网卡的，只知道IP。FreeSWITCH在启动时会自己选一个它认为最靠谱的IP（一般是能上互联网的那一个）做为默认的IP，这个IP就体现在 local_ip_v4 这个通道变量。那如果你想使用另外的网卡做为默认的IP呢？最简单的办法就是在vars.xml里加上一行，手动指定local_ip_v4。
+```xml
+ <X-PRE-PROCESS cmd="set" data=“local_ip_v4=192.168.3.119"/>
+ <X-PRE-PROCESS cmd="set"data="domain=$${local_ip_v4}"/>
+```
+
+## 按 F8 键将 log 级别设置为 DEBUG
+## freeswitch 事件调试
+2021-06-07 16:40:51
+1. SIP 信令跟踪
+在 fs_cli 里输入以下命令，可以激活SIP信令跟踪:
+
+sofia loglevel all 9
+sofia global siptrace on 
+2. 设置Log 等级
+编辑console.conf.xml
+```xml
+<param name="log_event" value="DEBUG"/> 
+<param name="all" value="DEBUG"/>
+```
+编辑switch.conf.xml 
+
+```xml
+<param name="loglevel" value="debug"/>
+```
+配置中的日志等级表：
+
+0 "CONSOLE",
+1 "ALERT",
+2 "CRIT",
+3 "ERR",
+4 "WARNING",
+5 "NOTICE",
+6 "INFO",
+7 "DEBUG"
+
+
+还可以通过控制台API动态设置log 输出级别：
+
+freeswitch@de> console loglevel [0-7] 
+此外，还可以设置 fsctl的log级别：
+
+freeswitch@de> fsctl loglevel [0-7] 
+如果是通过fs_cli连接，那么上述命令不会生效。这时应该用/log <loglevel>命令来控制日志的输出级别。
+
+
+3. 输出的颜色
+在console.conf.xml 里，可以打开控制台输出的高亮开关。
+
+```xml
+<!-- comment or set to false for no color logging -->
+<param name="colorize" value="true"/>
+```
+颜色方案：
+
+ALER - Red
+CRIT - Red
+ERROR - Red
+WARNING - Magenta
+NOTICE - Cyan
+INFO - Green
+DEBUG - Yellow
+
+
+## sofia.c:8034 IP 42.96.203.28 Rejected by acl "domains". Falling back to Digest auth.
+- [Freeswitch与外域IP对接之incoming call（彻底解决Rejected by acl "domains". Falling back to Digest auth.）](https://blog.csdn.net/xuyunzhang/article/details/28097929)
+修改/usr/local/freeswitch/conf/autoload_configs/acl.conf.xml：
+```xml
+<configuration>
+     ......
+    <list name="domains" default="deny">
+      <!-- domain= is special it scans the domain from the directory to build the ACL -->
+      <node type="allow" domain="$${domain}"/>
+      <!-- Added by vinco zhang at 2014-06-01 for zhangwenge gateway -->
+      <!--  why domain="42.96.203.28" doesn't work ? --> 
+      <!-- <node type="allow" domain="42.96.203.28"/> -->
+      <!-- use cidr= if you wish to allow ip ranges to this domains acl. -->
+      <!-- <node type="allow" cidr="192.168.0.0/24"/> -->
+     <!-- Added by vinco zhang at 2014-06-01 for zhangwenge gateway -->
+      <node type="allow" cidr="192.168.2.0/24"/>
+    </list>
+  </network-lists>
+</configuration>
+```
+
+acl配置生效
+
+freeswitch@internal> reloadacl reloadxml
+
+## FreeSwitch中用户不经过认证即可注册成功
+一般来说，FreeSwitch中的SIP 用户都需要通过用户名和密码进行认证后才能注册成功，并进行通话。若有特殊需要，也可以设置为无认证即可使用，具体设置如下 ：
+
+打开 /usr/local/freeswitch/conf/sip_profiles/internal.xml ,将如下两条设置去掉注释即可，
+```xml
+<!– <param name="accept-blind-auth" value="true"/> –>
+<!– <param name="suppress-cng" value="true"/> –>
+```
+即：
+```xml
+<param name="accept-blind-auth" value="true"/>
+<param name="suppress-cng" value="true"/>
+```
+
+在 FS_CLI.exe 中运行 reloadxml 即可。
+
+## 配置IP地址
+这一步主要是解决，拨号成功之不然可能打得通电话，但是没有声音。
+cd sip_profiles
+复制代码
+找到external.xml和internal.xml文件，将value字段修改为公网的IP地址，没公网写内网的
+```xml
+<param name="ext-rtp-ip" value="[external_ip]"/>
+<param name="ext-sip-ip" value="[external_ip]"/>
+```
+复制代码
+改后
+```xml
+<param name="ext-rtp-ip" value="192.168.2.158"/>
+<param name="ext-sip-ip" value="192.168.2.158"/>
+```
+
+## /usr/local/freeswitch/conf/vars.xml
+
+```xml
+  <!-- Internal SIP Profile -->
+  <X-PRE-PROCESS cmd="set" data="internal_auth_calls=false"/>
+  <X-PRE-PROCESS cmd="set" data="internal_sip_port=5065"/>
+  <X-PRE-PROCESS cmd="set" data="internal_tls_port=5055"/>
+  <X-PRE-PROCESS cmd="set" data="internal_ssl_enable=false"/>
+
+  <!-- External SIP Profile -->
+  <X-PRE-PROCESS cmd="set" data="external_auth_calls=false"/>
+  <X-PRE-PROCESS cmd="set" data="external_sip_port=5080"/>
+  <X-PRE-PROCESS cmd="set" data="external_tls_port=5081"/>
+  <X-PRE-PROCESS cmd="set" data="external_ssl_enable=false"/>
+```
+
+- [VoLTE IMS会话建立流程 N5流程](https://zhuanlan.zhihu.com/p/372452698)
+
+- [VoLTE Series](https://www.telecomtutorial.info/blog/categories/volte-series)
+
+## 本地用户拨打外部号码流程
+本地user/1000拨打外部号码40012345：
+
+因为user/1000注册在5060端口，所以向fs的5060端口发送INVITE请求；
+INVITE请求到达internal这个Profile所配置的UA（internal.xml）；
+此UA会对此INVITE请求进行鉴权（因为auth-calls=ture）；
+先检查ACL(acl.conf.xml)，然后进行Digest鉴权(directory/default/1000.xml中的用户名和密码)；
+若鉴权通过后会找到该用户的配置文件（即1000.xml），在1000.xml中的user_context标签中配置了路由，所以fs会根据此配置进行路由查找：以默认配置为例：，此时进入diaplan/default.xml中寻找路由；
+对于外部号码，default.xml中一般会将请求送到外部网关，例如：bridge sofia/gateway/gw1/40012345这样；
+其中gw1是我们配置的一个网关。本文开头解释过，网关最终都会被装入external.xml，而external这个Profile运行在5080端口。因此，该INVITE请求最终会通过本机的5080端口发往gw1网关（在gw1对应的xml中配好了目的地的ip和端口）。
+
+作者：阿虎儿
+链接：https://juejin.cn/post/7021092627030376478
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+## freeswitch软电话配置、结合讯时网关，外线电话呼入、呼出配置
+
+## 通过这种方式:originate sofia/external/1000@192.168.2.148 &echo 可以呼叫成功
+但是 originate user/1000 &echo 却不可以
+
+originate sofia/external/460000123456011@ims.mnc000.mcc460.3gppnetwork.org:6060 &echo
+
+
+## 最快安装（推荐）
+wget http://www.freeswitch.org/eg/Makefile && make install
+
+以上命令会下载一个 Makefile，然后使用 make 执行安装过程。安装过程中它会从 SVN 仓库中获取代码，实际上执行的操作跟上一种安装方式相同。
+
+## 安装声音文件
+```
+make sounds-install
+make moh-install
+make cd-sounds-install
+make cd-moh-install
+```
+## 电话
+
+虽然 FreeSWITCH 支持 IAX、H323、Skype、Gtalk 等众多通信协议，但其最主要的协议还是 SIP。支持SIP的软电话有很多，最常用的是 X-Lite 和 Zoiper。这两款软电话都支持 Linux、MacOSX 和 Windows平台，免费使用但是不开源。在 Linux 上你还可以使用 ekiga 软电话。
+
+## 特殊号码
+
+激动人心的时刻就要来了。输入“9664”按回车（或按绿色拨打电话按钮），就应该能听到保持音乐(MOH, Music on Hold)。如果听不到也不要气馁，看一下 FS-Con 中有没有提示什么错误。如果有“File Not Found”之类的提示，多半是声音文件没有安装，重新查看 make moh-install 是否有错误。接下来，可以依次试试拨打以下号码：
+
+| 号码      |   说明|
+| ----------|----------|
+| 9664      |   保持音乐 |
+| 9196      |   echo，回音测试|
+| 9195      |   echo，回音测试，延迟5秒|
+| 9197      |   milliwatte extension，铃音生成|
+| 9198      |   TGML 铃音生成示例|
+| 5000      |   示例IVR|
+| 4000      |   听取语音信箱|
+| 33xx      |   电话会议，48K(其中xx可为00-99，下同)|
+| 32xx      |   电话会议，32K|
+| 31xx      |   电话会议，16K|
+| 30xx      |   电话会议，8K|
+| 2000-2002 |   呼叫组|
+| 1000-1019 |   默认分机|
+
+## 命令行打开siptrace
+```
+freeswitch> sofia profile internal siptrace on
+
+freeswitch> sofia profile external siptrace on
+
+也可以全局开关抓包
+
+freeswitch> sofia global siptrace on/off
+
+还可以开底层日志
+
+freeswitch> sofia loglevel all 9
+
+或者可以开某一类型的日志
+sofia loglevel <all|default|tport|iptsec|nea|nta|nth_client|nth_server|n ua|soa| sresolv|stun> [0-9]
+```
+
+## 常用命令
+
+启动：freeswitch
+启动并后台运行：freeswitch -nc
+进入客户端：fs_cli -H 127.0.0.1 -P 8021 -p password
+退出客户端：/exit， /bye, /quit Ctrl+D
+停止：freeswitch -stop
+查询网关状态: sofia status profile local
+重启网关: sofia profile local restart
+查看freeswitch的端口情况：netstat -anp|grep freeswitch
+使用fs_cli进行呼叫：originate user/1003 &echo 其中&echo会把听到的声音返回给发出者
+音频编码部分设备不支持可以使用这个bgapi originate {absolute_codec_string=PCMU}user/1009 018162330576 xml default
+reloadxml 重新加载xml文件
+查看当前注册的用户数量：sofia status profile internal
+查找文件夹：find / -name external -type d
+复制文件到多个文件夹：echo a b c | xargs -n 1 cp -v ./gwl.xml
+重新注册网关：sofia profile external register gw
+ps -ef | grep freeswitch netstat -apn | grep 8021
+开启sip消息显示 sofia global siptrace on
+关闭sip消息显示 sofia global siptrace off
+
+## originate命令实例解
+originate命令用于从FreeSWITCH中向外发起一个呼叫，这个“外”就是用这里的呼叫字符串指定的。
+
+- fs 可以同时拨打 两通电话
+```
+freeswitch> originate user/1000,user/1001 &echo
+```
+
+- 也可以 一通 呼不通，就打第二通：
+```
+freeswitch> originate user/1000|user/1001 &echo
+```
+
+- orginate后面可以接路由，路由走 dialplan，比如这个例子就是走了9196的路由。
+```
+freeswitch> originate user/1000 9196
+```
+
+- 可以指定 inline模式
+```
+freeswitch> originate user/1000 echo inline
+```
+
+- 对于xml格式的dialplan 可以指定context
+```
+freeswitch> originate user/1000 1001 XML public
+```
+
+- originate可以指定主叫号码：
+```
+freeswitch> originate user/1000 &echo XML default 'Seven Du' 7777
+```
+
+这样会更改From字段和Remote-Party-ID字段
+
+- 可以设置超时时间，这个超时不是指对方不接听的超时，而是对方不回复100 Trying的超时时间，一般 表示 ip地址不可达。
+```
+freeswitch> originate sofia/internal/1000@192.168.100.100 &echo XML default 'Seven Du' 7777 10
+```
+- 在 FreeSWITCH发出INVITE消息后，由于没有收到100 Trying回复，于是 在1秒后重发INVITE消息，如果还收不到则于2秒、4秒后重发，由 于我们指定了10秒超时，因此该呼叫于10秒后失败，返回NO_ANSWER。
+
+默认的originate命令是阻塞的，如果执行上述命令，则无法输入其 他命令或取消该呼叫。一般用bgapi避免阻塞。
+
+originate呼叫参数里 允许设置通道变量，注意逗号什么的要转义。 其中，“^^”后面跟冒号表示以后要用冒号代替逗号（真是奇怪的替代方式）
+```shell
+freeswitch> originate {origination_caller_id_name='Seven Du', originatioin_caller_id_number=7777}user/1000 &echo
+
+freeswitch> originate {absolute_codec_string=G729\,PCMU}user/1000 &echo
+
+freeswitch> originate {absolute_codec_string=^^:G729:PCMU'}user/1000 &echo
+```
+- 也可以把不同的通道变量用大括号分开写：
+
+```shell
+freeswitch> originate {var1=1}{var=2}{var3=3}user/1000 &echo
+```
+
+- 还可以写单腿的局部通道变量，只作用于一个腿
+```shell
+freeswitch> originate {var1=1}[leg_timeout=10]user/1000| [leg_timeout=20]sofia/gateway/gw1/1380000000| [leg_timeout=20]sofia/gateway/gw2/1380000000
+```
+
+- 振铃或者彩铃被称为 early media，一般对方返回这个 就可以认为originate成功
+originate命令是在收到媒体指示就返回的（而非接听才返回），如收到SIP中的 183或200消息，可以配置成originate时忽略early media，以保证用户真的接听了才往下一步走。
+
+```shell
+freeswitch> originate {ignore_early_media=true}sofia/gateway/gw/13800000000 &playback(/tmp/test.wav)
+```
+- bridge的底层其实跟originate是同一个函数，区别只是在于参数不同，bridge多传了一个现存session的参数。
+在bridge的时候，如果b leg返回 180，而a leg已经接听，变成answered状态，就不能再给a leg发 ringing让他听回铃音乐了。如果b leg发的是183，则可以把媒体流直接给a 不会有问题。为了解决这个问题 可以 在bridge之前设置一 个transfer_ringback变量
 
 ```
+freeswitch> originate {transfer_ringback=local_stream://moh}user/1000 &bridge(user/1001)
+```
+
+这时a-leg接听后，如果b-leg振铃，a-leg将能听到假的回铃音。 这里假的回铃音是在收到b-leg的180时开始播放的。
+
+还有个参数（instant_ringback）可以不用等b返回 ringing，只要a接通 就能听见回铃音乐
+
+```
+freeswitch> originate {instant_ringback=true} {transfer_ringback=local_stream://moh}user/1000 &bridge(user/1001)
+```
+以上的参数（transfer_ringback，instant_ringback）都是用在a-leg已经接听的情况，即回呼的情况
+
+- bridge中的主叫号码
+如果要在freeswitch呼叫a leg的时候，更改a 看见的主叫号码，可以这样
+
+freeswitch> originate {origination_caller_id_number=7777}user/1000 &echo
+
+a 接听了之后，再回呼b的时候，会进行主叫号码翻转，b看见的主叫号码仍然是真实的a的号码 1000
+
+freeswitch> originate {originattion_caller_id_number=7777}user/1000 &bridge(user/1001)
+
+执行之后，能看见日志
+
+[INFO] switch_channel.c:2978 sofia/internal/sip:1000@192.168.1.127:47294 Flipping CID from "" <7777> to "Outbound Call" <1000>
+
+意味着呼叫b的时候主叫号码从7777变成了1000。
+
+如果要更改b看到的主叫号码（这里不会更改a看到的主叫号码）可以这样，因为bridge的本质仍然是originate，所以其实和 更改a看见的主叫号码方式一样。
+```shell
+freeswitch> originate user/1000 &bridge({origination_caller_id_number=8888}user/1001)
+```
+- 如果不想更改b腿上的 通道变量，也可以通过更改a腿上的 通道变量来影响b腿的显示
+```shell
+freeswitch> originate {effective_caller_id_number=8888}user/1000 &bridge(user/1001)
+```
+结论：
+
+总之effective_caller_id_number变量设置在a-leg上，但影响bleg的主叫号码显示（俗称来电显示）；
+
+origination_caller_id_number可以设置到a-leg，也可以设置到bleg上，它将影响本leg的来电显示。
+
+- 呼叫是怎么工作的
+
+主叫先发100 INVITE到freeswitch的5060内部端口，internal会回复100表示收到，然后是鉴权阶段，鉴权阶段会查找用户，校验密码。
+
+然后电话到路由阶段，开始查找dialplan，根据用户的context（user_context字段）开始查找对应的dialplan。然后会找到 被叫用户，获取他的注册地址（使用 sofia_contact这个API 获取）。
+
+找到被叫用户之后，freeswitch会给被叫用户发INVITE请求，如果被叫用户摘机，则给freeswitch发 200ok，freeswitch再给主叫发200ok，通话开始。
+
+这里注意在5080端口的通话都没有鉴权步骤。
+
+而路由的context来源于external.xml里的配置。
+
+<param name="context" value="public"/>
+
+如果是已经注册，有鉴权步骤的用户，那么以用户指定的context为准，如果没有鉴权步骤，freeswitch就不会去找注册用户，则以external.xml里配置的context为准。
+
+值得一提的是，对于没有经过鉴权的呼叫，同样可以有主、被叫 号码，只不过主叫号码是不可信的，对方可以指定显示任意号码。
+
+## 问题解决
+
+- [FreeSWITCH新手问题（无法呼出到软电话）- 暂时没提出解决办法](https://bbs.csdn.net/topics/392460099)
+
+- [Freeswitch使用originate转dialplan](https://blog.csdn.net/qiuzhendezhen/article/details/125446175)
+
+
+## 各种参考链接 
+
+- [FreeSWITCH中的XML拨号计划 - 各种示例](www.freeswitch.org.cn/2009/11/22/freeswitchzhong-de-xmlbo-hao-ji-hua.html)
+
+- [freeswitch的拨号规则配置 - 各种示例](https://blog.csdn.net/karl_max/article/details/5046811)
+
+- [认识拨号计划 - Dialplan - 讲解非常详细 - 每一个参数的意义](https://blog.51cto.com/u_14349334/3495988)
+
+- [《FreeSWITCH: VoIP实战》：FreeSWITCH 初步 - 有些参考意义](https://blog.csdn.net/tcscy/article/details/71158713?spm=1035.2023.3001.6557&utm_medium=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-5-71158713-bbs-392460099.pc_relevant_bbs_down_v2_default&depth_1-utm_source=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-5-71158713-bbs-392460099.pc_relevant_bbs_down_v2_default)
+
+- [!!!FreeSwitch权威指南 - 网页版电子书!!!](https://www.cnblogs.com/panghuhu/default.html?page=4)
+
+- [通过ESL监控freeswitch事件event](https://zhuanlan.zhihu.com/p/380130314)
+
+- [第七章 SIP 模块 - mod_sofia - 各参数解释](www.freeswitch.org.cn/2010/08/03/di-qi-zhang-sip-mo-kuai-mod_sofia.html)
+
+- [最常用的18个SIP呼叫业务流程详解完整版(一)](ec.ctiforum.com/jishu/qiye/wenzhai/550973.html)

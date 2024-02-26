@@ -26,6 +26,8 @@ cd gcc-7.2.0
 
 - [第二部份：gcc升级到gcc-9.2.0](https://blog.csdn.net/u012480990/article/details/104277771)
 
+- [nghttp2编译引起的gcc升级笔记](https://blog.csdn.net/zxc3590235/article/details/112190481)
+
 - [CentOS7编译安装Gcc9.2.0，解决mysql等软件编译问题](https://www.51lowkey.com/note-14.html)
 
 - [一次segfault错误的排查过程](https://blog.csdn.net/zhaohaijie600/article/details/45246569)
@@ -268,11 +270,11 @@ sudo apt-get install -y nodejs
 
 ```shell
 wget https://nodejs.org/dist/v8.1.0/node-v8.1.0-linux-x64.tar.xz
-tar -xvf node-v8.1.0-linux-x64.tar.xz
+tar -xvf node-v8.1.0-linux-x64.tar.xz -C /root/
 cd node-v8.1.0-linux-x64/bin
 ./node -v
-sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/node /usr/local/bin/node
-sudo ln /home/ubuntu/node-v8.1.0-linux-x64/bin/npm /usr/local/bin/npm
+sudo ln /root/node-v8.1.0-linux-x64/bin/node /usr/local/bin/node
+sudo ln /root/node-v8.1.0-linux-x64/bin/npm /usr/local/bin/npm
 ```
 
 + 方法3：
@@ -908,14 +910,15 @@ yum install --downloadonly --downloaddir=./  libaio-devel
 ### 源码安装
 
 #### 安装 nghttp2
-
+需要升级gcc, gcc g++ 4.8.5是不行的
+- [nghttp2编译引起的gcc升级笔记](https://blog.csdn.net/zxc3590235/article/details/112190481)
 ```shell
 git clone https://github.com/tatsuhiro-t/nghttp2.git
 cd nghttp2
 autoreconf -i
 automake
 autoconf
-./configure --prefix=/user/local/
+./configure --prefix=/usr/local/
 make
 sudo make install
 
@@ -926,7 +929,6 @@ yum install zlib-devel.x86_64
 
 #### 安装 openssl
 
-
 方式一 you can install a develop version，这个方式不会导致curl编译找不到openssl
 ```
 yum -y install openssl-devel
@@ -934,9 +936,9 @@ yum -y install openssl-devel
 
 方式二 源码安装, 会导致curl编译找不到openssl
 ```shell
-yum install zlib-devel.x86_6
+yum install zlib-devel.x86_64
 
-wget  http://www.openssl.org/source/openssl-1.1.0e.tar.gz
+wget  http://www.openssl.org/source/openssl-1.1.0e.tar.gz --no-check-certificate
 
 tar -zxvf openssl-1.1.0e.tar.gz
 
@@ -1801,27 +1803,6 @@ Curl_slist_free_all(slist);
 
 ```
 
-## [curl 支持 http2](https://www.cnblogs.com/brookin/p/10713166.html)
-
-### 源码安装
-
-#### 安装 nghttp2
-
-```shell
-git clone https://github.com/tatsuhiro-t/nghttp2.git
-cd nghttp2
-autoreconf -i
-automake
-autoconf
-./configure --prefix=/usr/local/
-make
-sudo make install
-
-add below to .bashrc and source it before compile curl
-export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib
-
-```
-
 #### 安装 openssl
 
 ```shell
@@ -2651,3 +2632,17 @@ perf report --call-graph none结果如下,后面结合perf timechart分析.
 
 ## WSL ubuntu 18.04 开启FTP service
 - [Ubuntu 18.04 安装vsftpd-完美可以用-其他都失败](https://blog.51cto.com/u_13460811/4929394)
+## git显示branch
+
+```shell
+vi ~/.bashrc
+
+function git-branch-name {
+  git symbolic-ref --short -q HEAD 2>/dev/null
+}
+function git-branch-prompt {
+  local branch=`git-branch-name`
+  if [ $branch ]; then printf " [%s]" $branch; fi
+}
+PS1="\u@\h \[\033[0;36m\]\W\[\033[0m\]\[\033[0;32m\]\$(git-branch-prompt)\[\033[0m\] \$ "
+```

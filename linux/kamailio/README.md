@@ -1211,7 +1211,7 @@ $ /root/hss.sh
 ```
 Access the web-interface of HSS: <font color="Hotpink">http://<IMS_VM_FLOATING_IP>:8080/hss.web.console/</font>
 
-For example, http://192.168.2.240:8080/hss.web.console/
+For example, http://192.168.2.258:8080/hss.web.console/
 ```
 user:      hssAdmin
 password:  hss

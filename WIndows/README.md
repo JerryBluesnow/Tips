@@ -276,6 +276,7 @@ Copyright (C) Microsoft Corporation.
 
 DISKPART> select vdisk file = "C:\Users\JerryZ\AppData\Local\Docker\wsl\data\ext4.vhdx"
 
+select vdisk file = "C:\Users\JerryZ\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx"
 DiskPart 已成功选择虚拟磁盘文件。
 
 DISKPART> compact vdisk
@@ -305,3 +306,6 @@ New-Item -ItemType SymbolicLink -Path "data" -Target $newLocation
 我做了有限的测试，一切似乎都按预期进行。如果你遇到问题，请在评论中告诉我！
 
 注意：如果您运行的是不带WSL/WSL2的Docker for Windows，那么这些步骤可能适用于DockerDesktop.vhdx文件…但是在这种情况下，您可能只需要更改Hyper-V VM实例中的VHDX位置。
+
+## windows下安装make, 使用powershell
+choco install make

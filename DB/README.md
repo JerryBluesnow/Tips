@@ -889,7 +889,7 @@ FLUSH PRIVILEGES;
 ```
 
 ```
-docker run --name mysql --restart=always -d -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql --entrypoint "/usr/bin/mysqld_safe" mysql_image
+docker run --name mysql -d -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql --entrypoint "/usr/bin/mysqld_safe" mysql_image
 ```
 
 ## mysql连接docker报错_本地宿主机通过mysql命令连接mysql Docker容器中的服务器报错 ERROR 2002 (HY000)...
@@ -966,3 +966,7 @@ sudo chown -R polkitd:input mysql
 ## postgres to mysql
 
 - [pg2mysql](http://www.lightbox.ca/pg2mysql.php)
+
+
+## 一定要-v /var/run/mysqld:/var/run/mysqld， 不然host无法访问mysql，跟权限无关
+docker run --name=mysql -it -p 3306:3306 -v /var/run/mysqld:/var/run/mysqld -v /var/lib/mysql:/var/lib/mysql -v /opt/data/mysql/conf:/etc/mysql/conf.d -v /opt/data/mysql/files:/var/lib/mysql-files -e MYSQL_ROOT_PASSWORD=admin --privileged=true -d mysql:5.7

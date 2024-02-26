@@ -252,15 +252,21 @@ root@default:/mnt/sda1/var/lib/docker/aufs/diff#
 - [docker容器配置ssh](https://blog.csdn.net/cheney__chen/article/details/81639203)
 
 ```
-docker search boonyadocker/tomcat-allow-remote  
-docker pull boonyadocker/tomcat-allow-remote 
+    docker search boonyadocker/tomcat-allow-remote  
+    docker pull boonyadocker/tomcat-allow-remote 
     
     docker run -it jerry4docker/jerryubuntu:first /bin/bash
     docker run -it jerry4docker/jerryubuntu:latest /bin/bash
     docker run -d -p 10000:22 -it jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -d -p 23:22 -itd jerry4docker/jerryubuntu:v3 /bin/bash
     docker run -it debian /bin/bash --registry-mirror=https://docker.mirrors.ustc.edu.cn
-    docker run -it --restart=always --privileged --network=host --name vonras -v /etc/resolv.conf:/etc/resolv.conf centos:centos7.6.1810 /usr/sbin/init
+    docker run -it --restart=always --privileged --network=host --name vonr
+     -v /etc/resolv.conf:/etc/resolv.conf centos:centos7.6.1810 /usr/sbin/init
+    docker run -it --restart=always --privileged --network=host --name vonrbd -v /etc/resolv.conf:/etc/resolv.conf jerry4docker/kamailiocentos:v1 /usr/sbin/init
+    docker run -it --restart=always --privileged --network=host --name sipp-build-test alpine:3.13 /usr/sbin/init
+    docker run -it --restart=always --privileged --network=host --name vonras2 centos:centos7.6.1810 /usr/sbin/init
+
+    docker run -it --privileged --network=host --name baon debian:10.13 /usr/sbin/init
 
     docker run -d -p 9982:22 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v6
     docker run -d -p 9982:22 -p 9528:9528 -p 9529:9529 -p 9530:9530 -p 9531:9531 -p 9906:3306 -p 9004:9004 --name=devhub --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it jerry4docker/jerry4docker:v9
@@ -613,11 +619,12 @@ docker run -p 3306:3306 --name mysql  -v /d/WorkSpace/mysql/my.cnf:/etc/mysql/my
 如果要建立目录映射
 
 sudo docker run -p 3306:3306 --name mysql \
+--privileged=true \
 -v /usr/local/docker/mysql/conf:/etc/mysql \
 -v /usr/local/docker/mysql/logs:/var/log/mysql \
 -v /usr/local/docker/mysql/data:/var/lib/mysql \
--e MYSQL_ROOT_PASSWORD=123456 \
--d mysql:5.7
+-e MYSQL_ROOT_PASSWORD=admin \
+-d mariadb:latest
 -v：主机和容器的目录映射关系，":"前为主机目录，之后为容器目录
 检查容器是否正确运行
 
@@ -686,8 +693,6 @@ mysql> select host,user,password from user;
 
 https://www.52pojie.cn/thread-727433-1-1.html
 
-作者：sablier
-出处：https://www.cnblogs.com/sablier/p/11605606.html
 
 ```
 show variables like '%char%';
@@ -723,7 +728,7 @@ default-character-set=utf8mb4
 [Minio](https://www.jianshu.com/p/52dbc679094a)
 
 docker run -it -p 9000:9000 --name minio \
--d --restart=always \
+-d --restart=always --privileged --network=host \
 -e "MINIO_ACCESS_KEY=AU1KIRAXJNT5Z7ZWA2CY3ZTD" \
 -e "MINIO_SECRET_KEY=glhL2C8am6GACEJJ9hhYikWA1NywYESqu9vNgXEiFoU2nTJn" \
 minio/minio server /data
@@ -1059,3 +1064,22 @@ docker run -p 3306:3306 --name mysql \
 -v /home/jerry_zhang/var/run/mysqld:/var/run/mysqld \
 -e MYSQL_ROOT_PASSWORD=admin \
 -d mariadb:latest
+
+
+## 如何将所有操作系统/架构的Docker映像拉/推到Dockerhub？
+```
+# Create a tag for any digests you are interested in
+docker pull --platform=amd64 mariadb:10.5.15
+docker tag 2c7d1ac0ae1b hb.radionxt.com/thirdparty/mariadb:10.5.15-amd64
+
+docker pull --platform=arm64 mariadb:10.5.15
+docker tag eb7ed9035465 hb.radionxt.com/thirdparty/mariadb:10.5.15-arm64
+
+docker manifest inspect
+# Push to your registry
+docker push hb.radionxt.com/thirdparty/mariadb:10.5.15-amd64
+docker push hb.radionxt.com/thirdparty/mariadb:10.5.15-arm64
+# Create and push the manifest
+docker manifest create hb.radionxt.com/thirdparty/mariadb:10.5.15 --amend hb.radionxt.com/thirdparty/mariadb:10.5.15-arm64 --amend hb.radionxt.com/thirdparty/mariadb:10.5.15-amd64
+docker manifest push hb.radionxt.com/thirdparty/mariadb:10.5.15
+```

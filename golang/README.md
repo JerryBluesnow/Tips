@@ -131,3 +131,8 @@ const (
 - [GitHub Top 10 + Vue 开源项目（2021版)](https://zhuanlan.zhihu.com/p/409241661)
 
 - [高并发微服务网关设计与实现](https://zhuanlan.zhihu.com/p/387378721)
+
+## go mod tidy 超时问题
+```shell
+go env -w GOPROXY=https://goproxy.io,direct
+```

@@ -5,3 +5,5 @@
 - [2019 年如何搭建你的 Vue 项目](https://zhuanlan.zhihu.com/p/70752505)
 
 - [vue3-easy-data-table](https://hc200ok.github.io/vue3-easy-data-table-doc/introduction.html)
+
+- [各类网页特效模板](http://www.bootstrapmb.com/)
