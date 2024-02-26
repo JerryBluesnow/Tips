@@ -2647,3 +2647,7 @@ perf report --call-graph none结果如下,后面结合perf timechart分析.
 - [如何用Perf解开服务器消耗的困境](https://rdc.hundsun.com/portal/article/637.html)
 
 - [perf Tutorial](https://perf.wiki.kernel.org/index.php/Tutorial)
+
+
+## WSL ubuntu 18.04 开启FTP service
+- [Ubuntu 18.04 安装vsftpd-完美可以用-其他都失败](https://blog.51cto.com/u_13460811/4929394)

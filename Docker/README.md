@@ -525,8 +525,14 @@ docker run -it --name vonrx --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:r
 
 docker run -it --name vonransible --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
 docker run -it --name vonransible2 --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:centos7.9.2009 /usr/sbin/init
-docker run -it --name shaken --privileged=true -v /home/jenkins/tls:/home/shaken --net=host -p 8080:8080 -p 8081:8081 sbc-docker-releases.repo.lab.pl.alcatel-lucent.com/shaken:latest
+docker run -it -d --name shaken --privileged=true --restart=always -v /home/jenkins/shaken:/home/shaken --net=host sbc-docker-releases.repo.lab.pl.alcatel-lucent.com/shaken:latest
 
+docker run -it -d --name shaken2 --privileged=true --restart=always --net=host sbc-docker-releases.repo.lab.pl.alcatel-lucent.com/shaken:v1.0
+
+docker build -t sbc-docker-releases.repo.lab.pl.alcatel-lucent.com/shaken:v1.0 -f ./shaken.dockerfile .
+
+docker build -t cns-sbc-docker-local.artifactory-hz1.int.net.nokia.com/jzhan107/shaken:latest -f ./shaken.dockerfile .
+docker build -t cns-sbc-docker-local.artifactory-hz1.int.net.nokia.com/jzhan107/shaken:latest -f ./shaken.dockerfile .
 ## 
 1.修改数据库字符集
 ALTER DATABASE database_name CHARACTER SET utf8
@@ -596,7 +602,7 @@ MySQL文档地址
 $ sudo docker images
 一般来说数据库容器不需要建立目录映射
 
-docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mariadb:latest
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mariadb:latest 
 docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:5.7
 
 docker run -p 3306:3306 --name mysql  -v /d/WorkSpace/mysql/my.cnf:/etc/mysql/my.cnf -e MYSQL_ROOT_PASSWORD=admin -d mysql:latest
@@ -606,7 +612,7 @@ docker run -p 3306:3306 --name mysql  -v /d/WorkSpace/mysql/my.cnf:/etc/mysql/my
 -d：后台运行容器，保证在退出终端后容器继续运行
 如果要建立目录映射
 
-duso docker run -p 3306:3306 --name mysql \
+sudo docker run -p 3306:3306 --name mysql \
 -v /usr/local/docker/mysql/conf:/etc/mysql \
 -v /usr/local/docker/mysql/logs:/var/log/mysql \
 -v /usr/local/docker/mysql/data:/var/lib/mysql \
@@ -1021,6 +1027,7 @@ systemctl stop docker
  
 #6、修改config.v2.json在ExposedPorts中加上要暴露的端口
 #	两个地方
+```
 "ExposedPorts":{"3306/tcp":{},"80/tcp":{}}"
 "Ports":{"3306/tcp":[{"HostIp":"0.0.0.0","HostPort":"33061"}],"80/tcp":[{"HostIp":"","HostPort":"801"}]}"
 最后改完之后，重启docker服务就行了
@@ -1030,3 +1037,25 @@ systemctl restart docker
 版权声明：本文为CSDN博主「new_PHP大神」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/my476530/article/details/125658365
 ```
+
+
+# 这个在qd014Jenkins上可以windows本地用mysql -uroot -padmin -hxxx.xxx.xxx.xxx连接， go项目也能连接
+docker run --name=mysql -it -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin --privileged=true -d registry.access.redhat.com/rhscl/mysql-57-rhel7
+docker run --name=mysql -it -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin --privileged=true -d mariadb:latest
+
+# 这个能跑起来
+docker run -p 3306:3306 --name mysql \
+-v /usr/local/docker/mysql/conf:/etc/mysql \
+-v /usr/local/docker/mysql/logs:/var/log/mysql \
+-v /usr/local/docker/mysql/data:/var/lib/mysql \
+-v /var/run/mysqld:/var/run/mysqld \
+-e MYSQL_ROOT_PASSWORD=admin \
+-d mariadb:latest
+
+docker run -p 3306:3306 --name mysql \
+-v /home/jerry_zhang/usr/local/docker/mysql/conf:/etc/mysql \
+-v /home/jerry_zhang/usr/local/docker/mysql/logs:/var/log/mysql \
+-v /home/jerry_zhang/usr/local/docker/mysql/data:/var/lib/mysql \
+-v /home/jerry_zhang/var/run/mysqld:/var/run/mysqld \
+-e MYSQL_ROOT_PASSWORD=admin \
+-d mariadb:latest

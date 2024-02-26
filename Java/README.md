@@ -102,6 +102,3 @@
 - [Let's Encrypt：初次使用免费的ssl证书，并生成java用的 jks(keystore) 文件](https://www.cnblogs.com/personnel/p/7795557.html)
 
 - [使用Let's Encrypt证书签名服务创建Java Keystore（.jks）](https://blog.csdn.net/code_for_fun/article/details/72886676)
-
-## 使用VSCode插件CodeRunner一键编译运行Java
-- [使用VSCode插件CodeRunner一键编译运行Java](https://blog.csdn.net/wuyujin1997/article/details/89323627)

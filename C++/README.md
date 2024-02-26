@@ -407,3 +407,23 @@ http://supercomputingblog.com/windows/ordered-map-vs-unordered-map-a-performance
 - [c++ 11中的随机数 ——random](https://blog.csdn.net/qq_34784753/article/details/79600809)
 
 ## - [Protobuf协议应用干货](https://blog.csdn.net/weixin_33860147/article/details/91650661?spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.pc_relevant_default&utm_relevant_index=9)
+
+
+## google benchmark
+```
+$ git clone https://github.com/google/benchmark.git
+$ cd benchmark
+$ cmake -E make_directory "build"
+$ cmake -E chdir "build" cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ../
+$ cmake --build "build" --config Release
+$ cd build
+$ make install
+
+if not install, you will encounter this issue with debug version:
+***WARNING*** Library was built as DEBUG. Timings may be affected.
+/usr/local/src/benchmark/src/benchmark_runner.cc:133: RunInThread: Check `st.skipped() || st.iterations() >= st.max_iterations' failed. Benchmark returned before State::KeepRunning() returned false!
+Aborted
+```
+### google benchmark online
+
+https://quick-bench.com/q/Xi39gae49FGfhQZx0yqOjN5dEHs

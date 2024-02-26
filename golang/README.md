@@ -34,16 +34,47 @@ tar -C /usr/local -zxf go1.19.linux-amd64.tar.gz
 vim /etc/profile
 
 在文件后追加以下内容
-export GOPROXY=https://goproxy.cn
+export GOPROXY=https://goproxy.cn,direct
 export GOROOT=/usr/local/go
-export PATH=$PATH:$GOROOT/bin
 export GOPATH=/root/go
-export PATH=$PATH:$GOPATH/BIN
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 
 退出并保存，刷新环境变量
 source /etc/profile
 
 go --version
+```
+## wsl ubuntu安装golang最新版
+- [How To Add Apt Repository In Ubuntu](https://linuxize.com/post/how-to-add-apt-repository-in-ubuntu/)
+follow https://github.com/golang/go/wiki/Ubuntu
+- [通过apt安装golang并初始化](https://www.jianshu.com/p/623c5cfba809)
+```shell
+
+apt install software-properties-common -y
+add-apt-repository ppa:longsleep/golang-backports
+add-apt-repository ppa:apt-fast/stable
+apt update
+apt-get install apt-fast
+apt install golang-go # for newest
+apt-get install golang-1.18-go # 指定版本
+
+vi .bashrc
+
+export GOPATH=/root/gopath
+export GOROOT=/usr/lib/go-1.18
+export GOBIN=/root/gopath/bin
+export GOARCH=386
+export GOOS=linux
+export GOTOOLS=$GOROOT/pkg/tool/
+export GOPROXY=https://goproxy.cn,direct
+export PATH=$PATH:$GOBIN:$GOTOOLS:/root/gopath/bin/linux_386:/usr/lib/go-1.18/bin
+```
+
+## 
+```
+go env -w GOPROXY=https://goproxy.cn,direct
+go install github.com/cloudwego/hertz/cmd/hz@latest
 ```
 
 ## Windows下使用syscall.SIGUSR1报错：SIGUSR1 not declared by package syscall
