@@ -1,5 +1,5 @@
 
-# [Download](https://golang.google.cn/dl/)
+# [Download](https://.google.cn/dl/)
 
 # [golang 2022.1永久激活](http://www.javatiku.cn/goland/1429.html) 
 
